@@ -1,0 +1,89 @@
+---
+id: use-zefops-effectively
+title: ❗️Use ZefOps Effectively
+---
+
+<!---
+In this guide we will focus on how composition works in zef. We will see how to succinctly express pipelines of functional transformations with zefops, how to integrate and curry regular python functions. We will also get a first glimpse of using zef for point free programming and transducers.
+
+Let us look at a slight variant of a sample problem given in the SICP book and go through a number of solutions in Python, discussing their tradeoffs.
+:::note Problem Statement
+Given a list of n  (n > 1) positive integers, return the sum of squares of the two largest numbers that are divisible by three.
+
+Example:
+[5, 4, 9, 13, 10, 7, 16]   ->   9^2 + 13^2 = 250
+:::
+
+
+
+
+
+
+#### "Traditional", Imperative Python
+```python
+from typing import List
+
+def solution1(v: List[int]) -> int:
+    v_filtered = []
+    for el in v:
+        if el % 3 == 0:
+            v_filtered.append(el)            
+    sorted_v = sorted(v_filtered)
+    x1 =  sorted_v[-1]
+    x2 =  sorted_v[-2]
+    return x1*x1 + x2*x2    
+```
+
+#### Making use of Builtins Map, Filter etc.
+
+```python
+def solution2(v: List[int]) -> int:
+    filtered_v = filter(lambda x: x%3==0, v)    
+    sorted_v = sorted(filtered_v)
+    largest_two = sorted_v[-2:]
+    squared = map(lambda x: x*x, largest_two)
+    summed = sum(squared)
+    return summed
+```
+This is somewhat more expressive and  cleaner with no mutation. Looking a bit closer, we can see that the data flow is strictly linear, with each line being a new stage along the pipeline. It seems like we're spending a lot of mental effort in variable naming though, and the variables are only used to pass the data to the next step.
+
+
+#### Avoiding Unnecessary Variable Naming
+```python
+def solution3(v: List[int]) -> int:
+    v = filter(lambda x: x%3==0, v)    
+    v = sorted(v)
+    v = v[-2:]
+    v = map(lambda x: x*x, v)
+    v = sum(v)
+    return v
+```
+OK, so the code is less noisy since we just named every intermediate value the same. It is not clear that this is better code though, since we gave up a a computation based model where expressions are substitutable by their names. We introduced unnecessary state :(.
+
+```python
+def solution4(v: List[int]) -> int:
+    return sum(map(lambda x: x*x, sorted(filter(lambda x: x%3==0, v))[-2:]))
+```
+We could also just focus on the dataflow itself and fully remove the 
+
+
+```python
+def solution5(v: List[int]) -> int:
+    return v | filter[lambda x: x%3==0] | sort | take[-2] | map[lambda x: x*x] | sum
+```
+
+#### Tacit Style
+```python
+solution6 = filter[lambda x: x%3==0] | sort | take[-2] | map[lambda x: x*x] | sum
+```
+Also often called point-free style of defining functions. This refers to defining functions by composition and avoiding the usage of the arguments/variables altogether.
+
+
+
+```python
+v = [5, 3, 18, 9, 13, 12, 17, 15]
+solution4(v)
+solution6(v)
+v | solution6
+```
+--->

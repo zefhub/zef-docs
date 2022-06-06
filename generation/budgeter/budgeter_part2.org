@@ -1,0 +1,156 @@
+#+PROPERTY: header-args :tangle budgeter_part2.py
+#+OPTIONS: toc:nil
+#+PROPERTY: header-args:dot :cmdline "-Gbgcolor=transparent -Nstyle=filled -Nfillcolor=gray10 -Ncolor=green3 -Nfontcolor=white -Ecolor=green3 -Efontcolor=gray50 -Tsvg"
+
+#+BEGIN_EXPORT html
+---
+title: Personal Budgeter tutorial part 2
+sidebar_label: Personal Budgeter (2)
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import FutureFeature from "@theme/FutureFeature";
+
+import CodeBlock from '@theme/CodeBlock';
+export const DannyCodeBlock = ({children}) => <div className="danny">{children}</div>;
+
+
+#+END_EXPORT
+
+This is a dumping ground for items that need to be rewritten and added to.
+
+TODO
+
+TODO
+
+TODO
+
+TODO
+
+TODO
+
+TODO
+
+TODO
+
+
+*** TODO
+    - Delayed to part 2
+      - [ ] Import from CSV (delay to part 2)
+      - [ ] Show categories with budget targets (delay to part 2)
+      - [ ] Basic frontend (delay to part 2)
+      - [ ] Spec as zef functions (delay to part 2)
+      - [ ] Maybe delay relation from relation example till part 2?
+    
+* Things for part 2
+** Validating with spec
+
+   (Maybe leave out for now)
+
+   Although everything presented so far looks fine, it would be quite easy to
+   break the code above. For example, attaching a transaction to 2 accounts is
+   possible but it will quickly result in errors:
+
+   #+begin_src jupyter-python :eval no :tangle no
+     z_coffee = g | now | instances[ET.Transaction] | filter[lambda z: z >> O[RT.Description] | maybe_value | collect == "Coffee"] | only | collect
+     link_account(z_coffee, z_acc_savings)
+     show_transactions(g)
+   #+end_src
+
+   This is because the traversal options expect to find a maximum of one
+   ~RT.HasEntry~ incoming to a ~ET.Transaction~. In production code we would
+   have a couple of options we could take to avoid these problems:
+
+   - Rigorously validate changes before they are made.
+   - Identify inconsistencies between the graph schema and the graph state.
+   - Handle errors gracefully.
+
+   Ideally we would include all of these options. For now, let's focus on
+   identifying inconsistencies. For short we call this "spec". Spec can be a
+   useful tool to implement all of the options listed above.
+
+   (TODO:)
+
+** Updating information
+   
+
+
+   
+** Cut and pasted from the layout section
+
+   It is also instructive to see how we can query for this information, and what
+   the functional interface might be. We could write a function:
+
+   
+   #+BEGIN_SRC jupyter-python
+     def get_amount(transaction, account):
+         entry = relation(account, RT.HasEntry, transaction)
+         return entry >> RT.Amount | value
+   #+END_SRC
+
+   #+RESULTS:
+
+   By abstracting this away, we could also allow for data to be represented in
+   several different ways in the same graph. For example, maybe we have some
+   transactions where the amount is contained directly on the transaction (from
+   an older version of our program), so our graph may have some data that looks
+   like this:
+
+   #+begin_src dot :file trans_layout3.svg :exports results :tangle no
+     digraph {
+         rankdir = LR
+
+         acc [label="Account"]
+
+         acc -> rel_a [arrowhead=none]
+         rel_a -> trans_a
+         rel_a -> amount_a [label="Amount"]
+         amount_a [label="AET.QuantityFloat", shape=box, fillcolor=darkgreen]
+         rel_a [label="RT.HasEntry", color=white]
+         trans_a [label="Transaction A"]
+
+         acc -> trans_b [label="RT.HasEntry"]
+         trans_b -> amount_b [label="Amount"]
+         amount_b [label="AET.QuantityFloat", shape=box, fillcolor=darkgreen]
+         trans_b [label="Transaction B"]
+
+         // {rank=same; acc_a; rel_a}
+         {rank=same; trans_a; trans_b}
+         {rank=same; amount_a; amount_b}
+     }
+   #+end_src
+
+   #+RESULTS:
+   [[file:trans_layout3.svg]]
+
+   Then we can easily encapsulate the different behaviours in our ~get_amount~
+   function by allowing a "fallback":
+
+   #+BEGIN_SRC jupyter-python
+     def get_amount(transaction, account):
+         entry = relation(account, RT.HasEntry, transaction)
+         if entry | has_out[RT.Amount] | collect:
+             return entry >> RT.Amount | value | collect
+         else:
+             return transaction >> RT.Amount | value | collect
+   #+END_SRC
+
+   #+RESULTS:
+
+   At the same time, we might add a function into the spec for our graph,
+   requiring an ~RT.Amount~ relation on either the ~ET.Transaction~ itself, or
+   the ~RT.HasEntry~ but not both.
+
+   #+BEGIN_SRC jupyter-python
+     def is_entry_valid(transaction, account):
+         entry = relation(account, RT.HasEntry, transaction)
+         num_amount_relations = entry | L[RT.Amount] | length | collect + transaction | L[RT.Amount] | length | collect
+         return (num_amount_relations == 1)
+   #+END_SRC
+
+   #+RESULTS:
+
+   More on creating and running spec later.
+
+   

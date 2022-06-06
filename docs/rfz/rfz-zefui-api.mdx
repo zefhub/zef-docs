@@ -1,0 +1,22 @@
+---
+id: 'rfz-zefui-api'
+title: RFZ - zefUI API
+---
+
+One of the core design goals of zefUI is ease of use, also at the cost of being opinionated.
+
+A python user from a python proces terminal / notebook / ... should be able to start zefUI with a single command, if they have a ZefRef to the zef component's or the app's root:
+```python
+zef_ui(z_my_app)
+```
+Below the hood, zefDB should check whether a zefUI backend process is already running and whether a browser was launched to display this.
+Upon first launch (neither zefUI backend nor a browser are running), it communicates with the tokolosh to start a zefUI backend session on a new port. Subsequently a browser can be launched, pointing this to the new zefUI backened session via url parameters.
+
+The user may also explicitly specify the port to host this on, as well as whether a browser should be launched (both optional function arguments)
+`zef_ui(z_my_app, port=3007, launch_browser=False)`.
+
+Upon loading, the front end application is unaware of the zefUI components / apps that will be displayed. This will be sent out as data from the zefUI backend upon connection.
+
+:::note
+In contrast to most backend-frontend architectures, zefUI is fully built on the observer pattern. The source of truth for the program state is the most recent time slice of the ui_model graph, a zefDB graph living on the backend. Instead of the front end querying the backend state via a REST / GraphQL API, *everything* is based on subscription from the very foundation. The essence of zefUI is a time-dependent, distributed subscriptions model paired with a compositional model for zefUI components.
+:::

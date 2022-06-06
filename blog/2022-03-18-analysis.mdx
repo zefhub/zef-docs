@@ -1,0 +1,134 @@
+---
+slug: using-external-tools
+title: Using External Tools
+author: Danny Cocks
+tags: [zef, sql, import, networkx, analysis]
+draft: true
+---
+
+### Danny TODO
+
+- [ ] Get the original Northwind dataset rather than the neo4j export
+
+## 3. Exposing with proxies or adjacency lists
+
+To view the data, we can use native Zef operations and traversal tools. For
+example, to get all products and their stock quantity as a dictionary, we could
+write:
+
+```py
+>>> d = (g | now
+           | all[ET.Product]
+           | map[lambda z: (z >> RT.ProductName | value | collect,
+                            z >> RT.UnitsInStock | value | collect)]
+           | func[dict]
+           | collect)
+       
+{'Chai': 39,
+ 'Chang': 17,
+ 'Aniseed Syrup': 13,
+ "Chef Anton's Cajun Seasoning": 53,
+ ...
+```
+
+It's also easy for us to get a subgraph of nodes with an adjacency matrix:
+
+```py
+A,nodes,edges = subgraph(g, ET.Employee, RT.ReportsTo)
+```
+
+This outputs an adjacency matrix `A`, which has integers that index into the
+list `edges` allowing us to recover the original `ZefRef` of each edge. The
+rows/cols of `A` correspond also to the list `nodes`. In this output, we haven't
+lost any information, although it has become more inconvenient to query.
+
+Algorithms typically expect the adjacency matrix A to contain the edge weights.
+Hence, we should transform A before passing it to them. The simplest is just to
+convert all edges to have weight 1 with: `A.astype(bool)`.
+
+To make use of networkX algorithms, we can also expose this using the
+`ProxyGraph` object of `zef.experimental.networkx`:
+
+```py
+>>> pg = ProxyGraph(now(g))
+>>> d = {pg.nodes[n]["ProductName"]: pg.nodes[n]["UnitsInStock"]
+         for n in pg.nodes if is_a(n.z, ET.Product)}
+
+{'Chai': 39,
+ 'Chang': 17,
+ 'Aniseed Syrup': 13,
+ "Chef Anton's Cajun Seasoning": 53,
+ ...
+```
+
+Note that the proxy graph is not a copy of the data. It is a view on the Zef
+graph, translating the networkX request to native Zef commands and then
+returning the result in a networkX style.
+
+## 4. Applying algorithms to the data
+
+As a basic example, we can look for connected components of the undirected graph
+of all nodes:
+
+```py
+>>> import networkx as nx
+>>> pg = ProxyGraph(now(g), undirected=True)
+>>> 
+>>> comps = list(nx.connected_components(pg))
+[{Node(#9166),
+  Node(#4161),
+  Node(#8926),
+  ...},
+ {Node(#9326)},
+ {Node(#9334)}]
+```
+
+This is a silly example, as all but two nodes of the dataset are connected.
+These two nodes are actually customers who have no orders:
+
+```py
+>>> comps | filter[length | equals[1]] | map[only | func[lambda x: x.z]] | collect
+[<ZefRef #9326 ET.Customer slice=2>,
+ <ZefRef #9334 ET.Customer slice=2>]
+```
+
+## Finding communities
+
+I'll leave this for the next blog post!
+
+
+(PREVIEW)
+
+```py
+from sklearn import cluster
+
+#A,A_nodes,A_edges = subgraph(now(g), ET, RT)
+pg = ProxyGraph(now(g), undirected=True)
+
+mst = nx.minimum_spanning_tree(pg.to_native())
+A = nx.adjacency_matrix(mst)
+
+n_clusters = 5
+
+alg = cluster.KMeans(n_clusters=n_clusters, n_init=100)
+alg.fit(A)
+
+labels = alg.labels_
+
+label_colors = [
+(1,0,0),
+(0,1,0),
+(0,0,1),
+(1,1,0),
+(0,1,1)
+]
+#node_colors = LazyValue(pg.nodes) | map[lambda x: labels[A_nodes.index(x.z)]] | map[lambda x: node_colors[x]] | collect
+node_colors = list(labels) | map[lambda x: label_colors[x]] | collect
+nx.draw(mst, node_color=node_colors)
+```
+
+![](northwind_test.png)
+
+## Wrap up
+
+If you'd like to find out more about Zef and ZefHub (and get early access), get us out at [zefhub.io](https://zefhub.io).

@@ -1,0 +1,23 @@
+---
+id: 'rfz-various'
+title: RFZ - Various
+---
+Various small features we want...
+
+### Allow relations to/from BT.ROOT_NODE of a graph
+
+### Allow relations to/from BT.TX_EVENT_NODE
+
+### Transaction Rollback
+
+### Do not create an additional BT.ZEFDB_USER_NODE
+We can simply use an ET.ZefDBUser, which is also used by the underlying C++ system. Linking to the outside, merging etc. comes for free.
+
+### graph revisioning system
+
+### Revise value assignment system
+Use BT.VALUE_NODE to store actual values and then reference on low level graph. Essential for effective value-based queries. Also allows value sharing.
+uid(value_node) = Blake3_hash_truncated(value_type_byte + actual_value)
+
+### Instantiate zefDB user and first tx upon graph instantiation
+

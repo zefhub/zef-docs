@@ -1,0 +1,777 @@
+---
+id: cheatsheet-comprehensive
+title: Cheatsheet (Comprehensive)
+---
+
+
+
+## Traversing Graphs
+``` python
+g | now                                         # returns a GraphSlice at the latest time (of execution)
+g | in_frame['14 Oct 2021 14:21:07 +0200']      # also returns a GraphSlice. Time must be before the time of execution
+
+g | all[ET.Foo]                                 # EZefRefs: all instances of type ET.Foo that ever existed on eternal graph g
+g | all[AET.String]
+g | all[ET]                                     # return all entities that ever existed
+g | all[BT]                                     # return all blobs (nodes and edges on eternal graph)
+g | all[(ET.Foo, RT.Bar, ET.Qux)]               # EZefRefs: all instances of relations fulfilling this condition
+g | all[tx]                                     # EZefRefs: all transactions on this graph (not zef pure)
+
+# ---- the same syntax can be used within any GraphSlice at a fixed time ----
+g | now | all[ET.Foo]                           # all instances of type ET.Foo that ever existed on eternal graph g
+g | now | all[(ET.Foo, RT.Bar, _)]              # wildcard matching
+g | now | all[(z1, RT.Bar, _)]                  # condition that matches up to a specific instance
+g | now | all[(z1, RT.Bar, z2)] | single        # we know that there is exactly one relation of type RT.Bar between z1 and z2.
+g | root                                        # UZefRef: root node of eternal graph g
+
+# ---- Ask for individual (E)ZefRefs to RAEs in Schema ----
+g | now | delegate[ET.Foo]                      # returns an Either[ZefRef][Nil]
+g | delegate[ET.Foo]                            # returns an Either[EZefRef][Nil]
+g | now | delegate[(ET.Foo, RT.Bar, ET.Qux)]    # returns an Either[ZefRef][Nil]
+
+z >> RT.FirstName                               # traverse over the relation to what is connected (a full traversal step = 2 hops)
+z > RT.FirstName                                # go onto the relation itself   (one hop only)
+z < RT.Foo
+z >> L[RT.FriendOf]
+z << L[RT.FriendOf]
+
+z > L[RT]                                       # all outgoing relations
+my_zefref < L[RT.LastName]
+my_zefref << L[Or[RT.LastName][RT.Name]]
+z >> L[(RT.OwnedPet, ET.Aardvark)]              # also impose a condition on the target type
+
+z_rel | source
+z_rel | target
+
+# ---- given a transaction (ZefRef/EZefRef), what happened here? ----
+z_tx | instantiated
+z_tx | terminated                               # returns a ZefRefs (of tombstones: the RAEs have been terminated in the resulting GraphSlice)
+z_tx | value_assigned
+z_tx | merged
+z_tx | affected                                 # any of the above
+z_tx | zefhub_user                              # which user caused this tx? Returns a Either[ZefRef][Nil]
+z_tx | time
+
+# ---- given a RAE: find out about it's history ----
+z1 | instantiated                               # in which transaction was the RAE z1 instantiated?
+z1 | terminated  
+z1 | value_assigned                             # if z1 is an AE: at which txs were values assigned?
+z1 | merged                                     # note: "merged" is a specialization of "instantiated". TODO: clear up definition!
+
+z1 | delegate
+z1 | frame                                      # extract the reference frame (graph slice) from a ZefRef
+z1 | in_frame[my_graph_slice]                   # switch to a specific reference frame
+
+my_zefref | in_frame[origin]                    # changes to the reference frame of the RAE's origin. Future extension: is it helpful to try to infer the origin's time slice from which it was merged in?
+my_ezefref | in_frame[g | now][allow_tombstone]
+
+# ---- traversing in time ----
+z | time_travel[-4]                             # if z is a RAE: moves the reference frame
+z | time_travel[+2*unit.seconds]                # move backwards or forwards by a given duration
+z | time_travel[now()]                          # move to an absolute time
+
+my_g_slice | time_travel[-4]                    # go back four epochs (transactional steps) in time
+my_g_slice | time_travel[+2*unit.seconds]
+my_g_slice | time_travel[now()]
+
+my_g_slice | to_tx                              # the tx that led to this GraphSlice
+z_tx | previous_tx                              # given a ZefRef[TX] / EZefRef[TX], move to the preceding tx (keeps frame constant for a ZefRef)
+z_tx | next_tx                                 
+my_tx | to_graph_slice                          # the GraphSlice resulting from the changes in this tx
+z_tx | to_ezefref                               
+
+# ---- questions of existence ----
+z1 | contained_in[my_graph_slice]                     # Does it exist in this slice? z1 may be from a different reference frame.
+z1 | contained_in[g]                                  # Has it evr existed on this graph? z1 may be from a different reference frame.
+
+# (replacement for has_relation)
+(z1, RT.FriendOf, z2) | contained_in[my_g_slice] # is this true in this slice?
+(z1, RT.FriendOf, ET.Dog) | contained_in[g]      # has this ever existed?
+(ET.Person, RT.FriendOf, ET.Dog) | contained_in[g]    # has this ever existed?
+
+# the inputs are propositions. We can also combine propositions.
+[
+    (Z['p'], RT.FirstName, _any),
+    (Z['p'], RT.LastName, "Smith"),
+] | reduce[lambda a, x: a[x]][And] | contained_in[g]                                 # returns a Boolean: the truth value of the combined proposition given the context of `g`
+```
+
+
+
+
+
+
+
+
+
+
+
+## Writing / Appending to Graphs
+``` python
+# just declare a Delta that we want. This is simply an expression.
+actions = [
+    ET.Foo,                         # instantiate a single entity
+    ET.Foo["foo1"]                  # optionally specify a name
+    AET.Float["n1"]                 # optionally specify a name
+    (ET.Bar, RT.Baz, ET.Qux),       # instantiate a relation via triple. Source and Target also instantiated
+    (z1, RT.Zefness, AET.String),   # refer to existing RAEs by using their ZefRef / EZefRef
+    (Z["foo1"], RT.Name, "Jack"),   # reference other RAEs in this GraphDelta via their internal name with `Z`
+    Z["n1"] <= 42.0,                # assign a value. Type must be compatible
+    terminate[z2],                  # the entity must exist if we want to declare our intent of terminating it
+    delegate[ET.Cat],
+    delegate[(ET.Bar, RT.Baz, ET.Qux)],
+    terminate[delegate[ET.Cat]],    # delegates are not really terminated, but marked as "retired". Allows schema versioning
+]
+run(actions | transact[g])            # actually perform the transaction
+z_foo = run(ET.Foo | g)             # shortcut form: instantiate and unpack args
+z_foo, z_bar = (ET.Foo, ET.Bar) | g | run    # output is structurally isomorphic to input. Types go in, instances come out
+
+
+# ---- Tagging RAEs ----
+z1 | tag['my favorite node']  | transact[g]                  # returns an effect to run on g
+z1 | tag[allow_steal]['my favorite node']  | transact[g]     # returns an effect to run on g
+z1 | remove[tag['my favorite node']]  | transact[g]          # remove an existing tag: tag name and RAE required
+z1 | terminate[tag['my favorite node']]  | transact[g]          # remove an existing tag: tag name and RAE required
+
+gs['my favorite node']                                     # returns a ZefRef
+gs | get['my favorite node']                               # also allowed
+
+gs1 - gs2                                                  # evaluates to a GraphDelta, also for non-subsequent slices. TODO: verify that this makes sense for slices on different graphs :)
+my_tx | to_graph_delta                                     # a transaction can be seen as a reified graph delta.
+my_tx | revert                                             # the inverse operations: returns a GraphDelta. Input must be a tx (with identities)
+
+g | tag['my favorite graph']                               # returns an effect: tag the graph in the context of the Zefhub user's namespace. 
+g | sync[True]                                             # returns an effect to sync a local graph with Zefhub
+```
+
+
+
+
+
+
+## Subscriptions
+```python
+my_stream | map[transform_element] | subscribe[print][keep_alive]      # subscribe to stream in local process
+g | on[value_assigned[z1]]              # returns a Stream[ZefRef]
+g | on[value_assigned[AET.String]]
+g | on[value_assigned[AET.String]["so zef!"]]
+
+g | on[instantiated[ET.Foo]]
+g | on[instantiated[(ET.Person, RT.Name, AET.String)]]
+
+g | on[terminated[ET.Foo]]
+g | on[terminated[z2]]
+
+g | on[merged[ET.Foo]]
+g | on[merged[z2]]
+
+
+# ---- Operators Specific to Awaitables ----
+debounce
+throttle
+delay
+merge                           # the atemporal version only has concat (which also exists for streams). 'merge' eagerly injects each element into the output stream asap.
+combine_latest                  # emits whenever any of the input streams has a new element. Similar to 'zip'
+with_latest_from
+
+              # 
+
+sec =  unit.seconds
+s | throttle[ Max[ 100/sec ], Over[2*sec] ]
+s | window[ Max[2*secs], Max[128] ] 
+s | delay[ 3*sec ] 
+s | debounce[20E-3 * sec]
+s | sample[5*sec]           # sample and emit at regular intervals. Driven by external timer.
+
+
+# ---- persistent subscriptions on zefhub ----
+g | on[instantiated[ET.Foo]] | func[create_effect] | subscribe[zefhub][run]
+# send_email_report as a zef function may specify which graphs it requires access to. Or a more granular policy.
+Timer(Time('2021-12-12 14:00 +0800'), spaced[1*week]) | func[send_email_report] | subscribe[zefhub][run]
+```
+
+
+
+
+
+
+
+
+
+## Zef Types and Concepts
+```python
+z2 | is_a[ET]
+z2 | is_a[ET.Cat]                                  # simple check for sub-typing
+z2 | is_a[ Or[ET.Cat][ET.Dog][ET.Aardvark] ]       # combine to form new predicates
+
+is_valid_email = And[
+    is_a[String],
+    Not[contains[" "]],
+    contains["@"],
+    map[is_lowercase] | All,
+]
+"abc@fgh.com" | is_valid_email                  # => True
+"abcfgh1.com" | is_valid_email                  # => False
+yo("abcfgh1.com" | is_valid_email)              # explain how we got the result!?
+```
+
+
+# Privileges
+```python
+"username" | grant[KW.view][g] | run    # Permit user "username" to view graph g.
+"username" | grant[KW.append][g] | run  # Permit user "username" to append to graph g.
+"username" | revoke[KW.view][g] | run   # Remove user "username"'s ability to view graph g.
+"username" | revoke[KW.append][g] | run # Remove user "username"'s ability to append to graph g.
+```
+
+
+
+
+The table below is all a big lie. At least the output claimed in the trailing comment. zefOps are fundamentally lazy and computation is only performed once the "collect" operator is appended. 
+
+```python
+(3, 11, 8, 2) | filter[lambda x: x<5]        # => (3, 2)
+(3, 11, 8, 2) | map[lambda x: x*x]           # => (9, 121, 64, 4)
+(3, 11, 8, 2) | length                       # => 4
+(3, 11, 8, 2) | first                        # => 3
+(3, 11, 8, 2) | last                         # => 2
+(3, 11, 8, 2) | nth[2]                       # => 8
+(42,) | single                               # => 42
+(True, False, True) | All                    # => False
+(True, False, True) | Any                    # => True
+(3, 11, 8, 2) | All[lambda x: x<20]          # => True
+(3, 11, 8, 2) | contains[42]                 # => False
+(3, 11, 8, 2) | take[3]                      # => (3,11,8)
+(3, 11, 8, 2) | take[-3]                     # => (11,8,2)
+(3, 11, 8, 2) | drop[3]                      # => (2,)
+(3, 11, 8, 2) | drop[-3]                     # => (3,)
+
+(3, 11, 8, 2) | reduce[...][]                       
+(3, 11, 8, 2) | scan[...][]                 
+42 | iterate[lambda x: x+2]                  # (42, 44, 46, ...)   i.e. (x, f(x), f(f(x)),... )
+range(1, 11) | group_by[lambda x: x%3][(0,1,2)]     # ( (0, (3,6,9)), (1, (1,4,7, 10)), (2, (2, 5, 8)) )
+
+range(1,12)   | drop_while[lambda x: x<8]    # => (8,9,10,11)
+(3, 7, 11, 8) | take_while[lambda x: x<10]   # => (3, 7)
+(3, 7, 11, 8) | take_until[lambda x: x>10]   # => (3, 7, 11)
+(3, 7, 11, 8) | take_while_pair[lambda x: x>10]   # => (3, 7, 11)
+
+[('a', 'b', 'c'), range(1,100) ] | unpack | zip       # => [('a', 1), ('b', 2), ('c', 3)]
+('a', 'b', 'c') | zip[(3,5)]                 # => [('a', 3), ('b', 5)]              # whichever completes first. Sometimes called 'zip_with', but no ambiguity
+[('a', 'b', 'c', 'd'), (3, 5)] | unpack | zip_longest[42]   # => [('a', 3), ('b', 5), ('c', 42), ('d', 42)]          # as in itertools: create sequence of longest input with default val.
+
+(3, 11, 8, 2) | reverse                      # => (2, 8, 3, 11)
+(3, 11, 8, 2) | Slice[1,3]                   # => (11, 8)
+((42, 5), (), (9,)) | concat                 # => (42, 5, 9)
+(3, 11) | repeat[3]                          # => ((3, 11), (3, 11), (3, 11))
+(3, 11) | cycle[3]                           # => ((3, 11, 3, 11, 3, 11))
+range(1,12) | stride[3]                      # => (1, 4, 7, 10)
+range(1,12) | chunk[3]                       # => ((1, 2, 3), (4,5,6), (7,8,9), (10, 11))
+range(1,12) | sliding[3]                     # => ((1,2,3), (2,3,4), (3,4,5), ...)
+range(1,12) | sliding[3][stride[2]]          # => ((1,2,3), (3,4,5), (5,6,7), ...)
+(1,2,3) | intersperse[42]                    #  => (1,42,2,42,3)
+((4,5,6), (7,8,9)) | transpose               # => ((4,7), (5,8), (6,9))  
+# (3, 11, 8, 2) | pairwise                   # => ((3,11), (11,8), (8,2))
+(1, 2, 3, 4, 5, 6, 7, 8, 9) | rotate[3]      # => (4, 5, 6, 7, 8, 9, 1, 2, 3) taken from C++ std::rotate 
+(42,42,1,2,3,42) | trim[42]                  # => (1,2,3)  trim from both sides
+(42,42,1,2,3,42) | trim_left[42]             # => (1,2,3,42)  trim from both sides
+(42,42,1,2,3,42) | trim_right[42]            # => (42,42,1,2,3)  trim from both sides
+
+(1,2,3,42,3,6,42,8) | split[42]              # => ((1,2,3), (3,6), (8,))         # does also not include what you split on
+(1,2,3,42,3,6,42,8) | split_after[42]        # => ((1,2,3,42), (3,6,42), (8,))   # does include what you split on 
+"have a nice day" | split_before[" "]        # => ("have", " a", " nice", " day")   # does include what you split on 
+(3,4,5, 1,2,3) | split_at[2]                 # => ((3, 4), (5, 1, 2, 3))         # specify the index where to split
+(3,4,5, 1,2,3) | split_at[(2, 5)]            # => ((3, 4), (5, 1, 2), (3,))      # specify multiple indexes where to split
+range(1,10) | split_when[lambda x: x%3==1]   # => (...)                          # named after rangesV3 and python's more_itertools split_when
+
+
+[(3,4,5), ('a', 'b')] | interleave           # => (3, 'a', 4, 'b')
+(3,4,5) | interleave[('a', 'b')]             # => (3, 'a', 4, 'b')
+[(3,4,5), ('a', 'b')] | interleave_longest   # => (3, 'a', 4, 'b', 5)
+(3,4,5) | interleave_longest[('a', 'b')]     # => (3, 'a', 4, 'b', 5)
+
+[(3,4,5), ('a', 'b')] | concat               # => (3, 4, 5, 'a', 'b')
+(3,4,5) | concat[(42, 43)][(1,)]             # => (3, 4, 5, 42, 43, 1)
+(3,4,5) | prepend[42]                        # => (42, 3, 4, 5,)
+(3,4,5) | append[42]                         # => (3, 4, 5, 42)
+(3,4,5) | append[(42, 43)]                   # => (3, 4, 5, (42, 43))
+[6,7,8,9] | remove[nth[2]]                   # => (6, 7, 9)
+
+(3,6,2,9,4) | max                            # => 9
+(3,6,2,9,4) | min                            # => 2
+(3,6,-2,-9,4) | max[lambda x: x*x]           # => -9                    # often called "max_by"
+(3,6,-2,-9,4) | min[lambda x: x*x]           # => -2                    # often called "min_by"
+(1,2,3,4,5) | sum                            # => 15
+(1,2,3,4,5) | partial_sum                    # => (1,3, 6, 10, 15)      # note that partial_sum = scan[add][0]
+(1,2,3,4,5) | mean                           # => 3.0
+
+(3, 11, 8, 2) | shuffle[my_seed]             # ?? is this consistent and simple ??
+(3, 11, -8, 2) | sort                        # => (-8, 2, 3, 11)
+(3, 11, -8, 2) | sort[lambda x: x*x]         # => (2, 3, -8, 11)  
+(3, 11, 8, 2) | replace[(11, 42)]            # => (3,42,8,2)
+(3, 11, 8, 3) | unique/distinct              # => (3,42,8)
+(4,5,6) | intersection[(5,6,7,8)]            # => (5,6)   also: [(1,2,3,4), (2,4), (4,)] | unpack | intersection  => (4,)
+42 | equals[43]                              # => False
+(3, 11, 8, 2) | identity                     # => (3, 11, 8, 2)  identity operator
+['red', 'green', 'red'] | frequencies        # => {'red': 2, 'green': 1}        # count the occurrences of each element
+
+{'a': 3, 'b': 4, 'c':5} | keys               # => ('a', 'b', 'c')
+{'a': 3, 'b': 4, 'c':5} | values             # => (3, 4, 5)
+{'a': 3, 'b': 4, 'c':5} | items              # => (('a', 3), ('b', 4), ('c', 5))
+{'a': 3, 'b': 4, 'c':5} | get['b']           # => 4
+{'a': 3, 'b': 4, 'c':5} | insert[('d', 42)]  # => {'a': 3, 'b': 4, 'c':5, 'd': 42}  
+{'a': 3, 'b': 4, 'c':5} | remove['b']        # => {'a': 3, 'c':5}                   
+
+d = {
+    'first_name': 'Jack', 
+    'address': {
+        'street_name': 'Kerkstraat', 
+        'house_number': 42
+    } 
+} 
+d | get_in['address', 'street_name']         # => 'Kerkstraat'. Default value can be provided as well
+d | insert_in['address', 'postal_code'][012] # => new dictionary with extra entry. Also used to overwrite entries
+d | remove_in['address', 'postal_code']      # => new dictionary with the specified key-val pair removed
+d | update_in['address', 'house_number'][lambda x: x+1] # run function on element. Returns new dictionary with house_number 43
+
+("my", "name", "is", "Fred") | join[" "]     # => "my name is Fred"      # only for strings
+'m' | is_alpha_numeric                       # => True
+'hello!' | map[is_alpha_numeric] | All       # => False
+
+42 | match[(
+    (lambda x: x%15==0, 'ZefBuzz'),
+    (lambda x: x%3==0, 'Zef'),
+    (lambda x: x%5==0, 'Buzz'),
+    (_, Z | to_str)
+]                                            # => "42"
+
+z1 | is_a[ET]                                # => True      if z1 points to a RAE that is any entity
+z1 | is_a[ET.Foo]                            # => True/False
+EN.Unit.Kilogram | is_a[EN.Unit]             # => True
+EN.Unit.Kilogram | is_a[EN]                  # => True
+
+z1 | to_json                                 # => serializes any object (including Zef types) and return a json string
+serialized_string | from_json                # => deserializes any json string and returns back the deserialized object
+
+# ---- Logic Combinators: can be used on Boolean values and predicate functions ----
+False | Not                                  # => True
+4 | Not[lambda x: x%2 == 0]                  # => False        Used as a propositional combinator. Returns propositions with same signature.
+is_cute_blue_and_light = And[is_cute][is_blue][is_light]        # composition of predicate functions
+is_cute_or_blue = Or[is_cute][is_blue]
+
+
+g | now                                      # returns the latest GraphSlice
+g | now | time_travel[-5]                    # move 5 transactions / slices back
+z_some_tx | time_travel[+3*days]             # ZefRef[TX]
+
+g | now | all[ET.Foo]                        # returns a List[ZefRef] containing all instances in that slice
+g | now | all[AET]                           # all AETs in this slice
+g | now | all[(ET.Foo, RT.Bar, ET.Qux)]
+g | all[ET.Foo]                              # List[EZefRef] of all instances that ever existed
+g | now | schema                             # List[ZefRef] of all delegates in the respective graph slice
+
+my_uzr | in_frame[allow_tombstone][z_tx]     # allow casting to a ZefRef, even in a frame where the RAE may have been terminated. Use only when necessary.
+
+range(1, 20) | zef_type                      # => LazyValue[List[Int]]
+first | zef_type                             # => func[(Seq[T], ), Either[T][Nil]]
+my_query | resolve[g|now] | collect 
+
+
+
+42.0 | to_int
+42 | to_float
+42 | to_str
+42 | to_bool
+42 | to_time
+42 | to_stream
+(1,5,7) | to_set
+{1,5,7} | to_list
+z1 | to_graph_slice
+z1 | to_graph
+z1 | in_frame[g|now]
+z1 | to_ezefref
+(??) | to_pandas_df
+(??) | to_pandas_multisheet_df               # or rather to_pandas_df[multisheet] ?
+(??) | to_excel
+'abcd' | to_clipboard
+g | All[tx] | to_graphviz
+
+"aB c!" | to_upper_case                         # => "AB C!"                applies element-wise
+"aB c!" | to_lower_case                         # => "ab c!"
+"get off my lawn!" | map[to_upper_case]         # => "GET OFF MY LAWN!!"    Strings are iterable
+
+"the_answer" | to_pascal_case                   # => "TheAnswer"
+"the_answer" | to_camel_case                    # => "theAnswer"
+"the_answer" | to_kebab_case                    # => "the-answer"
+"TheAnswer"  | to_snake_case                    # => "the_answer"
+"TheAnswer"  | to_screaming_snake_case          # => "THE_ANSWER"
+
+```
+
+
+## Effects (FX)
+
+#### Appending to Graphs
+``` python
+[
+    tag[z1]['my tag label']
+    remove[tag[z1]['my tag label']],
+    tag[z2][allow_steal]['my tag label']
+] | transact[g] | run
+
+# shorthand:
+[ET.Foo, ET.Bar, (ET.Baz, RT.Qux, 42)] | g          # returns an effect
+```
+
+#### Syncing Graphs
+```python
+Effect({
+    'type': FX.Graph.Sync,
+    'graph': g1,
+})
+
+# shorthand:
+g1 | sync[zefhub]        # returns an effect
+
+# have zefhub or another session take custodianship
+Effect({
+    'type': FX.Graph.TakeCustodianship,
+    'availability': ...        
+    'tx_policy': z_some_policy,
+})
+```
+
+#### Pushable Streams
+```python
+# Create a new concrete stream (default: local python process)
+Effect({
+    'type': FX.Stream.CreatePushableStream,
+    'stream_type': Stream[Dict],  
+})
+
+# create a persistent pushable stream in a Zefhub project
+Effect({
+    'type': FX.Stream.CreatePushableStream,
+    'stream_type': Stream[Dict],
+    'project': z_project,               # optional
+    'tag': 'my favorite stream',        # optional
+}) | run[zefhub]
+
+# pushing an item into a pushable stream
+Effect({
+    'type': FX.Stream.Push,
+    'stream': z_stream,
+    'item': 'hello',
+})
+
+
+{'msg': 'hello'} | push[my_pushable_stream]        # returns an effect
+my_msg_stream | subscribe[push[my_pushable_stream]]
+```
+
+
+#### GraphQL
+```python
+# ----------------------------- Host API ----------------------------------
+graphql_r = Effect({
+    'type': FX.GraphQL.StartServer,
+    'api_zefref': z_gql_schema,     # ZefRef
+    'port': 5000,    
+}) | run
+
+Effect({
+    'type': FX.GraphQL.StopServer,
+    'process': z_process,
+}) | run
+
+
+# ---------------------------- Playground --------------------------------
+graphql_r = Effect({                # start a GQL playground session
+    'type': FX.GraphQL.StartPlayground,
+    'api_zefref': z_gql_schema,     # ZefRef
+    'port': 5000,    
+}) | run
+
+Effect({
+    'type': FX.GraphQL.StopPlayground,
+    'process': z_process,
+}) | run
+```
+
+#### Websockets
+``` python
+Effect({
+    'type': FX.Websocket.StartServer,                   # intent
+    'port': 5000, 
+    'pipe_into': map[stream_handler] | subscribe[run]
+}) | run 
+
+Effect({
+    'type': FX.Websocket.StopServer, 
+    'process': z_process,       # ZefRef    
+}) | run 
+
+Effect({
+    'type': FX.Websocket.SendMessage, 
+    'process': z_process,       # ZefRef    
+    'message': b'hello!',
+}) | run 
+
+Effect({
+    'type': FX.Websocket.CloseConnections,              
+    'process': z_process,       # ZefRef                # which server?
+    'connections': [z_connection1, z_connection2],      # which ones?
+}) | run 
+```
+
+
+
+
+
+#### HTTP
+``` python
+# -------------------------- host a server --------------------------------
+my_eff = Effect({
+    'type': FX.HTTP.StartServer, 
+    'url': 'https://example.zefhub.io/api/'
+    'pipe_into': map[answer_query] | subscribe[run]
+})  
+
+Effect({
+    'type': FX.HTTP.StopServer, 
+    'process': z_process            # this is a ZefRef pointing to an ET.Process on a process graph    
+})
+
+# exactly one response per request should be returned to the FX system in this form:
+Effect({
+    'type': FX.HTTP.Response,
+    'request_id': '7625673254-23423',
+    'header': {'some_key': 'some value'},
+    'body': b'hello!',
+})
+
+
+# -------------------------- make a request --------------------------------
+Effect({
+    'type': FX.HTTP.Request,
+    'url': 'https://example.com/some_path',
+    'timeout': 10*unit.Seconds,                     # optional
+    'request_type': EN.HTTPRequestType.Post,
+    'header': {'key1': 'value 1'},
+    'body': b'hello',
+    'pipe_into': handle_response | print | run,     # what to do with response?
+})
+``` 
+
+#### File IO
+``` python
+Effect({
+    'type': FX.LocalFile.Read,
+    'filename' : filename
+})
+
+# shortcut function aka a ZefOp that returns an Effect
+filename | read_file | run
+
+Effect({
+    'type': FX.LocalFile.Write,
+    'filename' : filename,
+    'content': content,
+})
+
+# shortcut function aka a ZefOp that returns an Effect
+image | write_file["filename"] | run
+```
+
+
+
+#### OS Process
+```python
+Effect({
+    'type': FX.OSProcess.Create,
+    'graphs_to_expose': [g5, g9],
+})
+
+Effect({
+    'type': FX.OSProcess.Terminate,
+    'kill_timeout': 10*unit.Seconds,
+})
+```
+
+#### SocketIO
+```python
+```
+
+#### Logging
+```python
+# logging is also side effect.
+Effect({
+    'type': FX.Logging.Log,         # or make this simply FX.Log and break the structure?
+    'msg': 'hello',
+})
+
+Effect({
+    'type': FX.Logging.SetPolicy,   # move this to FX.Setting?        
+    'level': z_policy,              # policies are defined on graphs
+})
+```
+
+
+#### FX Settings / Switches
+```python
+Effect({
+    FX.Setting.
+})
+```
+
+
+
+## Temporal Coordination
+
+``` python
+# "fx" can be used as a dropin replacement for "run", which does not eagerly trigger
+
+# suppose we have 3 http requests to run, encoded in effects
+(eff1, eff2, eff3) | fx                 # would return 3 responses, each of type Either[Dict][Error]
+(eff1, eff2, eff3) | fx[racing] | single | print | run        # returns fastest result only, default: the first to return without an Error
+(eff1, eff2, eff3) | fx[racing[fastest[2]]]
+
+# can we do this for compute as well?
+(42, 44, 45) | fx[map[expensive_pure_fct]][timeout[10*unit.second]] 
+(42, 44, 45) | map[expensive_pure_fct][run_on[zefhub]] 
+
+my_rest_req_effect | fx[retry[5]]
+my_rest_req_effect | fx[timeout[10*unit.second]]        # this info may be passed like this in the fx op. Timeout info could also be specified in the effect
+```
+
+
+
+
+
+
+
+``` python
+# triggering operators
+
+collect
+for_each
+subscribe
+run
+
+```
+
+## TODO
+
+``` python
+ZefRef[ET[Dog]] | peel                # => ET[Dog]          # or use "unwrap"?
+Awaitable[List[Int]] | peel           # => List[Int]
+
+([1,2,3], ['a', 'b', 'c']) | unpack | zip 
+
+# default GQL schema generation: make this accessible via zefops
+my_schema = g | now | schema
+my_schema = g | now | schema[All]       # include intrinsic delegates as well
+my_schema | to_gql_schema               # returns a GraphDelta
+
+10.0 * units.Miles | In[ units.Meters ]
+``` 
+
+
+
+## Old Ops
+``` python
+    L
+    O
+xxx Q
+    affected
+    allow_terminated_relent_promotion => allow_tombstone
+xxx attach      no need: z1 | attach[RT.Name, "Jack"]    is contained as a limiting case of the new syntax "(z1, RT.Name, "Jack") | g | run"
+xxx batch
+    concatenate  => concat
+    delegate
+    element   => nth
+    filter
+    first
+    flatten => concat
+xxx has_in    #  z1 | has_in[RT.FriendOf]     new syntax with pattern matching:         =>   (_, RT.FriendOf, z1) | exists[Any]
+xxx has_out same as has_in
+xxx has_relation   also a special case: has_relation(z1, RT.Foo, z2)                    =>   (z1, RT.Foo, z2) | exists[Any]     or should this be closer to All syntax:     gs | exists[ (z1, RT.Foo, z2) ]?????
+xxx incoming   # was required in subscriptions: direction contained in new syntax
+xxx ins    => z << L[RT]
+xxx ins_and_outs  hardly ever used: this can be done with concat
+    instances   => All
+    instances_eternal   => All
+    instantiated
+xxx instantiation_tx   => tx[instantiated]
+
+xxx is_zefref_promotable                  # ask for forgiveness, not permission: zz | in_frame[?]     returns nil if not possible: check nil
+xxx is_zefref_promotable_and_exists_at    # also not needed
+    last
+xxx lift   not needed
+xxx make_field
+xxx not_in  Not[...]
+    now
+xxx on_instantiation   => on[instantiated[ET.Foo]]
+xxx on_termination
+xxx on_value_assignment
+    only    => single
+
+xxx outgoing # was required in subscriptions: direction contained in new syntax
+xxx outs       z1 >> L[RT]
+xxx relation  => contained in new syntax: e.g. zz = relation(z1, RT.Foo, z2)      is now    gs | All[(z1, RT.Foo, z2)] | single
+    sort
+    source
+    subscribe
+    take
+    target
+    terminate
+    terminated
+xxx termination_tx   =>  tx[terminated]
+    time
+xxx time_slice
+    time_travel
+    in_frame
+    to_uzefref  => to_ezefref
+    tx
+    uid
+    value
+    value_assigned
+xxx value_assignment_txs   => L[tx][value_assigned]
+xxx without  => Not can be used in filter, ...
+xxx exists_at  =>   no longer in tx, but graph slice (tx represents the change, not the resulting state)    z1 | exists[my_graph_slice] 
+
+fill_or_attach     ??????????
+assert_length           # my_list | Assert[Z | length == 2]
+    intersect        => rename to intersection?     [(1,2,3,4), (2,4), (4,)] | unpack | intersection  => (4,)    
+    keep_alive  remains useful for local subscriptions
+    unique      => unique / distinct
+xxx only_or     => attempt[only][alternative_value]
+xxx set_union   => same as concat[...] | distinct? Built in for Set[Any]
+
+```
+
+
+### Operators that can be used on Awaitables
+```python
+# that reduce the order by 1 (repetition)
+merge
+concat
+interleave
+first
+last
+single
+nth
+reduce
+min
+max
+sum
+mean
+reverse
+```
+
+
+### Operators you may be looking for, but we don't need
+```python
+range(10) | filterfalse[is_even]                # use instead: range(10) | filter[Not[is_even]]
+```
+

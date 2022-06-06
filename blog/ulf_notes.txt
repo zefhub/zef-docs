@@ -1,0 +1,197 @@
+---
+slug: hello-world
+title: Dealing with Information
+author: Ulf Bissbort
+#author_title: 
+author_url: https://github.com/ulfbissbort
+# author_image_url: https://avatars1.githubusercontent.com/u/17883920?s=460&v=4
+tags: [information, effective programs]
+---
+
+
+Dealing with information:
+classes are no good as information constructs. Not composable.
+
+Two derived classes, how to combine?
+
+"Elevate the containership of information to become the semantic driver" - Rich Hickey
+
+
+"The aggregates determine the semantics. This is dead wrong."
+
+
+
+domain model grows and changes.
+
+Common claim: "naming something is abstracting". We're getting concretions.
+
+
+"positional semantics does not scale". Don't use tuples / lists for information beyond a (low) threshold.
+Prefer dictionaries and keywords / labels together with the value.
+
+Don't use too many positional args in functions.
+
+types don't help when getting to the leaves of algebraic data types. f(int, int, str,str,str, str)
+
+
+Instead of "Maybe[String]" in a class: leave it out from a dict. The caller should deal with this. Use Spec.
+
+"social security number": "Maybe[str]" . This is not its type. It is a string. Don't bake all eventualities into the source code.
+
+"open constructs" it's ok if others add information that I don't care about. Reduction of coupling
+
+
+"reserve the developer's brain capacity for domain problems"
+There are functions and there are values. Also for situated programs.
+
+
+Execution model?
+
+
+
+RDF: got merging & domain modeling right. The schema should not dominate the semantics or the flow of information. Decouple the domain language from the programming language. Usually encapsulated in the translation layer in dealing with the DB over the wire. But now everybody needs to imperatively rewrite this translation layer in the service / language they are writing.
+
+But: RDF was hard to use. Didn't catch on amongst devs, few put in the effort to conform with rigid entity definitions.
+
+Also from RDF: the schemas should be able to evolve over time
+
+
+
+
+
+RDF graphs:
+(Subject, Predicate, Object)
+or
+(Entity, Attribute, Value)
+
+Entities themselves can be values
+Strict definition of Attributes: each one has its own URI. Determines semantics
+
+Usually saved as a triple => triple store
+May or may not be double linked.
+
+
+
+
+Datomic:
+Namespace qualified keys. Naming / RTs within a context have a certain meaning.
+
+
+with DomainContext(slang):
+    z5 >> RT.Bro 
+
+
+
+Specifying domain via type system: only partial coverage of correctness.
+
+Rather: allow easy adding of automatic checks for whatever is needed. Spec. A la carte.
+
+
+
+zef should be a tool for writing effective software.
+As little ceremony as possible. As little code as possible. The code you write should be as reusable as possible. 
+It is very different from the common approach in languages like Java / Python / Go / C++ / C# ...
+Write code that is cheap to throw away.
+Solve problems, not puzzles. Unless puzzles are your goals.
+
+
+
+Dynamic discovery
+
+
+
+===================================================================================================================
+BELOW IS COPIED OVER FROM "SITUATED PROGRAMS" BLOG POST, WHERE THERE IS A LOT OF OVERLAP WITH THE CONTENT ABOVE
+===================================================================================================================
+
+
+
+
+Dealing with information:
+classes are no good as information constructs. Not composable.
+
+Two derived classes, how to combine?
+
+"Elevate the containership of information to become the semantic driver" - Rich Hickey
+
+
+"The aggregates determine the semantics. This is dead wrong."
+
+
+
+domain model grows and changes.
+
+Common claim: "naming something is abstracting". We're getting concretions.
+
+
+"positional semantics does not scale". Don't use tuples / lists for information beyond a (low) threshold.
+Prefer dictionaries and keywords / labels together with the value.
+
+Don't use too many positional args in functions.
+
+types don't help when getting to the leaves of algebraic data types. f(int, int, str,str,str, str)
+
+
+Instead of "Maybe[String]" in a class: leave it out from a dict. The caller should deal with this. Use Spec.
+
+"social security number": "Maybe[str]" . This is not its type. It is a string. Don't bake all eventualities into the source code.
+
+"open constructs" it's ok if others add information that I don't care about. Reduction of coupling
+
+
+"reserve the developer's brain capacity for domain problems"
+There are functions and there are values. Also for situated programs.
+
+
+Execution model?
+
+
+
+RDF: got merging & domain modeling right. The schema should not dominate the semantics or the flow of information. Decouple the domain language from the programming language. Usually encapsulated in the translation layer in dealing with the DB over the wire. But now everybody needs to imperatively rewrite this translation layer in the service / language they are writing.
+
+But: RDF was hard to use. Didn't catch on amongst devs, few put in the effort to conform with rigid entity definitions.
+
+Also from RDF: the schemas should be able to evolve over time
+
+
+
+
+
+RDF graphs:
+(Subject, Predicate, Object)
+or
+(Entity, Attribute, Value)
+
+Entities themselves can be values
+Strict definition of Attributes: each one has its own URI. Determines semantics
+
+Usually saved as a triple => triple store
+May or may not be double linked.
+
+
+
+
+Datomic:
+Namespace qualified keys. Naming / RTs within a context have a certain meaning.
+
+
+with DomainContext(slang):
+    z5 >> RT.Bro 
+
+
+
+Specifying domain via type system: only partial coverage of correctness.
+
+Rather: allow easy adding of automatic checks for whatever is needed. Spec. A la carte.
+
+
+
+zef should be a tool for writing effective software.
+As little ceremony as possible. As little code as possible. The code you write should be as reusable as possible. 
+It is very different from the common approach in languages like Java / Python / Go / C++ / C# ...
+Write code that is cheap to throw away.
+Solve problems, not puzzles. Unless puzzles are your goals.
+
+
+
+Dynamic discovery

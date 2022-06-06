@@ -1,0 +1,98 @@
+### ZefRef
+
+:::type `ZefRef`
+
+Version-aware reference to a Zef object.
+
+You may think of a `ZefRef` as a pair `(e,t)`, where `e` is a pointer to a "timeless" Zef object (see [`UZefRef`](#uzefref)), and `t` indicates the time slice at which this object is viewed.
+
+The result of a ZefOp of the form `ZefRef -> ZefRef` is at the same time slice unless you explicitly ask for time travel.
+
+### UZefRef
+
+:::type `UZefRef`
+
+Version-unaware reference to a Zef object.
+
+Unlike [`ZefRef`](#zefref), `UZefRef`s do not come with a reference transaction and hence their behaviour differs in several important aspects:
+- `ZefRef`s filter relations based on whether they are visible at the reference transaction (i.e. whether they have been instantiated before the reference transaction and terminated after the reference transaction). `UZefRef`s consider any relation which has ever been attached to the object in question.
+- You cannot take the value of a `UZefRef<AET>`. Instead, you must convert to a `ZefRef` using e.g. `uzefref | now`.
+:::
+
+
+
+
+
+### QuantityFloat, QuantityInt
+
+:::type `QuantityFloat`
+Floating-point number with a physical unit (e.g. `EN.Unit.seconds`).
+
+**Example**
+```python
+g = Graph()
+a = instantiate(AET.QuantityFloat.seconds, g)
+a <= QuantityFloat(1.0, EN.Unit.seconds)
+```
+:::
+
+:::type `QuantityInt`
+Analogous to `QuantityFloat`.
+:::
+
+
+
+
+
+
+
+
+
+### RAE Types (`RT`, `AET`, `ET`)
+
+:::zeftype `AET.<typename>`
+Atomic entity type. AET Zef objects can hold a single value of the indicated type.
+
+`<typename>` must be one of `Bool`, `Int`, `Float`, `Time`, `QuantityInt.<unit>` or `QuantityFloat.<unit>`, where `<unit>` denotes a physical unit (e.g. `seconds`).
+
+**Example**
+
+```python
+g = Graph()
+a = instantiate(AET.Bool,g)
+a <= true
+a | now | value # <- true
+```
+:::
+
+:::zeftype `ET.<typename>`
+Entity type, serving to distinguish structurally equivalent Zef entities.
+
+`<typename>` can be any valid symbol in your programming language (e.g. `ET.WhateverYouWant`).
+:::
+
+:::zeftype `RT.<typename>`
+Relation type, serving to distinguish structurally equivalent relations between Zef objects.
+
+`<typename>` can be any valid symbol in your programming language (e.g. `RT.WhateverYouWant`).
+
+**Example**
+```python
+g = Graph()
+a = instantiate(ET.A,g)
+b = instantiate(ET.B,g)
+e = instantiate(a,RT.E,b,g)
+f = instantiate(a,RT.F,b,g)
+
+a | now | outs # <- ZefRefs(e|now,f|now), i.e. all outgoing relations
+a > L[RT.E]    # <- ZefRefs(e|now), i.e. only the outgoing relations of type RT.E
+```
+:::
+
+
+
+
+
+
+
+

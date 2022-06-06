@@ -1,0 +1,141 @@
+---
+id: 'lazy-zefops'
+title: 'Lazy ZefOps'
+---
+
+Laziness is no stranger to python (generators), but within zef, we want a whole new level of laziness.
+
+What do we mean? Look at
+```python
+[42, 43, 57] | map[lambda x: 2*x]
+```
+
+
+
+
+## Why Laziness?
+It allows us to decouple execution of a computation from the content of a computation. This is powerful in many ways. Think of PyTorch or Tensorflow: it feels like writing Python, but when training models it is not Python code, but optimized binary code that runs on a GPU / TPU / CPU. Since the library designers did an excellent job in hiding the details from the user and giving useful error messages as early as possible, the user writing Python never has to deal with the low level details such as parallelization, memory management etc. All of this is only possible because the user only declares a computation graph via the high level API. The declaration of this computation is decoupled from the execution.
+
+This is also very powerful in the context of distributed systems and multi-core computation (one could also consider a GPU as a distributed computational platform). 
+
+
+## Triggering Computation
+At some point, you actually want the computation to be performed. There are two ways to trigger computation:
+* Using one of the control (triggering computation) ZefOps: `collect`, `for_each`, `subscribe`, `run`
+* Using any ZefOp with parentheses `my_op(...)` as opposed to piping `... | my_op`.
+
+We can categorize them into two groups: 
+1.  The Ops that changes state / has side effects (these live in the imperative shell of your program): `subscribe`, `for_each`, `run`
+2.  The Op that has no side effects and simply triggers compute to arrive at some expression: `collect`
+
+
+#### collect
+Used in conjunction with evaluating expressions that produce values, i.e. do not perform any side effect. It can be used on any LazyValue, i.e. it will work both on generators (sequences) and "scalar" values.
+```python
+import operator                                     # python builtin
+
+my_lazy_val = [42, 43, 57] | map[lambda x: 2*x]
+my_lazy_val | collect                               # => [84, 86, 114]     sequence
+my_lazy_val | reduce[operator.add][0] | collect     # => 284               not a sequence
+```
+
+#### for_each
+
+#### subscribe
+
+Why introduce a new ZefOp? Can't we just use `for_each` instead of `subscribe`?
+This is a decision that we pondered over for a while and decided to go with this choice for now. The main reason is the connotation which both expressions. Using `subscribe` in the context of `for_each`, e.g.
+```python
+range(10) | subscribe[print]            # this looks weird. It is also not valid.
+```
+OK, so should we use `for_each` instead of `subscribe` for observables then?
+```python
+my_event_stream | for_each[print]       # Hmmmm. Not great, not terrible.
+```
+Historic side remark: `forEach` was originally used in RXJS instead of `subscribe`, but they moved to the latter at some point.
+There is nothing wrong with this and it boild down to communicating intent. Since many libraries and languages have the concept of subscriptions, we decided to stick with two different operators. `for_each` is to *Iterables* what `subscribe` is to *Observables* / *Streams*. Both are wrappers for side-effectful functions and signal that the contained function lives in the imperative shell of your program.
+Can you also use pure functions instead, you may ask? You could, but why would you? Every legitimate use of `for_each` or `subscribe` will perform a side effect, since one does not rely on the return value (often "disposables" or similar types are returned). Why would one even bother executing a function that does not perform a side effect? If you have a pure function, you almost certainly want to use `map`. In both cases of lazy iterables and observables the language / runtime may even choose not to execute the pure function if the output is not required, e.g. if there currently are no subscribers. 
+
+ In summary, we believe that the concept of "subscriptions" is well known, even outside of the developer community, that it justifies introducing and using a separate operator. A subscription, the execution of which is push based and driven by the event coming in conveys a different meaning from the execution of a side-effectful function by the caller (pull-based).
+
+
+#### run
+So why do we need another operator like `run`?
+Well, not every lazy value is an iterator. This may sound strange to some, as Python conflates these two concepts in its basic form: Laziness is mostly discussed in the context of generators (iterables).
+```python
+range[20] | for_each[print]             # take one item out of the collection, call 'print' on it, then take the next
+```
+But what if we have a lazy value that is not an iterable? e.g. 
+```python
+range[20] | last | for_each[print]      # invalid!
+```
+This looks weird, as it should. `for_each` represents the concept of doing something to each element of a collection. But the value flowing into `for_each` above is not a collection, it is a `LazyValue[Int]` that will evaluate to `19` and `for_each` makes no sense. So why do we not just pipe it through the function
+```python   
+range[20] | last | print                # invalid!
+```
+you may ask? Well, you may use zef as a library and provide any function of your choice at the end. If zef can deal with piping through functions without wrapping them with e.g. `func[print]`, it is not easy to tell whether the function is pure or not. If it is pure, we would definitely not want to evaluate by default when encountering such an expression somewhere along the operator chain. This would go against the very core principles of lazy ZefOps and prohibit deferred / remote execution. Once you go eager, you cannot go back, whereas the opposite is not true. Hence the default would be to not trigger evaluation.
+But we need some way to communicate that we want to trigger computation then. This is what `run` does. 
+It can be used in two ways: 
+1. Within the ZefFX system `my_effect | run`
+2. With side-effectful functions `run(range[20] | last | print)`
+
+:::info A Word of Caution
+In many cases it is possible to use `run` with the piping syntax. But we recommend using it with usual function notation using parentheses, since this guarantees that the expression being passed to `run(range[20] | last | print)`
+:::
+
+
+
+
+## Python & Value Semantics
+Python's lazy "expressions" don't always obey value semantics. Evaluating them changes the state of your program and requires coordination. 
+Let's look at an example
+```python
+x = map(lambda x: x*2, [1,2,3])     # python's map function
+list(x)                             # => [84, 86, 114]
+list(x)                             # => []               😱
+```
+Calling the `list` constructor mutates the state of its input argument, hence you cannot treat them like values that obey substitutional semantics. This is a common pitfall for beginners. It is not the case for all generator expressions though, e.g.
+```python
+x = range(4)
+list(x)                             # => [0, 1, 2 , 3]
+list(x)                             # => [0, 1, 2 , 3]
+```
+
+One of the design goals for lazy ZefOps is for LazyValues to obey value semantics. This means that evaluation of ZefOps should not require coordination.
+
+Note: This is not implemented yet, since many of the ZefOps at the moment are defined by wrapping the Python builtin operators. You may be repeating computation (implementing a caching layer at the core of the evaluation engine is a consideration for the future), but you will never get a different result.
+
+
+
+## ZefDB Queries & Lazy Values
+
+```python
+# only declares the computation to be done
+my_query | resolve[g]                     
+
+# do the work. Runs locally if the graph is locally present.
+my_query | resolve[g] | collect                         
+
+# this could take a lot of compute. Have zefhub deal 
+# with the load and send back the result. Block until then. 
+# Returns a List of Dicts, each a valid answer
+my_query | resolve[g] | collect[zefhub]           
+
+# the list of results may be very long, we're only interested in the first 10.
+my_query | resolve[g] | take[10] | collect[zefhub]      
+
+# have zefhub determine the result, but don't block 
+# this program. Returns a LazyValue[List[Dict]]
+my_query | resolve[g] | collect[zefhub][asynchronous]   
+
+```
+
+
+
+## Bridging the Gap between Development and Production
+
+
+## Native Python Type Absorption
+
+## Piping vs. Class Method Chaining
+

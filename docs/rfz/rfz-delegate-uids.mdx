@@ -1,0 +1,12 @@
+---
+id: 'rfz-delegate-uids'
+title: RFZ - Delegate UIDs
+---
+
+It makes sense to track uids of delegate RAEs as well: when merging RAEs across graphs, relation instances may point to/from delegates and the merge requests need a way to communicate this.
+
+:::info
+Note that delegate RAEs are singletons, i.e. delegates of the same RAE type on different graphs have to be identical. If user A creates an ET.Dog instance *dog1* on *g1* and user B creates an ET.Dog instance *dog2* on *g2* and *dog1* is merged into *g2*, *dog1* and *dog2* on *g2* should automatically be of the same type after the merge, i.e. have the same delegate.
+:::
+
+To guarantee that the identity / uid assignement of delegates fulfills this requirement, also without cooridnation by zefhub, the uid of a delegate is always calculated by the `hash(blot_type_byte + RAE_type_name)`. We use the Blake3 hashing algorithm for a good compromise between hashing performance and cryptographic security (currently a cryptographic hash is note required, but in case we ever want to rely on it).

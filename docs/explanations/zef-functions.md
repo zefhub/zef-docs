@@ -1,0 +1,119 @@
+---
+id: zef-functions
+title: Zef Functions
+---
+
+When WhatsApp was acquired by Facebook for 19 billion USD, they had about 32 engineers and 450M users. The founders often attribute this impressive ratio of (team size)/(user size) to their ability to leverage the strengths of Erlang and [Mnesia](https://en.wikipedia.org/wiki/Mnesia). What is this strength? Erlang is built for a distributed system from the ground up. Everything is built
+How did they manage to maintain such a large system 
+
+
+Python is cute. It has a simple and very clear [data model](https://docs.python.org/3/reference/datamodel.html) where everything is an object. Functions are also Python objects, that can be passed around as first class citizens.
+
+Similarly, zefDB could be considered to have a similar underlying paradigm: everything worth keeping track of in the long run can be represented as an entity on a graph. However, in contrast to Python object, RAEs on graphs are not tied to the context of one specific Python process. They live outside of the process and are just data. Once they are saved, they never change. This makes sharing between various threads or even different processes safe and possible.
+
+Being able to share data, including arbitrary subscriptions across a distributed system can be extremely useful. Curated data that is easily queriable is great, but not of much use by itself. To be of value to anyone, it is always in conjunction with some form of compute. After all, we want something to happen. Our favorite form of organizing compute within the zefDB ecosystem is the function. Ideally pure. But not everything can be pure and we acknowledge the need for side effects at the boundary (imperative shell) of any system.
+
+If 
+1. organizing data on graphs time versioned, accumulating graphs is so useful for data
+2. we acknowledge that our code is also just data that goes into some interpreter or compiler (and is hopefully managed by some version ocntrol system, such as Git)
+3. We have learned from modelling complex domains that it is often useful to split up data at a fairly granular level (since aggregation is easy, but deconstruction requires a DSL, assumptions, etc.)
+
+
+
+
+Could it be useful to make functions first class objects on zefDB graphs? This is what zef functions are.
+If this sounds unnecessary and overly complicated, just take a deep breath and let's look at an example. It's actually very simple and to be seen as a tool for some tasks.
+For now, zef functions are implemented in Python only (integration with other languages is planned if this experiment continues to be successful).
+
+
+### Our first zef function
+
+How do we define a zef function? It is just a regular Python function for which we use a decorator.
+```python
+@zef_function(g)
+def times_two(x: int) -> int:
+    return x * 2
+```
+You can run this in your favorite coding environment: a script in VSCode, a Jupyter notebook, from a shell, etc.
+When this code is run, the function itself is not executed, but the decorator is. The first argument `g` is the zefDB graph (it could be local or synced with zefhub) onto which the zef function will be written.
+
+### Graph layout
+
+If you were to look at the graph `g` after running the code above, you would see the following layout for the newly added part (the zascii graph shows the template, not the actual data instance).
+```
+
+                                           RT.UseTimeSlice   # hack for now until we can point at txs
+                                        ┌──────────────────►AET.String    
+                                        │
+                                        │  RT.Name
+                                        ├──────────────────►AET.String
+                                        │
+                        RT.Binding[*]   │
+                     ┌──────────────────┴────────────────────────────────►ET.ZEF_Function
+                     │
+                     │
+    ET.ZEF_Function──┤
+                     │  RT.OriginalName!
+                     ├────────────────────►AET.String
+                     │
+                     │  RT.PythonSourceCode!
+                     ├────────────────────►AET.String
+                     │
+                     │  RT.Label
+                     ├────────────────────►AET.String
+                     │
+                     │  RT.IsPure
+                     └────────────────────►AET.Bool
+
+
+```
+The `!` indicates that a field is required and `[*]` denotes that an arbitrary number are allowed, i.e. it is of list form.
+We'll go into more detail on the structure later. For now, let us just notice that our function has just been dissected a bit and put onto the graph as pure data. Just like any other data on a ZefDB graph, this data can now be automatically synced over different processes, we get granular versioning, etc.
+
+### Retrieving existing zef functions
+
+
+
+```python 
+# --------------------------------------------         this code snippet was generated by          --------------------------------------------
+# --------------------------------------------  zefdb.to_clipboard at 2021-09-23 09:55:02 (+0800)  --------------------------------------------
+# z_zef_function = g["33a745842fc7f625287566bc86049451"]["6a2e5895de7410f4f21bc7b951690824"]
+# Original function name: times_two
+g = Graph('91614c5735041d96a2ee2160e5a97119')     # This zef function lives on this graph tagged with []'
+@zef_function(g = g,
+)
+def zef_function_33a745842fc7f625287566bc86049451(x: int) -> int:
+    return x * 2
+```
+
+
+### Zef function signatures
+
+
+
+
+
+### Tracking dependencies of zef functions
+
+
+### Pure and impure functions
+
+
+### Remote execution
+Up to now thos
+
+
+### Performance: Not painting yourself into a corner
+
+### Let it grow
+
+
+
+
+### Type hinting
+It is highly recommended to provide Python type hints for zef functions. These allow for all kinds of magic further down the road, such as generating automated tests, applying static analysis to functions and their dependencies, running, Some of the most tangible advantages become apparent when using zef functions within zefops, where extensive type inference can be performed (and printed out via e.g. the info op), giving you greater insight into your application as it grows.
+
+
+
+
+

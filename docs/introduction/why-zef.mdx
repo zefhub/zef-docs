@@ -1,0 +1,21 @@
+---
+id: why-zef
+title: Why Zef?
+---
+
+## Is ZefDB for me?
+
+
+If one or more of the following are true, it may be:
+- I have highly connected data and managing it via a relational database forces me to change the schema too often
+- Time plays an important role in my data and I want it to be a first class citizen.
+- I love streams / observables. Much of the real world that I model is a stream. Can't somebody please build a database that is based on streams and not ONLY on values? But values are great to (to abstract things that behave like values)!
+- At any point in time I want to be able to ask how the system I'm building got into a specific state. Also, I don't want to implement this - can't this just magically happen?
+- I want to develop locally with a fast feedback loop and the same system to run "serverless" in production without me having to worry about all the context.
+- I am currently forced to bunch a whole lot of business logic in one query since I have strong consistency guarantees on my data and am afraid that something changes between database round trips
+- I wish I did not have to interact with a database and could work purely with my local native data structures
+- I do not believe that ORMs are the final solution to a problem I whish I never had.
+- I'm afraid to break something in production and lose data. I feel much safer with git where I can undo any change any time and have a full history.
+- A large part of my code deals with the infrastructure: setting up database connections, formulating queries not in my native programming language, writing my code async to not block while queries are executed, solving problems arising from the previous point, translating responses into native data structures. I prefer writing code that deals with the problem I want to solve
+- My inner aesthetic side feels abused by the compositional properties of SQL
+- I hold the separation of state from compute in similarly high regard as the separation of church from state

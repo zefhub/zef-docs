@@ -1,0 +1,30 @@
+
+digraph {
+    // rankdir = LR
+
+    edge [dir=both, arrowtail=dot]
+    
+    employee [label="ET.Employee", shape=box]
+    department [label="ET.Department", shape=box]
+    location [label="ET.Location", shape=box]
+    country [label="ET.Country", shape=box]
+    region [label="ET.Region", shape=box]
+    role [label="ET.Role", shape=box]
+
+    //employee -> department [label="RT.WorksFor"]
+    employee -> worksfor [arrowhead=none]
+    worksfor -> department [dir=forward]
+    worksfor [label="RT.WorksFor(*)"]
+    worksfor -> role [label="RT.Role"]
+
+    employee -> employee [label="RT.ManagedBy"]
+
+    employee -> dependent [label="RT.HasDependent(*)"]
+    dependent [label="ET.Dependent", shape=box]
+
+    department -> location [label="RT.LocatedAt"]
+    location -> country [label="RT.InCountry"]
+    country -> region [label="RT.InRegion"]
+
+    {rank=same; location; country; region}
+}

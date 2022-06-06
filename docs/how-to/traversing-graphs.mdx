@@ -1,0 +1,115 @@
+---
+id: traversing-graphs
+title: Traversing Graphs
+---
+
+There are three ways 
+
+## Tags / UIDs
+if you know the exact entity that you want to go to on a graph, either from its uid or from a tag you gave it (e.g. `my_tag`), you an immediately jump there
+```python
+g | get['my_tag']           # just another zefop that can be chained
+g['my_tag']                 # normal index notation
+```
+In this sense, ZefDB graphs act very much like dictionaries.
+
+
+
+
+
+## Listing all RAEs of a given type
+
+```python
+gs | All[ET.Person]         # gs is of type "GraphSlice", i.e. the state at a fixed time
+```
+The query above will return a list of ZefRef (pinned to the reference frame of the graph slice queried). By default, this list will be ordered according to their instantiation time. Note that in contrast to most other databases, the query above is a pure function: if you were to ever run it again in the future, it is guaranteed to return the same result, since the reference frame ("as of query") is baked into `gs` and every state of the graph will remain accessible.
+
+If you are familiar with relational databases, this analogous to selecting all rows in the "Persons" table. We see that the choice of tables to model a domain with a relational DB schema maps onto the zef type system.
+
+The above query returns all entities that exist in a given time slice (i.e. the ones instantiated prior, but terminated prior to the reference frame of `gs`). We could also want to ask a different question though: return a list of `ET.Person` that have ever existed on the graph up to the point of performing the query:
+```python
+g | All[ET.Person]           # g is the eternal graph, i.e. of type "Graph"
+```
+This will return a `List[EZefRef]` with no reference frame baked in.
+
+When running this query again in the future, a different list may be returned (i.e. it is not a pure function). It will definitely contain all ET.Person it contained in the current result, but it may contain new entities as well.
+
+:::info Why is `All` capitalized?
+In contrast to all other zefops, `All`, `Any`, `And`, `Or`, `Not` are capitalized to not clash with the python builtin keywords and functions.
+:::
+
+
+```python
+animals_i_like = Or[is_a[ET.Dog]][is_a[ET.Cat]]
+gs | All[animals_i_like] 
+```
+
+
+
+
+
+
+
+
+## Traversing the Graph Structure
+
+Suppose we are on a given RAE or set of RAEs of our graph at some fixed time, i.e. we have a `z1: ZefRef` (this can also be extended to `List[ZefRef]` and higher orders).
+
+One thing we may want to do is to traverse the graph from there. Just like Entities and AtomicEntities, every instance of a relation has a concrete relation type (RT).
+
+```python
+z1 >> RT.Name       # move along the single, unique edge "RT.Name" to the target RAE.
+```
+
+In ZefDB, vertices and relations are treated on equal footing: we can have ZefRefs to both.
+:::info ZefDB Graphs are not Really Graphs
+They are Meta-Graphs. (not to be confused with the rebranding of the Facebook social graph)
+
+We learned this naming from a paper by Ben Goertzel https://arxiv.org/abs/2012.01759.
+What are Meta-Graphs? Relations themselves can have incoming and outgoing relations (these are distinct from the source/target).
+Why did we not just stick to Graphs? Our in-house graph database that preceded ZefDB (and was designed as a more performant version of NetworkX) was built on property graphs. Both nodes and edges can have properties attached: dictionaries in our case.
+Since ZefDB graphs are maximally flat (avoid unnecessary nested/internal structure that is ontologically ambiguous), we needed a way to represent fields/attributes on edges. Although disputed at first, we never regretted this choice. It is an extremely useful structure to have in representing ontologies and removes the ambiguity of whether a given attribute should be an internal field of the edge/node or is justified.
+:::
+
+Since relations are also first class citizens on graphs, we can also provide a richer syntax for the traversal:
+```python
+z1 > RT.Name       # only move onto the edge (a single step)
+```
+:::info Analogy to fields on objects / structs:
+Note that `my_zefref >> RT.MyFieldName` is often analogous to `my_struct.my_field`. 
+:::
+
+
+## Pattern Matching ❤️ Graphs
+
+Pattern matching is a power approach to get to the data that one wants quickly and declaratively. 
+In essence it is the answer to the following question: given a pattern `p` and a concrete data structure `d`, find all instances contained in `d` that fulfill `p`.
+
+SQL queries can be understood in the context of pattern matching, as can be the new structural pattern matching statement introduced in Python 3.10.
+
+We can also recognize the basic query `gs | All[ET.Person]` as a pattern matching problem: return all RAEs in the graph slice `now(g)` that fulfill the following pattern: They are of type `ET.Person`.
+
+Clearly we can extend this concept. Suppose we are looking for all relations of type `RT.Name` that have a `ET.Person` as a source and an `AET.String` as a target: in Zef we represent this in plain data as a (semantic) triple
+```python
+gs | All[(ET.Person, RT.Name, AET.String)]         # returns a List[ZefRef]
+```
+
+```python
+```
+
+
+## Questions of Existence
+```python
+(z1, RT.FriendOf, z2) | exists              # returns a Boolean
+```
+This returns True if there is one ore more relation instance of type `RT.FriendOf` between the two specific entities `z1` and `z2`. If `z1` and `z2` are ZefRefs and no graph slice is provided to the `exists` zefop, they MUST have the same reference frame for the question to be unambiguous.
+
+Suppose we are interested in whether exactly one such relation exists
+```python
+(z1, RT.FriendOf, z2) | exists[single]      # returns True iff one such relation exists
+```
+
+
+```python
+```
+

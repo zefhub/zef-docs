@@ -1,0 +1,75 @@
+---
+title: Glossary
+---
+
+### RAE
+
+An acronym that refers to the 3 types which represent information on a Zef graph (RT, AET, ET). Each RAE has an identity which remains stable over time.
+
+### Relation Type (RT)
+
+Defines the edge between any two RAEs on a graph. i.e. RT.Name
+
+### Atomic Entity (AET)
+
+Defines a node with a value type. Values can be assigned over time. i.e. AET.String
+
+### Entity Type (ET)
+
+Defines a node an identifier. Node properties are not contained within the ET and are instead "flattened out" into connected RT(s) and AET(s). i.e. ET.Person
+
+### Abstract RAE
+
+An acronym that refers to the abstract versions of RT, AET, and ET. It represents the concept of a RAE independent of time through all graphs.
+
+### Delegate
+
+The higher level representation of data on a graph. Defines how data (RAEs) is laid out on a graph. Every instance of a RAE is connected to a unique delegate.
+
+### Graph Slice
+
+The state of a graph at a specific point in time.
+
+### Transaction Request (TXRequest)
+
+[Previously GraphDelta] A list that contains the instantiations, terminations, and value assignments a user would like to perform on a graph.
+
+### Transaction (TX)
+
+A list that contains the instantiations, terminations, and value assignments that have been executed on a specific graph. A Transaction is generated after a Transaction Request(s) has been executed.
+
+### UID
+
+An auto-generated, variable length unique identifier given to all graphs and RAEs.
+
+### ZefRef
+
+A struct that holds graph specific information about an Atomic Entity (AET), Entity (ET), or Relation (RT). A ZefRef also holds information about the specific time slice the Entity or Relation exists in.
+
+### EZefRef
+
+Stands for Eternal ZefRef. Similar to a ZefRef but is independent of any time slice reference.
+
+### Tag
+
+A unique user-given, string reference to a specific graph or RAE within a given scope (namespace, organization, etc). Can be used for retrieval.
+
+### Piping '|'
+
+The symbol used to chain operations together (can be seen as the '.' dot notation used in other languages).
+
+### ZefOps
+
+A library of functional, cross-langauge operators which can be used directly in Python code to query and transform data.
+
+### ZefFX
+
+Tools to deal with effects in a controlled and understandable way.
+
+### ZefDB
+
+An in-memory, immutable graph database.
+
+### ReactiveZ
+
+Tools to build reactive systems through functional transformations and subscriptions of data streams.

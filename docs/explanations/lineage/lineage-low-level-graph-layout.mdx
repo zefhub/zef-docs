@@ -1,0 +1,36 @@
+---
+id: lineage-low-level-graph-layout
+title: Lineage
+[//]: # low level graph layout
+---
+
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+
+
+### Managing identity for different observers
+
+Suppose our dog `rufus` had a really big meal and was completely knocked out. To the extent that someone mistakenly thought `rufus` was no more and terminated him on the graph, only later noticing their false observation in the world and wanting to revert this. Creating a new instance of an `ET.Dog`, even if we instantiated him with the name `(ET.Dog, RT.Name, 'Rufus')`, would not correctly tie up the identity to the original `rufus`.
+One could consider allowing termination to be reverted, but this would go against one of the core principles of RAEs and their fundamental similarity to RAEs: once a RAE is terminated, it will never come alive again. All downstream derived observables can be cleaned up for good.
+
+OK, then how do we deal with this? We want to apply a GraphDelta that effectively undoes our erroneous termination of `rufus`.
+
+This is where the lineage system can come to our rescue: Up to now, this enabled us to talk about the same thing in the real world as seen from the perspective (reference frames) of different graphs. Maybe graph `g1` received an update on Rufus' `RT.Status`, but `g2` has not been informed yet, although it knows about Rufus. The RAE `z1` on `g1` referring to the actual Rufus will have a different uid and RAE identity than the RAE `z2` on `g2` referring to the same actual Rufus. The lineage system allows ZefDB to automatically figure out that `z1` and `z2` actually refer to the same thing in the real world, but seen from different perspectives: i.e. they are of the same lineage. Two RAEs are of the same lineage if and only if they refer to the same **primordial ancestor**.
+
+
+
+### Graph representation
+
+![](lineage_layout_simple.png 'The elementary low level graph building block for keeping track of lineage.')
+
+
+
+We need to account for some edge cases here: what if the merging target graph terminated one of the RAEs being merged into it?
+
+
+
+![](lineage_layout_after_termintion.png 'Logo Title Text 1')
+![](lineage_layout_after_local_termintion.png 'Logo Title Text 1')
+
+
+

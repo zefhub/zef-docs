@@ -1,0 +1,71 @@
+---
+id: zefops
+title: ZefOps
+---
+
+
+
+## Operator Chaining & Functional Piping
+Core principles: Composition, data flow and 
+
+Immutability: Unless absolutely necessary, prefer transformation of data (generating new values from old values) over mutating existing values.
+
+
+## Piping Syntax
+
+
+### Single Argument
+```python
+@func
+def square(x: int):
+    return x*x
+
+42 | square   
+```
+The last line is pretty much the same as `square(42)`, except that it returns a lazy value. As soon as we decorate a Python function with `func` we can use it 
+
+
+### Multiple Arguments
+```python
+@func
+def add(x: int, y: int):
+    return x+y
+
+res = 3 | add[5]      # x=3  and y=5
+```
+The first argument of a multivariate function is the one that is piped through, whereas the other arguments can be Curried in with square brackets.
+
+
+```python
+@func
+def f(x: int, b: float, c: int = 42):
+    return b*x + c
+
+10 | f[2][5]            # 2*10 + 5
+10 | f[2]               # 2*10 + 42     # default value
+```
+
+### In-Place Usage
+```python
+1 | func[lambda x: x+1]
+1 | func[Z+1]               # zef lambda function
+```
+
+
+
+
+
+## Why the square brackets?
+Ok, we need to provide a bit of context for this one.
+
+The goal is to make the use of multivariate functions (more than one argument) play nicely with the functional chaining pattern. However, in a data pipeline, the functions essentially always take one argument (the flowing data). One can think of the other arguments as being parametrically fixed to some value.
+
+Also, we want to retain the ability of not having to specify the values for arguments with default values provided in the function definition.
+
+
+
+
+
+
+
+

@@ -1,0 +1,171 @@
+---
+id: declarative_queries
+title: Queries
+---
+
+**TLDR summary:** There are different types of queries in zefDB. Traditional data access patterns, declarative queries in zefQL. Subscriptions to stay informed about the changes after the query can be automatically derived via differential queries.
+
+# Traditional Query Commands
+
+```python
+friend_name = z >> RT.BestFriend >> RT.FirstName | value
+```
+
+
+
+# Declarative Queries
+
+
+:::note Disclaimer
+The zef query engine is not implemented yet. The following syntax is included for demonstration purposes and to invite the reader to come up with further minimal examples and join us in coming up with a highly composable and powerful syntax for graph queries.
+:::
+
+One of the core principles of zef is to blend into existing host languages. Zef syntax is valid syntax of the host language. Queries are no different and you do not have to append SQL strings to express queries. A query by itself performs not actions, it is pure data and an expression.
+
+Let's jump to a concrete example to get started.
+``` python
+my_query = Query([
+        ET.Person["p"],
+    ])
+```
+The `ET.Person` is a condition declared as a type that has to match and we pass it a variable name `"p"`. Once we pass the `my_query` to the resolve function and execute the query
+
+```python
+my_solutions = resolve(my_query, my_graph_slice)
+```
+
+a lazy list of solutions is returned. Each solution is a dictionary that binds compatible values to the names specified in the query. Suppose we have a graph slice (the state of a graph at some time slice) with three entities of type `ET.Person`. The the list of solutions would be
+```python
+[
+    {"p": z1},      # z1 is a ZefRef of type ET.Person
+    {"p": z2},      # z2 is a ZefRef of type ET.Person
+    {"p": z3},      # z3 is a ZefRef of type ET.Person
+]
+```
+It is important to note that **all** possible distinct combinations of RAEs and values that fulfill the conditions of the query will appear as solutions in this list.
+
+:::tip Omitting Variables in Solution
+If you need to express interconnections in the query, but don't want the variable name and matched value to appear in the solutions, you can use a variable name that starts with an underscore, e.g. `_x1`.
+:::
+
+
+Let us look at a few more examples. Above we have used the matching to an `ET.Person` type, which is just one specific level of the zef type system hierarchy `_ -> BT -> ET -> ET.Person`. As is common in pattern matching libraries and languages, the most general wildcard in zef is denoted by the expression `_`, which matches to anything. Hence, the resolution of
+``` python
+my_query = Query([
+        _["x"]
+    ])
+```
+would list every RAE that exists in the graph slice. 
+
+Let's look at some more examples. In formulating queries, it is often useful to formulate conditions that have to hold between different elements in the query. Analogous to the the syntax we used in expressing graph deltas as triples, we can also express constraints in our query as triples.
+``` python
+Query([
+        ET.Person['p'],                           # the variable named "p" must be of type ET.Person
+        AET.String["n"],                          # "name" must be of type AET.String
+        (Z['p'], RT.FirstName["r"], Z["n"]),      # There must exist a relation of this type between "p" and "n"
+        value_assigned[Z["n"]]["Fred"],           # The RAE bound to "n" must have the value "Fred" assigned
+    ])
+```
+Let us introduce some rules to understand what the syntax of the above query means.
+* If we assign the same name `p` to multiple expressions in the same query, those expressions refer to the same thing.
+* If multiple type restrictions are bound to the same internal name, these types must be mutually compatible (i.e. subtypes) for the query to be meaningful (if they contradict, the query would fundamentally not be satisfiable independent of the data).
+* Both `Z` or `_` can be used to refer to anything.
+* Each expression / line above is called an atomic clause / atom. The ordering of clauses is of no significance.
+* All atomic clauses appearing as list elements in a query are implicitly coupled via logical "and" relations.
+* Triples imply the existence of directed relations of the specified type with the notation (source, relation, target).
+
+It is surprising to see how far one can get by simply combining these basic building blocks to construct complex queries.
+
+Now that we have seen the basic constituents of queries, let us shorten the above example.
+``` python
+Query([ 
+        (ET.Person['p'], RT.FirstName["r"], "Fred"), 
+    ])
+```
+
+
+Find all persons and their surnames `{p, last_name}` that have more than five friends named "Fred".
+
+``` python
+Query([ 
+        (ET.Person['p'], RT.FriendOf["r"], ET.Person['_p1']), 
+        (ET.Person['_p1'], L[RT.FirstName]["_name_list"], "Fred"),
+        length["_name_list"] > 5, 
+        (Z['p1'], RT.LastName, AET.String['last_name']),
+    ])
+```
+
+
+---
+
+### Using Python Functions in Queries
+We can also combine queries with native Python (or other zef supported languages in future) functions. Let's formulate a query that finds all parent-child pairs whose year of birth add up to a prime number.
+```python
+from zef import ops
+
+def prime_iter(v):
+    def passes(x):        
+        return all((x%f !=0 for f in v | ops.take_while[lambda f: f <= x/2] ))
+    next_prime = range(1+(v|ops.last), 2*(v|ops.last)) | ops.filter[passes] | ops.first
+    return (*v, next_prime)
+
+def is_prime(n: int) -> bool:    
+    return n in (
+    (2, )
+    | ops.iterate[prime_iter]           # x | iterate[f] returns an infinite lazy sequence (x, f(x), f(f(x)), ...) for an endomorphism f
+    | ops.take_while[lambda m: m <= n]
+    | ops.last    
+    )
+
+Query([    
+    (ET.Person['child'], RT.ChildOf, ET.Person['parent']),
+    is_prime((Z['parent'] >> RT.YearOfBirth | value) + (Z['child'] >> RT.YearOfBirth | value))
+])
+```
+The above query would run locally and we could definitely improve the performance with caching and other techniques. If you wanted to run the query on your cluster or zefhub in a distributed form, one can use zef functions to make the Python functions first class citizens on the distributed network.
+
+
+
+## Executing Queries
+We have seen how to express queries, which are pure data. Like other zef values, they can be stored on zef graphs, be sent over the wire via zef streams, or saved as files. No computation is performed when formulating the query, which allows for complete separation of the query and its execution context.
+How would we actually execute a query though? For this we need at least two pieces: 
+* the query itself 
+* a graph slice or flat graph providing the data context to execute the query
+
+```python
+my_solutions = my_query | resolve[my_g_slice]
+```
+Note that since we are not dealing with a mutable database, this is a pure function. If we execute it a year from now, we are guaranteed to get the same result. This is only possible for databases that have value semantics.
+
+This fact allows us to introduce another useful feature: queries can be made lazy. Why would we want that? Suppose we want to show a table of all customers on a web frontend, but the customer list is really long. With and eagerly evaluating database, we would typically have to handle the pagination in an imperative layer of the backend resolver function. This is often repetitive, error-prone and adds a lot of unnecessary complexity (especially once one is building a fully reactive system and subscriptions get involved).
+
+So what would the zef style of doing this be? There's nothing special about queries if those are pure functions. Lazy evaluation and functional data transformation pipelines should also be the default here. The consumer at the very end of the pipeline is in charge of triggering the actual evaluation, i.e. the good old pull-based iterator pattern.
+This decouples the layer that formulates the query (business logic) from the layer that sets up the pipeline (application layer) and the actual triggering of computation (induced by the user as the final consumer).
+
+Note that this allows queries to even return solutions of infinite length.
+
+
+
+
+## Translation Between the Worlds
+
+We can always (? - please reach out if you can think of a counter-example) translate any traditional query command into the declarative form. Let's look at the simple example above
+
+```python
+friend_name = z1 >> RT.BestFriend >> RT.FirstName | value
+```
+
+```python
+Query([
+    (z1, RT.BestFriend, Z["_bf"]),
+    (Z["_bf"], RT.FirstName, String['friend_name']),
+])
+```
+Resolving this, binds the String value to the `friend_name` in the solution. If we would have wanted the name in the form of an AET.String, we would omit the `... | value` in the query command and use `(Z["_bf"], RT.FirstName, AET.String['friend_name'])` in the query expression.
+
+
+## What Query Engines Do
+Exactly the opposite. Given a declarative query expression, the query engine tries to find an efficient computational graph to evaluate the expression. We can think of the query command as one specific computational path. There may be many ways to determine the solution for a query resolution. Any correct computation will have to lead to the same result. Hence, the task of building an efficient query engine can be posed as an optimization problem over the space of all possible computational paths. This is closely related to compiler theory and term rewriting systems.
+
+Goals: There seems to be an entire field on manual SQL query optimization. Our aim with zef is that by default, the user should not have to optimize this himself. In the long run we aim to express query resolution as a tree search problem and explore various ideas, including machine learning, to automate this process as much as possible.
+

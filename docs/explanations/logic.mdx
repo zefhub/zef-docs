@@ -1,0 +1,87 @@
+---
+id: logic
+title: Logic
+---
+
+`Any` and `All` can be used as drop-ins for Python's builtin `any` / `all`. They take `List[Bool]` as input arguments.
+```python
+[True, False, True] | All           # => False
+[True, True, True] | All            # => False
+
+[True, False, True] | Any           # => True
+[False, False, False] | Any         # => False
+```
+They can be called with parentheses / pipe operator, resulting in eager / lazy evaluation respectively.
+They can also be used on `Awaitable[List[Bool]]` (Streams).
+
+The stream returned by `Any` completes upon the first occurrence of `True` or upon the completion of the input stream.
+
+# Combining Predicates
+Suppose we have some predicate function, e.g.
+```python 
+def is_even(x: int) -> bool:
+    return x % 2 == 0
+```
+but suppose we want to filter on elements for which the predicate function is actually `False`. Some libraries introduce a new operator `filter_not`. While this is a valid approach, we could also formulate the problem we are facing here differently: given a set predicate functions, can we introduce a set of higher order functions / operators that allow us to transform and compose new predicate functions?
+
+For this problem zef provides the following logic combinators: `And`, `Or`, `xor`, `Not`.
+:::info Capitalization rule 
+ZefOps are capitalized when the lower case version would conflict with a Python builtin function.
+:::
+
+
+```python 
+range(1,10) | filter[Not[is_even]]
+```
+
+* `Not`: unary operator w.r.t. `[...]` (always takes exactly one predicate of type `Func[(Any,), Bool]`) and returns a predicate of the same type.
+* `xor`: binary operator w.r.t. `[...]`
+* `And`: multiary operator w.r.t. `[...]`
+* `Or`: multiary operator w.r.t. `[...]`
+
+
+Let's look at an example to create a new predicate in point free notation
+```python 
+is_even = lambda x: x%2==0
+# we can also use builtin predicate ZefOps like `larger_than`
+is_odd_and_large = And[Not[is_even]][larger_than[100]]      
+```
+:::info 
+Note that `is_odd_and_large` is still just a data structure: a composed ZefOp. It can be inspected with the existing tools, sent over the wire, assigned to AETs, etc. just like other values as well (if the operators it is composed of fulfill the same property: i.e. the predicate functions being expressed as zef functions on a graph).
+:::
+
+All predicate functions that are combined with these logic combinators must themselves have a compatible type signature (e.g. `Func[(Int,), Bool]` for `is_large` and `is_even`). The type signature is forwarded to the resulting composite predicate. 
+
+### Accessing the Type
+Suppose we had specified the type signature `Func[(Int,), Bool]` for `is_large` and `is_even`. Then we could extract the resulting type using the `Type` ZefOp.
+```python 
+is_odd_and_large | Type             # => Func[(Int,), Bool]
+42 | is_odd_and_large               # => False
+yo(42 | is_odd_and_large)           # why is this happening? Similar to "explain" in ClojureScript
+```
+
+### Using `Not` on Values
+
+`Not` can be used as a unary operator on Boolean values
+```python
+True | Not                          # => False    # allowed
+[False, True, False] | map[Not]     # => [True, False, True]
+
+[True, False] | And                 # Not allowed. Use `All` for this
+[True, False, False] | Or           # Not allowed. Use `Any` for this
+```
+
+
+## A Shorthand Notation
+Sometimes we want to combine a larger number of predicates with `And` / `Or`. Writing this over multiple lines may look a bit messy with all the `[]`, especially if we also have to account for Python's multi-line rules.
+```python
+is_valid_email = And[
+    is_a[String],
+    Not[contains[" "]],
+    contains["@"],
+    map[is_lowercase] | All,    # since a String is iterable, `map` applies character-wise
+]
+```
+To account for these cases where it is more convenient to split by `,` and have one predicate per line, one can also use a single `[]` and pass in a Tuple of predicate functions (or even leave the explicit tuple away in Python, as passing multiple args into `[]` is automatically parsed into a single tuple).
+
+
