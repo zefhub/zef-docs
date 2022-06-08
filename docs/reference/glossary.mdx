@@ -4,19 +4,19 @@ title: Glossary
 
 ### RAE
 
-An acronym that refers to the 3 types which represent information on a Zef graph (RT, AET, ET). Each RAE has an identity which remains stable over time.
+An acronym that refers to the 3 types which represent information on a Zef graph (RT, AET, ET). Each RAE has an identity which remains stable over time. Properties are not contained within any RAEs and are instead "flattened out" into connected Relations and Attributes.
 
-### Relation Type (RT)
+### Relation (RT)
 
 Defines the edge between any two RAEs on a graph. i.e. RT.Name
 
-### Atomic Entity (AET)
+### Attribute Entity (AET)
 
-Defines a node with a value type. Values can be assigned over time. i.e. AET.String
+[Previously Atomic Entity] Defines a node with an identity where values can be assigned over time. i.e. AET.String
 
-### Entity Type (ET)
+### Entity (ET)
 
-Defines a node an identifier. Node properties are not contained within the ET and are instead "flattened out" into connected RT(s) and AET(s). i.e. ET.Person
+Defines a node with an identity that defines the objects of a domain. i.e. ET.Person
 
 ### Abstract RAE
 
@@ -24,11 +24,11 @@ An acronym that refers to the abstract versions of RT, AET, and ET. It represent
 
 ### Delegate
 
-The higher level representation of data on a graph. Defines how data (RAEs) is laid out on a graph. Every instance of a RAE is connected to a unique delegate.
+A low level node representing all instances of a specific RAE.
 
 ### Graph Slice
 
-The state of a graph at a specific point in time.
+The state of a specific graph at a specific point in time.
 
 ### Transaction Request (TXRequest)
 
@@ -36,19 +36,23 @@ The state of a graph at a specific point in time.
 
 ### Transaction (TX)
 
-A list that contains the instantiations, terminations, and value assignments that have been executed on a specific graph. A Transaction is generated after a Transaction Request(s) has been executed.
+A set of all instantiations, terminations, and value assignments that have been executed on a specific graph. A Transaction is generated after a Transaction Request(s) has been executed.
 
 ### UID
 
-An auto-generated, variable length unique identifier given to all graphs and RAEs.
+A variable length unique identifier used in various parts of Zef.
 
 ### ZefRef
 
-A struct that holds graph specific information about an Atomic Entity (AET), Entity (ET), or Relation (RT). A ZefRef also holds information about the specific time slice the Entity or Relation exists in.
+Reference to a RAE or TX seen on a specific graph and at a specific time (graph slice).
 
 ### EZefRef
 
-Stands for Eternal ZefRef. Similar to a ZefRef but is independent of any time slice reference.
+Stands for Eternal ZefRef. Reference to a RAE or TX seen on a specific graph but independent of any time.
+
+### GeneralRef
+
+Reference to a RAE or TX but independent of any graph or time.
 
 ### Tag
 
@@ -56,11 +60,11 @@ A unique user-given, string reference to a specific graph or RAE within a given 
 
 ### Piping '|'
 
-The symbol used to chain operations together (can be seen as the '.' dot notation used in other languages).
+The symbol used to chain operations together where data flows from left to right.
 
-### ZefOps
+### ZefOp
 
-A library of functional, cross-langauge operators which can be used directly in Python code to query and transform data.
+A functional, cross-language operator which can be used directly in Python code to query, traverse, and transform data.
 
 ### ZefFX
 
