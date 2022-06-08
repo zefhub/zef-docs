@@ -22,7 +22,7 @@ def correct_or_misplaced_filters(guess: str):
     return (guess                                                       
         | enumerate                                                          
         | filter[Not[second | equals['_']]]                            
-        | map[if_then_else_apply[second | is_alpha][correct][misplaced]]         
+        | map[If[Is[second | is_alpha]][correct][misplaced]]         
         | concat                                                                
         | collect                                                       
         )
@@ -31,7 +31,7 @@ filters_pipeline = [
     filter[length | equals[5]],         # Just making sure it is a 5 letter word
     not_contained_filters(discard_letters),                      
     guesses | map[correct_or_misplaced_filters] | concat | collect 
-]  | concat | as_pipeline | collect    # Flatten all sublists and turn them into a pipeline
+]  | concat | to_pipeline | collect    # Flatten all sublists and turn them into a pipeline
 
 possible_solutions = wordlist | filters_pipeline | collect
 possible_solutions | run[print]
