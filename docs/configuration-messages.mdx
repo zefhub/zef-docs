@@ -25,3 +25,5 @@ Some more low-level options are also avaialble that affect behavior rather than 
 | `allow_dynamic_entity_type_definitions` | `False` | |
 | `allow_dynamic_relation_type_definitions` | `False` | |
 | `allow_dynamic_enum_type_definitions` | `False` | these three options override whether `ET`, `RT`, or `EN` creation is allowed. Primarily used for service jobs.|
+| `default_rollback_empty_tx` | `True` | If `True`, any transaction which is empty is undone, leaving the graph in exactly the same state before opening the transaction. |
+| `default_wait_for_tx_finish` | `True` | If `True`, the closing of a transaction is blocking until all of the data is processed. When a function that closes a transaction returns, the `read_head` and `write_head` will be in sync. |
