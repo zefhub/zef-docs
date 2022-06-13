@@ -28,14 +28,14 @@ These variables match to [zwitch options](configuration-messages)
   before the python module is fully loaded. This helps in identifying "core"
   tokens that are required for the loading of the module which are missing from
   the public set of ZefHub tokens.
-  
+
 ### Local storage
 
 - `ZEFDB_FILEGRAPH_PATH`: where to store filegraphs, the caches for the zef graphs
 - `ZEFDB_MEMORY_STYLE`: set to
-  * `ANONYMOUS`: for mmap-ed in-memory graphs without file backing.
-  * `FILE_BACKED`: for mmap-ed in-memory graphs with cached file backing, see `ZEFDB_FILEGRAPH_PATH`.
-  * blank: for automatic choice. This is currently, `ANONYMOUS` for local graphs and `FILE_BACKED` for graphs accessed from ZefHub.
+  - `ANONYMOUS`: for mmap-ed in-memory graphs without file backing.
+  - `FILE_BACKED`: for mmap-ed in-memory graphs with cached file backing, see `ZEFDB_FILEGRAPH_PATH`.
+  - blank: for automatic choice. This is currently, `ANONYMOUS` for local graphs and `FILE_BACKED` for graphs accessed from ZefHub.
 
 ### Core behavior
 
@@ -43,7 +43,7 @@ These variables match to [zwitch options](configuration-messages)
   or otherwise communicate with ZefHub in this mode. Currently, it is not
   possible to persist graphs locally in this mode either. You can create
   `ET`/`RT`/`EN`/`KW` tokens in this mode, although they will be assigned
-  temporary values and won't persist beyond your python session. 
+  temporary values and won't persist beyond your python session.
 - `ZEFDB_TRANSFER_CHUNK_SIZE`: influences the transfer of large graphs.
   Currently a bandaid on the websocket protocol, will be removed in the future.
 
@@ -53,8 +53,10 @@ These variables match to [zwitch options](configuration-messages)
   stored. Defaults to `$HOME/.zef`. The config file itself is located at `ZEFDB_CONFIG_PATH/config.yaml`.
 
 The following variables match to configuration options that can be modified through the
-`config` zefop. The variables will be merely listed here, see [config](configuration-config) for more
-details about their behaviour.
+`config` zefop.
+
+<!-- The variables will be merely listed here, see [config](configuration-config) for more
+details about their behaviour. -->
 
 - `ZEFDB_LOGIN_AUTOCONNECT`
 - `ZEFDB_BUTLER_AUTOSTART`
