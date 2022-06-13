@@ -22,6 +22,10 @@ Defines a node with an identity that defines the objects of a domain. i.e. ET.Pe
 
 An acronym that refers to the abstract versions of RT, AET, and ET. It represents the concept of a RAE independent of time through all graphs.
 
+### Zef Graph
+
+An immutable, in-memory, fully versioned graph that can be used as a local data structure and/or a persisted database. Analogous to SQLite, all data is layed out in continguous sequence that can be directly saved as a file.
+
 ### Delegate
 
 A low level node representing all instances of a specific RAE.
@@ -58,22 +62,36 @@ Reference to a RAE or TX but independent of any graph or time.
 
 A unique user-given, string reference to a specific graph or RAE within a given scope (namespace, organization, etc). Can be used for retrieval.
 
-### Piping '|'
-
-The symbol used to chain operations together where data flows from left to right.
-
 ### ZefOp
 
 A functional, cross-language operator which can be used directly in Python code to query, traverse, and transform data.
 
 ### ZefFX
 
-Tools to deal with effects in a controlled and understandable way.
+A library to deal with effects in a controlled and managed way, which guarantees resource safety along with tools for visibility, concurrency, and parallelism.
 
 ### ZefDB
 
-An in-memory, immutable graph database.
+A library that consists of Zef Graphs plus operators to interact with the data.
 
 ### ReactiveZ
 
 Tools to build reactive systems through functional transformations and subscriptions of data streams.
+
+### Flat Graph
+
+A data stucture capable of representing an arbitrary graph as an immutable value. Distinct from a Zef Graph in that it is independent of any time (flat).
+
+### Logical Type
+
+An extension of typical language type systems that leverages set theory and is capable of representing arbitrary constraints as types.
+
+<!-- ### Value Type
+
+An extension of typical language type systems that focuses on set theory, specifically a value type can represent a set given arbitrary constraints.
+
+The set of either Logical Types, Representation Types, or a combination of the two.
+
+### Representation Type
+
+A protocol for a concrete binary representation for values of a certain type, contiguously represented in memory with zero serialization overhead. -->
