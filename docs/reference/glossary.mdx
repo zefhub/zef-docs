@@ -2,89 +2,104 @@
 title: Glossary
 ---
 
-### RAE
+### Abstract RAE
 
-An acronym that refers to the 3 types which represent information on a Zef graph (RT, AET, ET). Each RAE has an identity which remains stable over time. Properties are not contained within any RAEs and are instead "flattened out" into connected Relations and Attributes.
-
-### Relation (RT)
-
-Defines the edge between any two RAEs on a graph. i.e. RT.Name
+An acronym that refers to the abstract versions of RT, AET, and ET. It represents the concept of a RAE independent of time through all graphs.
 
 ### Attribute Entity (AET)
 
 [Previously Atomic Entity] Defines a node with an identity where values can be assigned over time. i.e. AET.String
 
-### Entity (ET)
-
-Defines a node with an identity that defines the objects of a domain. i.e. ET.Person
-
-### Abstract RAE
-
-An acronym that refers to the abstract versions of RT, AET, and ET. It represents the concept of a RAE independent of time through all graphs.
-
-### Zef Graph
-
-An immutable, in-memory, fully versioned graph that can be used as a local data structure and/or a persisted database. Analogous to SQLite, all data is layed out in continguous sequence that can be directly saved as a file.
-
 ### Delegate
 
 A low level node representing all instances of a specific RAE.
 
-### Graph Slice
+### Entity (ET)
 
-The state of a specific graph at a specific point in time.
+Defines a node with an identity that defines the objects of a domain. i.e. ET.Person
 
-### Transaction Request (TXRequest)
+### Errors
 
-[Previously GraphDelta] A list that contains the instantiations, terminations, and value assignments a user would like to perform on a graph.
+Pure data values, follows closely to Golang.
 
-### Transaction (TX)
+### Eternal Graph
 
-A set of all instantiations, terminations, and value assignments that have been executed on a specific graph. A Transaction is generated after a Transaction Request(s) has been executed.
-
-### UID
-
-A variable length unique identifier used in various parts of Zef.
-
-### ZefRef
-
-Reference to a RAE or TX seen on a specific graph and at a specific time (graph slice).
+The Zef Graph viewed as a stable graph across time.
 
 ### EZefRef
 
 Stands for Eternal ZefRef. Reference to a RAE or TX seen on a specific graph but independent of any time.
 
+### Flat Graph
+
+A data stucture capable of representing an arbitrary graph as an immutable value. Distinct from a Zef Graph in that it is independent of any time (flat).
+
 ### GeneralRef
 
 Reference to a RAE or TX but independent of any graph or time.
 
-### Tag
+### Graph Slice
 
-A unique user-given, string reference to a specific graph or RAE within a given scope (namespace, organization, etc). Can be used for retrieval.
+The state of a specific graph at a specific point in time.
 
-### ZefOp
+### Logical Type
 
-A functional, cross-language operator which can be used directly in Python code to query, traverse, and transform data.
+An extension of typical language type systems that leverages set theory and is capable of representing arbitrary constraints as types.
 
-### ZefFX
+### RAE
 
-A library to deal with effects in a controlled and managed way, which guarantees resource safety along with tools for visibility, concurrency, and parallelism.
-
-### ZefDB
-
-A library that consists of Zef Graphs plus operators to interact with the data.
+An acronym that refers to the 3 types which represent information on a Zef graph (RT, AET, ET).
+Each RAE has an identity which remains stable over time.
+Properties are not contained within any RAEs and are instead "flattened out" into connected Relations and Attributes.
 
 ### ReactiveZ
 
 Tools to build reactive systems through functional transformations and subscriptions of data streams.
 
-### Flat Graph
+### Relation (RT)
 
-A data stucture capable of representing an arbitrary graph as an immutable value. Distinct from a Zef Graph in that it is independent of any time (flat).
+Defines the edge between any two RAEs on a graph. i.e. RT.Name
 
-### Logical Type
+### Tag
 
-An extension of typical language type systems that leverages set theory and is capable of representing arbitrary constraints as types.
+A unique user-given, string reference to a specific graph or RAE within a given scope (namespace, organization, etc). Can be used for retrieval.
+
+### Transaction (TX)
+
+A set of all instantiations, terminations, and value assignments that have been executed on a specific graph. A Transaction is generated after a Transaction Request(s) has been executed.
+
+### Transaction Request (TXRequest)
+
+[Previously GraphDelta] A list that contains the instantiations, terminations, and value assignments a user would like to perform on a graph.
+
+### UID
+
+A variable length unique identifier used in various parts of Zef.
+
+### Zef Graph
+
+An immutable, in-memory, fully versioned graph that can be used as a local data structure and/or a persisted database.
+Analogous to SQLite, all data is layed out in continguous sequence that can be directly saved as a file.
+
+### ZefDB
+
+A library that consists of Zef Graphs plus operators to interact with the data.
+
+### ZefFX
+
+A library to deal with effects in a controlled and managed way, which guarantees resource safety along with tools for visibility, concurrency, and parallelism.
+
+### ZefGQL (GraphQL)
+
+Any mentions of GQL in the docs refers to GraphQL.
+
+### ZefOp
+
+A functional, cross-language operator which can be used directly in Python code to query, traverse, and transform data.
+
+### ZefRef
+
+Reference to a RAE or TX seen on a specific graph and at a specific time (graph slice).
 
 <!-- ### Value Type
 
