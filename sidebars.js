@@ -67,8 +67,8 @@ module.exports = {
 			label: "Reference",
 			items: [
 				"reference/glossary",
-				"reference/zef-ops",
 				"reference/cheatsheet-comprehensive",
+				"reference/zef-ops",
 			],
 		},
 		// {
