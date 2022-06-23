@@ -37,7 +37,7 @@ from zef.ops import *
 from zef.experimental import sql_import
 
 decl = sql_import.guess_csvs("*.csv")
-decl | write_file["sql_import.yaml"] | run
+decl | save_file["sql_import.yaml"] | run
 ```
 
 ## Open YAML file with ImGui interface
