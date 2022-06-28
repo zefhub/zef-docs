@@ -80,6 +80,7 @@ module.exports = {
 			type: "category",
 			label: "Configuration",
 			items: [
+				"configuration-config",
 				"configuration-messages",
 				"configuration-env",
 				"configuration-client-state",
