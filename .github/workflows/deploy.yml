@@ -9,7 +9,7 @@ jobs:
   build:
     name: Build and upload Docker image
     runs-on: ubuntu-20.04
-    enviroment: CI
+    environment: CI
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
@@ -49,7 +49,7 @@ jobs:
     name: Deploy to K8S cluster
     needs: [build]
     runs-on: ubuntu-20.04
-    enviroment: CI
+    environment: CI
     steps:
       - name: Get tag
         id: vars
