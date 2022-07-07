@@ -26,10 +26,16 @@ Also check out our blog post on [SQL imports](https://zef.zefhub.io/blog/sql-imp
 ```python
 pip3 install "imgui[sdl2]"
 
+# On MacOS:
 brew install SDL2
+
+# On other systems, install with your package manager, apt, pacman, yum, etc...
 ```
 
 ## Generate YAML file
+
+Unzip the CSV files into a new empty directory and then start your interpreter
+from this directory. Then:
 
 ```python
 from zef import *
@@ -41,6 +47,10 @@ decl | save_file["sql_import.yaml"] | run
 ```
 
 ## Open YAML file with ImGui interface
+
+```python
+python3 -m zef.experimental.sql_ui.wizard sql_import.yaml
+```
 
 If using MacOS, make sure you use Python 3.9 (as of March 2022) and are using the Python 3.9 Zef wheel.
 
@@ -76,12 +86,17 @@ If needed, we may add an option to save to a new filename in the future.
 
 ## Load edited YAML file into Zef
 
+If you have appropriately configured the importer you should be able to run the
+following code to perform the actual import:
+
 ```python
 decl = "sql_import.yaml" | load_file | run | get["content"] | collect
 g = Graph()
 actions = sql_import.import_actions(decl)
 actions | transact[g] | run
 ```
+
+If you would like, you can use our pre-configured file for this dataset [here](northwind_sample.yaml).
 
 See the results of your import!
 
@@ -90,29 +105,29 @@ yo(g)
 
 <...snip...>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Atomic Entities ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[6007 total, 6007 alive]       AET.String
-[2985 total, 2985 alive]       AET.Float
-[2527 total, 2527 alive]       AET.Int
-[2232 total, 2232 alive]       AET.QuantityFloat.dollars
-[2469 total, 2469 alive]       AET.Time
+[5993 total, 5993 alive]       AET.String
+[5217 total, 5217 alive]       AET.Float
+[3496 total, 3496 alive]       AET.Int
+[2487 total, 2487 alive]       AET.Time
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Entities ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[1660 total, 1660 alive]       ET.Order
-[154 total, 154 alive]         ET.Product
-[12 total, 12 alive]           ET.Employee
+[11 total, 11 alive]           ET.Employee
 [93 total, 93 alive]           ET.Customer
+[9 total, 9 alive]             ET.EmployeeTerritory
 [53 total, 53 alive]           ET.Territory
 [4 total, 4 alive]             ET.Region
+[830 total, 830 alive]         ET.Order
 [3 total, 3 alive]             ET.Shipper
+[77 total, 77 alive]           ET.Product
 [29 total, 29 alive]           ET.Supplier
 [8 total, 8 alive]             ET.Category
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  Relations ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [4 total, 4 alive]             RT.RegionDescription
        [4 total, 4 alive]             (ET.Region, RT.RegionDescription, AET.String)
-[2155 total, 2155 alive]       RT.Order
-       [2155 total, 2155 alive]       (ET.Order, RT.Order, ET.Product)
-[9 total, 9 alive]             RT.ReportsTo
-       [9 total, 9 alive]             (ET.Employee, RT.ReportsTo, ET.Employee)
+[2155 total, 2155 alive]       RT.OrderDetails
+       [2155 total, 2155 alive]       (ET.Order, RT.OrderDetails, ET.Product)
+[8 total, 8 alive]             RT.ReportsTo
+       [8 total, 8 alive]             (ET.Employee, RT.ReportsTo, ET.Employee)
 <...snip...>
 ```
