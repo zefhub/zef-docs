@@ -48,12 +48,14 @@ type Department {
 To host this as a GraphQL server, we save this file to `sample.graphql` and then
 run:
 ```
-python3 -m zef.gql.simplegql sample.graphql data-graph --create --port 5001 --bind 0.0.0.0
+python3 -m zef.gql.simplegql --schema-file=sample.graphql --data-tag=data --create --port 5001 --bind 0.0.0.0
 ```
 
-You may then point your browser at the [GraphQL Playground](https://graphqlbin.com) and enter
-`http://localhost:5001/gql` to explore the GraphQL API. Note that the graph
-created `data-graph` contains no data.
+Note that this command uses (or creates if it doesn't already exist) a graph
+with the tag `data`. You may then point your browser at the [GraphQL
+Playground](https://graphqlbin.com) and enter `http://localhost:5001/gql` to
+explore the GraphQL API. Try creating a department and employee and then
+querying them.
 
 For help on the commandline arguments, run:
 

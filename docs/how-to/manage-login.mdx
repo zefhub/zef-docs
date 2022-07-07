@@ -23,7 +23,7 @@ ZefHub. There are several methods:
   GitHub account.
 - "Guest": don't create any account, but login as a guest user for this session only.
 
-Login information for Zef is stored in `~/.zef/credentials` for future sessions.
+Login information for Zef is stored in `~/.zef/hub.zefhub.io/credentials` for future sessions.
 No passwords are stored in this, only a refresh token.
 
 ## Logging out
@@ -37,7 +37,8 @@ from zef.ops import *
 logout | run
 ```
 
-This is nearly equivalent to deleting the `~/.zef/credentials` file.
+This is nearly equivalent to deleting the `~/.zef/hub.zefhub.io/credentials`
+file but will also forcibly unload any graphs you have loaded.
 
 :::danger
 

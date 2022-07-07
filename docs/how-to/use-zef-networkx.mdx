@@ -65,33 +65,21 @@ advance with the Zef graph head.
 
 ### Node/edge properties
 
-Any AETs on the entities are interpreted as fields:
+Nodes are simple wrappers around a ZefRef object and any AETs on the entities are interpreted as fields:
 
-```
+```python
 >>> for node in dg.nodes:
 ...     print(f"{node} has name {dg.nodes[node]['Name']}")
 
-Node(#96) has name Alex
-Node(#126) has name Bob
-Node(#134) has name Charlie
-Node(#142) has name Doug
-```
-
-Nodes are simple wrappers around a ZefRef object:
-
-```
->>> for node in dg.nodes:
-...     print(f"{node} is proxy for ZefRef {node.z}")
-
-Node(#96) is proxy for ZefRef <ZefRef #96 ET.Person slice=2>
-Node(#126) is proxy for ZefRef <ZefRef #126 ET.Person slice=2>
-Node(#134) is proxy for ZefRef <ZefRef #134 ET.Person slice=2>
-Node(#142) is proxy for ZefRef <ZefRef #142 ET.Person slice=2>
+<ZefRef #97 ET.Person slice=2> has name Doug
+<ZefRef #127 ET.Person slice=2> has name Charlie
+<ZefRef #135 ET.Person slice=2> has name Bob
+<ZefRef #143 ET.Person slice=2> has name Alex
 ```
 
 Edges can similarly possess fields:
 
-```
+```python
 >>> # We can also do lookups with ZefRefs
 ... z_alex = zg | now | all[ET.Person] | select_by_field[RT.Name]["Alex"] | collect
 ... z_bob = zg | now | all[ET.Person] | select_by_field[RT.Name]["Bob"] | collect
@@ -99,43 +87,55 @@ Edges can similarly possess fields:
 ... info = dg[z_alex][z_bob]
 ... print(f"Edge information: {info}")
 
-Edge information: {'Since': <Time 2022-03-09 12:50:19 (+0800)>, 'MetAt': 'Gym'}
+Edge information: {'MetAt': 'Gym', 'Since': <Time 2022-07-08 07:55:57 (+0800)>, 'type': RT.FriendsWith}
 ```
 
 ### Simple characterisations
 
 Many simple NetworkX analysis functions will work directly on these graphs:
 
-```
+```python
 >>> nx.node_connectivity(ug_all)
 
 1
 ```
 
-```
+```python
 >>> list(nx.connected_components(ug))
 
-[{Node(#126), Node(#96), Node(#134)}, {Node(#142)}]
+[{<ZefRef #97 ET.Person slice=2>},
+ {<ZefRef #127 ET.Person slice=2>,
+  <ZefRef #135 ET.Person slice=2>,
+  <ZefRef #143 ET.Person slice=2>}]
 ```
 
-```
+```python
 >>> nx.greedy_color(ug_all)
 
-{Node(#126): 0, Node(#96): 1, Node(#134): 2, Node(#142): 1}
+{<ZefRef #135 ET.Person slice=2>: 0,
+ <ZefRef #127 ET.Person slice=2>: 1,
+ <ZefRef #143 ET.Person slice=2>: 2,
+ <ZefRef #97 ET.Person slice=2>: 1}
 ```
 
-```
+```python
 >>> nx.shortest_path(dg_all)
 
-{Node(#96): {Node(#96): [Node(#96)],
-  Node(#126): [Node(#96), Node(#126)],
-  Node(#134): [Node(#96), Node(#134)],
-  Node(#142): [Node(#96), Node(#126), Node(#142)]},
- Node(#126): {Node(#126): [Node(#126)],
-  Node(#134): [Node(#126), Node(#134)],
-  Node(#142): [Node(#126), Node(#142)]},
- Node(#134): {Node(#134): [Node(#134)]},
- Node(#142): {Node(#142): [Node(#142)]}}
+{<ZefRef #97 ET.Person slice=2>: {<ZefRef #97 ET.Person slice=2>: [<ZefRef #97 ET.Person slice=2>]},
+ <ZefRef #127 ET.Person slice=2>: {<ZefRef #127 ET.Person slice=2>: [<ZefRef #127 ET.Person slice=2>]},
+ <ZefRef #135 ET.Person slice=2>: {<ZefRef #135 ET.Person slice=2>: [<ZefRef #135 ET.Person slice=2>],
+  <ZefRef #97 ET.Person slice=2>: [<ZefRef #135 ET.Person slice=2>,
+   <ZefRef #97 ET.Person slice=2>],
+  <ZefRef #127 ET.Person slice=2>: [<ZefRef #135 ET.Person slice=2>,
+   <ZefRef #127 ET.Person slice=2>]},
+ <ZefRef #143 ET.Person slice=2>: {<ZefRef #143 ET.Person slice=2>: [<ZefRef #143 ET.Person slice=2>],
+  <ZefRef #127 ET.Person slice=2>: [<ZefRef #143 ET.Person slice=2>,
+   <ZefRef #127 ET.Person slice=2>],
+  <ZefRef #135 ET.Person slice=2>: [<ZefRef #143 ET.Person slice=2>,
+   <ZefRef #135 ET.Person slice=2>],
+  <ZefRef #97 ET.Person slice=2>: [<ZefRef #143 ET.Person slice=2>,
+   <ZefRef #135 ET.Person slice=2>,
+   <ZefRef #97 ET.Person slice=2>]}}
 ```
 
 Many other NetworkX features work as above.
@@ -154,4 +154,4 @@ nx.average_clustering(dg.to_native())
 ```
 
 The nodes in a graph returned by `to_native()` are still thin wrappers around a
-`ZefRef` and can be used to get back to the original graph.
+`ZefRef` and can be used to get back to data on the original graph directly.

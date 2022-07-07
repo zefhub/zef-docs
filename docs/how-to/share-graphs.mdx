@@ -79,13 +79,13 @@ g = Graph("secret-santa-planning")
 This will cause a "merge request" to be sent via the network and wait for a
 successful response to be received.
 
-If many rapid updates need to be applied, you should take the host role:
+If many rapid updates need to be applied, you should take the transactor role:
 
 ```python
-make_primary(g)
+g | take_transactor_role | run
 for i in range(1000):
     ET.Participant | g | run
-make_primary(g, False)
+g | release_transactor_role | run
 ```
 
 Acquiring host role means that all updates are performed in-memory with maximum

@@ -23,11 +23,11 @@ receipt = [
 ] | transact[g] | run
 ```
 
-Atomic entities can be given with value assignment operations:
+Attribute entities can be given with value assignment operations:
 
 ```python
 receipt = [
-    AET.String <= "TX-9000",
+    AET.String | assign["TX-9000"],
 ] | transact[g] | run
 ```
 
@@ -47,7 +47,7 @@ that the above is equivalent to:
 receipt = [
     (Z["source"], RT.Model, Z["target"]),
     ET.Machine["source"],
-    AET.String["target"] <= "TX-9000",
+    AET.String["target"] | assign["TX-9000"],
 ] | transact[g] | run
 ```
 
@@ -59,7 +59,7 @@ should satisfy:
 ```python
 assert receipt["source"] | is_a[ET.Machine] | collect
 assert receipt["target"] | is_a[AET.String] | collect
-assert receipt["target"] | value | equals["TX-9000"] collect
+assert receipt["target"] | value | equals["TX-9000"] | collect
 ```
 
 A RAE from any graph can be referenced or merged using the GraphDelta:
@@ -121,7 +121,7 @@ receipt = [
     (Z["p"], RT.OwnerOf, Z["rufus"]),
     (Z["p"], RT.OwnerOf, Z["spot"]),
     (Z["p"], RT.OwnerOf, Z["mittens"]),
-] transact[g] | run
+] | transact[g] | run
 ```
 
 This can instead be written as as length-3 tuple, where the 3rd element is a list:
