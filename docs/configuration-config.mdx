@@ -48,7 +48,7 @@ would like the entire config.
 ### Purpose
 
 | Variable          | Type                           | Default                     | Purpose                                                                                            | Env var                 |
-|-------------------+--------------------------------+-----------------------------+----------------------------------------------------------------------------------------------------+-------------------------|
+|-------------------|--------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------|-------------------------|
 | butler.autoStart  | bool                           | True                        | Whether to start the butler on python module import                                                | ZEFDB_BUTLER_AUTOSTART  |
 | login.autoConnect | "always"<br />"auto"<br />"no" | "auto"                      | Whether to connect to ZefHub on butler startup. "auto" means to connect if credentials are present | ZEFDB_LOGIN_AUTOCONNECT |
 | login.zefhubURL   | string                         | "wss://hub/zefhub.io"       | The ZefHub URL to connect to.                                                                      | ZEFHUB_URL              |
