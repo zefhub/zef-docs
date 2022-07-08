@@ -1,8 +1,6 @@
 ---
-title: ZefHub connections
+title: Authentication methods
 ---
-
-## ZefHub connections
 
 By default, importing the zef module will attempt to connect to ZefHub
 automatically. However, this is only possible if your credentials are known
@@ -28,9 +26,9 @@ process. ZefDB looks for credentials in the following order:
 
 1. The `ZEFHUB_AUTH_KEY` environment variable (plaintext email/password).
 2. The `~/.zef/zefhub.key` file (plaintext email/password).
-3. The `~/.zef/credentials` file (refresh token).
+3. The `~/.zef/hub.zefhub.io/credentials` file (refresh token).
 
-It is recommended to use the refresh token method from the `~/.zef/credentials`
+It is recommended to use the refresh token method from the `~/.zef/hub.zefhub.io/credentials`
 file, which is populated via the `login` effect. However, if you do use a
 plaintext email/password, it is not communicated directly with ZefHub but
 instead exchanged for a login token via secure connection with Google Firebase.
@@ -49,6 +47,6 @@ When graphs are unloaded, any `ZefRef` referencing that graph is invalidated.
 
 :::
 
-Alternatively, you can logout by deleting the `~/.zef/credentials` file and
-restarting your python session.
+Alternatively, you can logout by deleting the `~/.zef/hub.zefhub.io/credentials`
+file and restarting your python session.
 
