@@ -9,6 +9,13 @@ environment variable). When any command that requires ZefHub is run (for
 example, a requesting a graph by tag, or asking for a new `ET` or `RT`) then it
 will throw an exception if you are not connected to ZefHub.
 
+The two main login methods are either:
+
+1. A refresh token. This is obtained in your client through Google Firebase
+Authentication using either an email/password combination or via OAuth with
+GitHub.
+2. An API key, generated from the ZefHub console.
+
 To login, you should use the `login` effect. Calling this will start a local
 HTTP server to perform auth through either a 3rd-party provider (for example
 GitHub) or an email/password pair. Explicitly, this is the recommended
@@ -24,16 +31,19 @@ login | run
 It is possible to provide credentials for login without using the browser login
 process. ZefDB looks for credentials in the following order:
 
-1. The `ZEFHUB_AUTH_KEY` environment variable (plaintext email/password).
-2. The `~/.zef/zefhub.key` file (plaintext email/password).
+1. The `ZEFHUB_AUTH_KEY` environment variable (API key).
+2. The `~/.zef/zefhub.key` file (API key).
 3. The `~/.zef/hub.zefhub.io/credentials` file (refresh token).
 
 It is recommended to use the refresh token method from the `~/.zef/hub.zefhub.io/credentials`
-file, which is populated via the `login` effect. However, if you do use a
-plaintext email/password, it is not communicated directly with ZefHub but
-instead exchanged for a login token via secure connection with Google Firebase.
+file, which is populated via the `login` effect.
 
-To login as a guest user, you can set `ZEFHUB_AUTH_KEY` to `GUEST`.
+If you are running a non-user service, then `ZEFHUB_AUTH_KEY` can be set to an
+API key generated from the ZefHub console. API keys can have their permissions
+restricted to only the operations your service requires.
+
+As a special case, to login as a guest user, you can set `ZEFHUB_AUTH_KEY` to
+`GUEST`.
 
 ### Logging out
 
