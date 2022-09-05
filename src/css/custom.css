@@ -9,6 +9,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Aldrich&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap");
 
 :root {
+  --ifm-container-width-xl: 850px;
   --custom-content-color: #fff;
   --custom-content-color-light: #aaa;
   --custom-content-color-lightest: #fefefe;
@@ -99,7 +100,7 @@ header {
     var(--ifm-heading-vertical-rhythm-bottom) * var(--ifm-leading) * 0.2
   );
   margin-top: calc(
-    var(--ifm-h2-vertical-rhythm-top) * var(--ifm-leading) * 1.5
+    var(--ifm-h2-vertical-rhythm-top) * var(--ifm-leading) * 1.8
   );
 }
 

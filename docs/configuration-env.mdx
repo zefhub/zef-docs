@@ -4,9 +4,8 @@ title: Environment variables
 
 ### ZefHub connections
 
-- `ZEFHUB_AUTH_KEY`: what key to use to authenticate with ZefHub. A string of
-  `GUEST` indicates authentication as a guest user. See
-  [authentication](configuration-auth) for more information.
+- `ZEFHUB_AUTH_KEY`: either `GUEST` to authenticate as a guest user or an API
+  key. See [authentication](configuration-auth) for more information.
 - `ZEFHUB_URL`: the URL to connect to, by default `wss://hub.zefhub.io`.
 
 ### Information messages
@@ -57,3 +56,4 @@ details about their behaviour.
 - `ZEFDB_LOGIN_AUTOCONNECT`
 - `ZEFDB_BUTLER_AUTOSTART`
 - `ZEFHUB_URL`
+- `ZEFDB_TOKENS_CACHE_PATH`
