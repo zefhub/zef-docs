@@ -1,0 +1,5 @@
+---
+id: wish
+title: Wish
+---
+
