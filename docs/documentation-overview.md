@@ -1,6 +1,7 @@
 ---
 id: documentation-overview
-title: Documentation Overview\slug: /
+title: Documentation Overview
+slug: /
 ---
 
 # Documentation Overview  
