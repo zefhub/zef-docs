@@ -105,7 +105,7 @@ Write more Total Functions (ZefBlog)
   
   
   
-### Domain Types  
+## Domain Types  
 RAEs: Relations, Attribute Entities, Entities  
   
 - **ET.Foo**: denotes the set of all instances of entities with this fundamental type. The only way our program can refer to a real world entity (or a concept we choose to model this way) is via a reference. Also see: [[Entities and Concepts don't live in the CPU]]. Here comes the crux. This set / type `ET.Foo` actually operates at a higher semantic level. It automatically discards references. This means any `z` of concrete type  `ZefRef` / `EZefRef` / `Ref`  referencing an entity of this type returns true for `z | is_a[ET.Foo]`  
@@ -128,12 +128,12 @@ see also: Dictionary Queries in Zef
   
   
   
-### Zef Types are not Mutually Exclusive  
+## Zef Types are not Mutually Exclusive  
 Both Lists and Tuples are not fundamental types (both an array and a generator) qualify as a list. Take the concrete array `v = [42, 'hello']`. There are many sets / types that this is part of. For instance, `v | is_a[T]` will be true for both `T = Tuple[Int, String]`, but also `T = List[Int | String]`, `List[String | Int | Graph] | Float`, etc.  
 It is therefore not meaningful to ask for a value's (singular) logic type. There are infinitely many. You could however ask for a value's representation type, i.e. in which specific form is this value represented in bits. This question operates on a lower abstraction level though. When modeling our domain, we usually do not want to worry about the nitty gritty low level details of how something is represented in memory. We want to operate at the level of our domain and different parts of our code should ideally decide on the abstraction layer they operate on and try sticking to that (of course there may be legitimate exceptions, this is more a default rule of thumb).  
   
   
-### Representation Types  
+## Representation Types  
 These can be seen as primitive types. Any data in our system must be represented in some form. Whether it is a String, an Array or a lazy Generator. Roughly speaking, Zef's representation types boil down to what is usually understood as a **type** in many programming languages.  
 It is worth noting though that representation types themselves can serve as logic types. They denote the set of all values represented in the way they denote. e.g. `Int32`. The same conceptual value may be represented by different types though, e.g. 42 could be represented by a `Int8`, `Int16`, etc.  
 As a consequence, equality of value does not imply equality of representation type. This may seem surprising at first, but is not idiosyncratic to Zef. e.g. in Python `42 == 42.0` returns True, but `type(42) == type(42.0)` is False.  
