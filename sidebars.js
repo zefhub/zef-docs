@@ -54,13 +54,6 @@ module.exports = {
             "websocket"
           ]
         },
-        {
-          "type": "category",
-          "label": "ZefUI",
-          "items": [
-            "zef-ui-command-line"
-          ]
-        },
         "introduction-to-zef-db",
         "using-zef-fx"
       ]
@@ -107,6 +100,7 @@ module.exports = {
           ]
         },
         "data-first-vs-data-last-languages-where-python-stands",
+        "unifying-streams-and-dbs",
         "zef-design-aspirations",
         "low-level-graph-data-layout",
         "introduction-to-zef-fx",
