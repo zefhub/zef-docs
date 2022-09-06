@@ -1,6 +1,5 @@
 module.exports = {
   "mainSidebar": [
-    "documentation-overview",
     {
       "type": "category",
       "label": "Introduction",
