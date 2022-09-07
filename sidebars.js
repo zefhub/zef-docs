@@ -144,7 +144,7 @@ module.exports = {
             "2021-day-6"
           ]
         },
-        "zef-ops-syntax-gym"
+        "zef-op-katas"
       ]
     },
     {
