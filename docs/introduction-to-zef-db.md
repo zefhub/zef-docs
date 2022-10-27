@@ -233,7 +233,7 @@ The dictionary syntax can be nested. Note than the direction of the relations on
 ] | transact[g] | run  
 ```  
   
-Resulting struvture:  
+Resulting structure:  
 ![](0ca04ac86152536a22224b126f7fdc157fae6e6365b19410f18864039ce81f37.png)  
   
   

@@ -28,7 +28,7 @@ diff(flat_graph_2, flat_graph_1)    # between two FlatGraphs
 diff(flat_graph_2, graph_slice_1)   # between a FlatGraph and a GS  
 ```  
   
-Essentially this diffing can be done between any graphs that represent state. Since the identity of atoms in Zef are tracked across different graphs based on the ZefDoc - Explanation - Zef Lineage Model, diffs can even be computed between states of different ZefDB graphs.  
+Essentially this diffing can be done between any graphs that represent state. Since the identity of atoms in Zef are tracked across different graphs based on the Zef Lineage Model, diffs can even be computed between states of different ZefDB graphs.  
   
   
 ### Data Structure  

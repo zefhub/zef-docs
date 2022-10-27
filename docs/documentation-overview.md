@@ -70,8 +70,10 @@ Technical description of the machinery and how to operate it. This aspires to pr
   
   
   
-## Table of Contents  
-TODO  
+## Feature List  
+(this is a work in progress, not all things considered features are listed)  
+- Start using ZefDB in a Local-First approach, switch to distributed and automatic persistence any time  
+  
   
   
   

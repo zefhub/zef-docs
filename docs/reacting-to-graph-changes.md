@@ -67,7 +67,7 @@ new_person_stream = g | on[Instantiated[Person]]
   
   
 ## Triples & Pattern Matching  
-See [[Triples & Pattern Matching (ZefDoc)]] for a discussion on the triple of types.  
+See [[ZefDoc - Triples & Pattern Matching]] for a discussion on the triple of types.  
   
 ```python  
 my_pattern = (ET.Actor, RT.ActedIn, ET.Movie)  
