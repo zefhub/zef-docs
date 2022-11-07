@@ -13,6 +13,7 @@ module.exports = {
       "type": "category",
       "label": "How-To",
       "items": [
+        "introduction-to-zef-db",
         {
           "type": "category",
           "label": "Traverse Graphs",
@@ -50,6 +51,15 @@ module.exports = {
           ]
         },
         "traversing-graphs",
+        "data-wrangling",
+        {
+          "type": "category",
+          "label": "ZefDB",
+          "items": [
+            "introduction-to-zef-db",
+            "zef-db-graph"
+          ]
+        },
         "reacting-to-graph-changes",
         {
           "type": "category",
@@ -62,7 +72,6 @@ module.exports = {
           ]
         },
         "traversing-time",
-        "introduction-to-zef-db",
         {
           "type": "category",
           "label": "ZefOps",
@@ -114,15 +123,25 @@ module.exports = {
             "entity-vs-value",
             "semantic-diffing",
             "graph-slice",
+            "ezef-ref",
             "atoms"
           ]
         },
         "data-first-vs-data-last-languages-where-python-stands",
+        "creating-a-data-model",
         "graph-relational-model",
         "unifying-streams-and-dbs",
         "zef-vs-python-lists-tuples",
         "low-level-graph-data-layout",
         "introduction-to-zef-fx",
+        {
+          "type": "category",
+          "label": "ValueTypes",
+          "items": [
+            "user-value-type-advanced-typing",
+            "z-expressions"
+          ]
+        },
         {
           "type": "category",
           "label": "ZefDB",
@@ -133,6 +152,7 @@ module.exports = {
           ]
         },
         "logical-atomism",
+        "predicate-dispatch",
         {
           "type": "category",
           "label": "Logic Types",
@@ -164,7 +184,8 @@ module.exports = {
           "items": [
             "facts-logic"
           ]
-        }
+        },
+        "zef-value-types"
       ]
     },
     {
@@ -212,7 +233,14 @@ module.exports = {
       "label": "FAQ",
       "id": "faq"
     },
-    "documentation-overview"
+    "documentation-overview",
+    {
+      "type": "category",
+      "label": "HowTo",
+      "items": [
+        "codebase-queries"
+      ]
+    }
   ],
   "developerSidebar": [
     {

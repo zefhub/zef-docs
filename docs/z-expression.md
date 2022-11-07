@@ -18,7 +18,7 @@ T1 = (Z < 10)  # the set / type of all things considered to be less than 10.
 'hi' | is_a[T1]      # False  
 ```  
   
-On the type level, `Z` is of type `ZExpression`. As soon as a `ZExpression` is combined with some value using one of the binary boolean operators `==, !=, <, >, <=, >=`, this evaluates to a Zef ValueType.  
+On the type level, `Z` is of type `ZExpression`. As soon as a `ZExpression` is combined with some value using one of the binary boolean operators `==, !=, <, >, <=, >=`, this evaluates to a [Zef ValueType](zef-value-types).  
   
   
   

@@ -3,7 +3,16 @@ id: gather
 title: Gather
 ---
 
-### Overview & Rules  
+  
+### Overview  
+The `gather` operator allows you to efficiently "select" or gather subgraphs of certain atoms, starting from an initial set.  
+  
+The gather ZefOp executes a sequence of steps: in each step new atoms are added to the set according to your specified rules. T  
+!ZefDoc - Gather 2022-11-05 08.51.55.excalidraw  
+The gray region shows the selected nodes at each step.  
+  
+  
+### Rules  
 Suppose you're starting from one or a given set of ZefRef and you are interested in the "surrounding region" in the graph. The `gather` operator allows you to iteratively explore the region and "gather" neighboring nodes, resulting in a subgraph of the region.  
   
 You can specify the traversal policy by specifying a declarative set of `rules`  
@@ -53,3 +62,4 @@ You can also call gather on a single atom (a ZefRef pointing to it). This is equ
 ```python  
 z1 | gather[rules]  
 ```  
+  

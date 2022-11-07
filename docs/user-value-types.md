@@ -44,6 +44,7 @@ So why recreate all this functionality? There are various reasons:
 ```python  
 # define a new UVT  
 Email = UserValueType('Email', String, Is[contains['@']] )  
+# structure:    (type name, representation type, constraints)  
   
 # construct an instance of this type  
 yolandis_mail = Email('yolandi@zefhub.io')      # succeeds  
@@ -56,7 +57,7 @@ One can use UserValueTypes in function signatures to be more restrictive
  ```python  
 def send_email(address: Email):  
 	...  
-  
+   
 send_mail(yolandis_mail)          # valid  
 send_mail('yolandi@zefhub.io')    # error: does not accept raw Strings  
 ```  
@@ -71,7 +72,7 @@ to_upper_case(yolandis_mail)    # returns a String
 ### Example 2  
 ```python  
 # suppose we require that every person instance has a 'surname' field  
-MyConstraint = Is[contains['surname']]   
+MyConstraint = {'surname': String}   # Dict as type:   
   
 Person = UserValueType('Person', Dict, MyConstraint)  
 ```  
@@ -131,3 +132,6 @@ For instances of these types:
 | type information        | ✅  | ❌         | ✅            |   ✅      |  
 | automatic serialization | ✅  | ✅         | ❌            |   ✅      |  
   
+  
+### Related Material  
+- [Advanced typing for UserValueTypes](user-value-type-advanced-typing)
