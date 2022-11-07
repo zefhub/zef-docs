@@ -10,7 +10,7 @@ A [Zef reference](reference-types) that semantically also contains a reference f
 ### Representation  
 We can encode everything in two UIDs:  
 1. the UID of the [object](https://plato.stanford.edu/entries/object/#ContObjeVsSubj) Zef Atom (entity / attribute entity / relation)  
-2. the UID of the transaction which determines the ZefDoc - Reference Frame  
+2. the UID of the transaction which determines the reference frame  
   
   
   

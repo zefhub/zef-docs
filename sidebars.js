@@ -13,6 +13,7 @@ module.exports = {
       "type": "category",
       "label": "How-To",
       "items": [
+        "introduction-to-zef-db",
         {
           "type": "category",
           "label": "Traverse Graphs",
@@ -42,6 +43,23 @@ module.exports = {
         "how-to/share-graphs",
         "how-to/use-zef-networkx",
         "how-to/manage-login",
+        {
+          "type": "category",
+          "label": "ValueTypes",
+          "items": [
+            "image"
+          ]
+        },
+        "traversing-graphs",
+        "data-wrangling",
+        {
+          "type": "category",
+          "label": "ZefDB",
+          "items": [
+            "introduction-to-zef-db",
+            "zef-db-graph"
+          ]
+        },
         "reacting-to-graph-changes",
         {
           "type": "category",
@@ -53,7 +71,14 @@ module.exports = {
             "websocket"
           ]
         },
-        "introduction-to-zef-db",
+        "traversing-time",
+        {
+          "type": "category",
+          "label": "ZefOps",
+          "items": [
+            "gather"
+          ]
+        },
         "using-zef-fx"
       ]
     },
@@ -63,6 +88,7 @@ module.exports = {
       "items": [
         "explanations/privileges",
         "explanations/blob-structure",
+        "user-value-types",
         {
           "type": "category",
           "label": "Wish",
@@ -79,6 +105,7 @@ module.exports = {
         },
         "introduction-to-logic-types",
         "zef-ops-two-levels-of-laziness",
+        "zef-objects",
         {
           "type": "category",
           "label": "FlatGraph",
@@ -93,23 +120,47 @@ module.exports = {
             "zef-ref",
             "reference-types",
             "reference-frame-programming",
+            "entity-vs-value",
             "semantic-diffing",
             "graph-slice",
+            "ezef-ref",
             "atoms"
           ]
         },
         "data-first-vs-data-last-languages-where-python-stands",
+        "creating-a-data-model",
+        "graph-relational-model",
         "unifying-streams-and-dbs",
-        "zef-design-aspirations",
+        "zef-vs-python-lists-tuples",
         "low-level-graph-data-layout",
         "introduction-to-zef-fx",
         {
           "type": "category",
-          "label": "ZefDB",
+          "label": "ValueTypes",
           "items": [
-            "relational-or-graph"
+            "user-value-type-advanced-typing",
+            "z-expressions"
           ]
         },
+        {
+          "type": "category",
+          "label": "ZefDB",
+          "items": [
+            "zef-db-transactions",
+            "relational-or-graph",
+            "graph-synchronization"
+          ]
+        },
+        "logical-atomism",
+        "predicate-dispatch",
+        {
+          "type": "category",
+          "label": "Logic Types",
+          "items": [
+            "triples-pattern-matching"
+          ]
+        },
+        "ref-types-vs-uids",
         {
           "type": "category",
           "label": "Code Search",
@@ -117,7 +168,7 @@ module.exports = {
             "finding-zef-ops"
           ]
         },
-        "why-we-built-zef",
+        "z-expression",
         {
           "type": "category",
           "label": "Graphs",
@@ -125,7 +176,16 @@ module.exports = {
             "graph-instructions",
             "graph-instructions"
           ]
-        }
+        },
+        "design-goals",
+        {
+          "type": "category",
+          "label": "Logic",
+          "items": [
+            "facts-logic"
+          ]
+        },
+        "zef-value-types"
       ]
     },
     {
@@ -144,7 +204,8 @@ module.exports = {
             "2021-day-6"
           ]
         },
-        "zef-ops-syntax-gym"
+        "importing-plain-python-data",
+        "zef-op-katas"
       ]
     },
     {
@@ -172,7 +233,14 @@ module.exports = {
       "label": "FAQ",
       "id": "faq"
     },
-    "documentation-overview"
+    "documentation-overview",
+    {
+      "type": "category",
+      "label": "HowTo",
+      "items": [
+        "codebase-queries"
+      ]
+    }
   ],
   "developerSidebar": [
     {

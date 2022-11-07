@@ -233,7 +233,7 @@ The dictionary syntax can be nested. Note than the direction of the relations on
 ] | transact[g] | run  
 ```  
   
-Resulting struvture:  
+Resulting structure:  
 ![](0ca04ac86152536a22224b126f7fdc157fae6e6365b19410f18864039ce81f37.png)  
   
   
@@ -292,11 +292,6 @@ Technically, this makes ZefDB graphs [Typed Meta-Graphs ](https://arxiv.org/abs/
 ```  
   
 ![](e8b050b3f327aaf57f133ed7ea9a06ea0a74d985ca4a497af170ac4860d6d030.png)  
-  
-  
-  
-## Ensuring Field Uniqueness: SetField  
-  
   
   
   

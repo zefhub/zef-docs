@@ -4,6 +4,8 @@ title: Relational or Graph
 ---
 
   
+![](6eb901ab29d46f643c439e72e0fcb16ff8f7b4eb7b9e1a9eaa5681b32000b687.png)  
+  
 Is ZefDB a relational or a graph DB? This is a question we often hear.  
   
 The answer to this question is more complicated, since different people and communities use terms somewhat differently.  
