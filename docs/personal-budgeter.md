@@ -1360,7 +1360,7 @@ The result should speak for itself. There are three obvious issues however:
   
 ### Manually  
   
-See the guide [GraphQL](/how-to/graphql-manual) for how to customize the GraphQL schema.  
+See the guide [[ZefDoc - GraphQL Manual Schema]] for how to customize the GraphQL schema.  
   
   
 ### Running a server  
@@ -1397,8 +1397,7 @@ We have the ability to add accounts, categories and transactions to a graph,
 linking them together, displaying them in a tabular form and accessing them  
 through a GQL API.  
   
-There's much more to do. In the next part [to-be-done](budgeter\_part2), we'll get a few more things up and  
-running:  
+There's much more to do. In the next part  
   
 -   Budget goals, summaries and warnings.  
 -   Improving the data layout to handle more cases  

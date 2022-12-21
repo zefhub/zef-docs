@@ -12,7 +12,7 @@ Zef graph, this is the place to learn how.
 Instead of reinventing the wheel, we make use of NetworkX to first parse the  
 file into memory.  
   
-In this example, we'll use a example GraphML file of [sample.graphml](sample.graphml).  
+In this example, we'll use a example GraphML file of TODO: sample.graphml  
   
 ## Load into NetworkX  
   
@@ -65,8 +65,8 @@ translation of these using the keyword options:
 - `aet_translation`  
   
 The default translation tries to guess the ET or RT from the ID. But there are  
-plenty of times where this is not right. For example, this [sample  
-data](id-sample.graphml) has only numeric IDs, which will convert to `ET.Node`  
+plenty of times where this is not right. For example, this TODO: sample data  
+has only numeric IDs, which will convert to `ET.Node`  
 in the default translation. You might want to instead import this as:  
   
 ```py  
@@ -90,7 +90,7 @@ relation. If you want to disable this you can set `store_id=None`.
   
 This How-To is about imports only. Zef graphs in general can be meta-graphs and  
 so might not be directly representable in any of the formats. However, one  
-option we have is to use the [Zef NetworkX proxy](use-zef-networkx) to view and then export your Zef  
+option we have is to use the [[ZefDoc - NetworkX Interface]] to view and then export your Zef  
 graph to a file. For example:  
   
 ```py  
