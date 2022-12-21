@@ -40,14 +40,14 @@ In particular, these programmatic operations and types will be covered:
   
 Let's create a database representation of something similar to the relation database shown at [https://www.sqltutorial.org/sql-sample-database/](https://www.sqltutorial.org/sql-sample-database/).  
   
-![](ce681a89e685e7b02da1db8d26405a057862ae7fbdfe86c128a64000725f29c9.png)  
+![](437cf4dd242743f1ec86be82c2cfea83d8f1e434fe8b49511893d1a1f1ba9af8.png)  
   
 This information is meant to describe a company's distribution of employees,  
 jobs and departments. As we are using a graph database, we will not duplicate  
 this exact structure as it is inflexible. Instead, we will show some of the unique  
 flexibility of graph databases and zefDB's flat layout. In this tutorial, the  
 equivalent graph layout to the above relational table layout will be:  
-![](ad8b5d03a5734804d29b643ab4a1c34e33b3dc5bb2d11d0aaaebdc5d580f798c.png)  
+![](9b5a5a64a148f5b8ef97e5bfd4c802d29e9ad79f180caf911783e6780db8bb5e.png)  
   
 where `*` indicates multiple relations may be present.  
   
@@ -448,7 +448,7 @@ simply run:
 g | now | all | graphviz | collect  
 ```  
   
-![](16e2c2ff75a1ea81f368b864fe16db1e10677b60d49e646813c0ff0ee2371aa2.png)  
+![](f72128dbce13b877c02a283f3cff892922ab1393967951af0bff6e944d01a06c.png)  
   
 This will autogenerate a visualisation with a layout that will likely require  
 some zooming to view all of the individual parts.  

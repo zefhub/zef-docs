@@ -43,7 +43,7 @@ Effect({
 }) | run   
 ```  
 Running the effect starts a Playground server in the background on the user's machine and starts a browser.  
-![](a2f7118deec2072b62c39f635d59d63d1cf40e095e668aee1e3e427b6acb8889.png)  
+![](ba76d571e79a7328f3c10b3c5f52bc99f56506a3df15edc8ddc5dcf750a85a0d.png)  
   
   
 ## Launch Server  

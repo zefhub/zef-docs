@@ -4,7 +4,7 @@ title: Relational or Graph
 ---
 
   
-![](b47c94cee4e76cd0d9a005f3d4f15cd63dad13040577c81b71cac6f2328add6b.png)  
+![](6eb901ab29d46f643c439e72e0fcb16ff8f7b4eb7b9e1a9eaa5681b32000b687.png)  
   
 Is ZefDB a relational or a graph DB? This is a question we often hear.  
   

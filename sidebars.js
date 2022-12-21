@@ -205,6 +205,7 @@ module.exports = {
       "type": "category",
       "label": "Reference",
       "items": [
+        "zef-faq",
         "writing-to-graphs",
         {
           "type": "category",
@@ -223,7 +224,6 @@ module.exports = {
             "zef-hub-connection"
           ]
         },
-        "zef-faq",
         {
           "type": "category",
           "label": "Internals",

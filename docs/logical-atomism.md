@@ -4,7 +4,7 @@ title: Logical Atomism
 ---
 
   
-![](5238eec396136f9d3bf719816537757c49f32882661828f6331b4d86f1521560.png)  
+![](888ac6e0394b08f7228e206d2dce02078baf39fb31ffbb8d895c67f8ba79d256.png)  
 Bertrand Russel and Atomism by [Stable Diffusion](https://github.com/CompVis/stable-diffusion)  
   
 ### No Internal Structure  

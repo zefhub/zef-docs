@@ -4,7 +4,7 @@ title: Data Wrangling
 ---
 
   
-![](24674492f6f4fe3edf90c60dcf5021e0a4be69db3fc8417f5b13f7823bc80fc1.png)  
+![](743eeca371ed56d6f704ad611b7e6f40a27c7b15e2368bf43452180d3bc067f8.png)  
   
     
 ### Type Inference    

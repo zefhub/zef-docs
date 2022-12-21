@@ -6,7 +6,7 @@ slug: /
 
 # Documentation Overview  
   
-![](e3dc65c01ca8dcc9ee802adebbd944ea96f77a46bcde4732c6912d365c9ffddd.png)  
+![](df0090957d11156c71ccb2fb5d0391c9e9e07670b120debc5588c038a8efd8b3.png)  
   
 This page will give an overview of   
 1. "I want to...": point you somewhere quickly  
@@ -47,7 +47,7 @@ A good starting point may be the introductory articles.
 We follow the structure laid out in [the wonderful guide by Divio](https://documentation.divio.com/).  
 Essentially, there are four categories for documentation.  
   
-![](285ad93bb7ebd0207e76e9d8b718fdc49d8fca8a6942317e6921ddea5f0b8229.png)  
+![](94e9a91c49b783ea238f7e4ce43890615b496c889f106ab40842c4851a6000ce.png)  
 source: [Divio](https://documentation.divio.com/)  
   
   

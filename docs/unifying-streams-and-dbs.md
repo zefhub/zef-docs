@@ -5,7 +5,7 @@ title: Unifying Streams and DBs
 
   
   
-![](49c38400f1171495ec1794a7de06a3523483b00233f74d1a5eed4303c6177059.png)  
+![](25cd990ffb2d0de4a3982268d46e73315e9d58bc526c69c1ab8d5635369152b5.png)  
   
   
 ### States  
@@ -32,7 +32,7 @@ However, although it has become common to even persist the data flowing through 
 ### Aggregation over events = State  
 One common architecture is that events propagate through streams (i.e. event streams). The state at any point in time can be defined as the aggregate of all changes applied in sequence to some initial state.  
   
-![](f36c6e7df20cbcc2660f6aa8782ec136e5964c0d05fe356ea1d5c6fadf721979.png)  
+![](8fc3279a6490993e24f6d0198f052988cdc253dd131094ff3d5ad3e41aa59dae.png)  
 Transactions a reified ([[ZefDoc - Graph Instruction |graph instruction]]) events.  
   
 It is common to persist this aggregate state in one or multiple databases. Which databases and the data model is chosen based on requirements of how the data will be queried.  

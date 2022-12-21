@@ -214,7 +214,7 @@ There's a lot going on here, let's compare it to the normal transaction notation
 Beware that if an Error is returned the destructuring will fail.  
   
 Resulting structure:  
-![](af548667ae5acaeda8b17ffe0d7c78ac4c51dab97ba4b78a114694df6a6dd332.png)  
+![](e6788559a66604c1b51bd06772449e0945caff3c57a35970f14615fa04353dfe.png)  
   
   
   
@@ -234,7 +234,7 @@ The dictionary syntax can be nested. Note than the direction of the relations on
 ```  
   
 Resulting structure:  
-![](5ac9940441eed5d863b98b1f0bf25a90d222b74e6b1fb8c199728762aa792ca7.png)  
+![](0ca04ac86152536a22224b126f7fdc157fae6e6365b19410f18864039ce81f37.png)  
   
   
 ## Cross Referencing Entities  
@@ -261,7 +261,7 @@ Sometimes the changes we want to express within one direction cannot all be expr
 Allowing cross referencing (using internal names) between the dictionary notation and other elements in the change list is a powerful tool to make your code more expressive.  
   
 Let's have a look at the graph structure:  
-![](532068f95a2fc290ed46c6d1da7ae6673e3fc1cb17dd7d014ff4de487f41012d.png)  
+![](ddf92fa123c28bc957e2754d5762d9b0d8529f7c5e8bcdb454aa5255d99fd7fd.png)  
   
   
 ## Adding Bare Entities  
@@ -291,7 +291,7 @@ Technically, this makes ZefDB graphs [Typed Meta-Graphs ](https://arxiv.org/abs/
 ] | g | run  
 ```  
   
-![](c636225176e4bc02fe0a6b6ca693b45b62cddffbe056fc61db5e6177bcd2ec63.png)  
+![](e8b050b3f327aaf57f133ed7ea9a06ea0a74d985ca4a497af170ac4860d6d030.png)  
   
   
   

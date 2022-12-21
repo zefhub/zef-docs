@@ -5,7 +5,7 @@ title: Codebase Queries
 
   
   
-![](d510b920414cefd4fb0f065ac19967f72c8ddfec7747d53ab7357a7fece9f672.png)  
+![](6d532654df99090ab3f3300625720cd9382e7ed4e60fba5ab5d19e8f034f2e65.png)  
 by Stable Diffusion  
   
 ### Accessing Data Associated with ZefOps Relationally  

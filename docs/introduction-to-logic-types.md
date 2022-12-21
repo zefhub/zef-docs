@@ -5,7 +5,7 @@ title: Introduction to Logic Types
 
   
   
-![](4d3b8919aa10399d5418194ec10f7d57dbdba842aac9e88c16c46f14b8684863.png)  
+![](159f741a856a1b9a95d017f7e0015528fd2a8c2e40c53ee6469ee9b2835cc18e.png)  
 source: https://unsplash.com/photos/E2vK9eAqpdg  
   
   

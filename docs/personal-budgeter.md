@@ -90,7 +90,7 @@ z_acc = receipt["acc"]
 This has made an account entity and attached a couple of simple pieces of  
 metadata, one a string and one an enum. As a figure, this might look like:  
   
-![](58e40cb4842b1732e5a2ada0b305158e86b0196dee74b5aed91c5638cf35ee37.png)  
+![](19d0a9b5aab42a33fa299606390682d213573bd3a652189266fe100669e9819f.png)  
   
 In zefDB these are 3 separate entities, but in other databases (e.g.  
 `examples here`) this might be represented as a single "object" with separate  
@@ -250,7 +250,7 @@ Category Groceries has a goal of <QuantityFloat: 200 EN.Unit.AUD> over a EN.Peri
 Earlier, we glossed over a few of the problems to do with the transaction  
 layout. Let's look at the layout so far:  
   
-![](9d7360c5f29fdd9d27becc2ea347f0876285334f2c4349dddead3e8d2685bbc4.png)  
+![](f7105c35d90b2de6555bb58f9db9602d84f40b5e9ca418a4853ee414b100df45.png)  
   
 What are some possible problems here?  
   
@@ -266,7 +266,7 @@ These questions can be addressed in different ways. For example, we could
 separate the identity of the transaction from the entry in each associated  
 account. Alternatively, we can use a feature of zefDB to store information  
 on relations. For example:  
-![](12e1333b84f6556cac24254b63d73941625a3e29199e10c441edc3119bc17210.png)  
+![](0ed2edeb021e0f0e1194038a9123e73f54320bcb386cb05cc2e37a265d69d2c7.png)  
   
 For brevity, only amounts have been shown, but dates and descriptions can  
 also be attached to the HasEntry relations. To view this data, think of the  
@@ -1388,7 +1388,7 @@ explorer is available in the form of the GraphQL Playground
 `playground_path` to the effect, our server also provides this playground,  
 so you should be able to connect to `http://localhost:5001/` to send sample  
 queries to the the GQL server. An example screenshot is shown below:  
-![](85117d6a27344dc9fbc928a7fffc34fc7f02b2580849ee52b561512f2cacafb4.png)  
+![](e06de776be2b4f81bd21ec707cea4c4c6c83918223d0d937f915f9f8938c63c7.png)  
   
   
 ## What comes next  

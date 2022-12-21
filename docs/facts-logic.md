@@ -47,12 +47,12 @@ Suppose you built out a system which can represent all entities you're dealing w
 - It can take all possible `objects` / entities as one of the two arguments.  
   
 Historical remark: this was in fact how Gottlob Frege, the founding father of modern logic (following Bool) thought about facts.  
-![](00cfb031571331d4f97356bce6ce0940e1c4984e47fc4730b71e33a455d763e9.png)  
+![](e73ab41a264df59cb8310a093531b17959bb2190e48c0677ea7513b26e5890e6.png)  
 [source](https://www.jstor.org/stable/2182877)  
   
 This concept of encoding relations as functions is also well known to C++ meta-programmers  
   
-![](97f2da1da05c9fe4b0e2b867987f39f808efc627e1f12fe9b31180fa8a9929c5.png)  
+![](610f93012302acc2569d732d9f14a34f2bcacaf83085d4d5aefa21ff027d8501.png)  
 from [cppreference](https://en.cppreference.com/w/cpp/meta)  
   
   

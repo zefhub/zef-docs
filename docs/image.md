@@ -35,7 +35,7 @@ When using iPython in VSCode interactive mode or Jupyter, Zef will show the actu
 ```python  
 image  
 ```  
-![](1e79c7a1680224bf50474d4d8379cbced3ce0899093354ddcc9a01c1641f0fef.png)  
+![](969826980df00cc0865da17852e66652f232d3ce219400e2e92fa257150b79c0.png)  
   
   
   

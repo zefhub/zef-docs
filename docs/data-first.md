@@ -41,7 +41,7 @@ class String():
 In this case `self` would refer to the data (the object). Methods are also just functions in Python that are slapped onto the class. Hence, in Python's idiomatic object-oriented approach, methods are data-first: the first argument passed into the method is always the object on which the method is called and the dot notation is just syntactic sugar.  
   
 So how do we remember where the data argument comes in the various builtin Python functions and what is the recommended approach in the language?  
-![](6a59f90c760f549222285962bf4df5181ff983da72fe0ec9bd5024df14b80dbc.png)  
+![](1801d2d667430bbdb67303ab2edaf25f5284ebd09d1d8834bed0cec0e189d498.png)  
   
   
 Personally, I find this lack of consistency of Python and Itertools a bit tedious: I often need to look up the order of arguments for some of the itertools functions I don't use on a daily basis.  

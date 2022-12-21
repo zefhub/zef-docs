@@ -8,11 +8,11 @@ When importing multiple CSV files that reference each other through various IDs,
   
 Instead of looking at and modifying the YAML file in a text editor:  
   
-![](2763153f45d7753d13ea07f0298092880cb2a7a74a1947e92bd497ef76d14278.png)  
+![](49eada71a63a3c127e6bf74093e7781af3fcb69ddfb7e9f6d0fad1745fd0bbbf.png)  
   
 You can use our graphical ImGui interface!  
   
-![](0554a1a0906293888ae0579f2601e790250a68dba01788f9ce005da19a79369b.png)  
+![](5567c4f539f7e89d99739bbb381bae17c40ab964d8120b66bf862e85e381f6ba.png)  
   
 If you're using MacOS, make sure you use Python 3.9 (as of March 2022, Python 3.10 does not play nicely with ImGui).  
   
@@ -59,19 +59,19 @@ python3.9 -m zef.experimental.sql_ui.wizard sql_import.yaml
   
 ## Change Entity names from plural to singular  
   
-![](9224f45ea477ed0f582617f15fac97f50d081ea90461c845b4b5157f6db7e03f.png)  
+![](06a3316a97901004245a3f4a1cfc0d516f0bdb9b3cde7d5754934f6da1118af3.png)  
   
 ## Change cross-referenced IDs from Field to Entity and rename their RTs  
   
-![](a968835df8df94823ef355a90c1806a187bf0a1407f985cd2140f0b8be7d0277.png)  
+![](e14e9e21f25602071b466514ef9cdf1d4b350d76b374ac8595c5fb4483ae6681.png)  
   
 See your options through the dropdown (make sure the Entity names are edited first to see the correct options).  
   
 ## Change AET types  
-![](0936e169866ee6fcc5e9835383ae52ab4f95948e74429b24bcbb74af3acba16e.png)  
+![](b39ef5dafe56ac067ca768d19fccd7ab8c2a6128e98e35a5f838527fd7eb0975.png)  
   
 ## Change Entities to Relations  
-![](aac869a6e7ba151d479bb1aa898a68dd303be29eb89e315ad855596c614b98e7.png)  
+![](b28f7f02d66af42be0d5e84698d57b21e35b463477cd15432a73b8a6d944862d.png)  
 Set the correct Source and Target.  
   
 ## Save your edited YAML file  
