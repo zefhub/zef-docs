@@ -33,7 +33,7 @@ However, although it has become common to even persist the data flowing through 
 One common architecture is that events propagate through streams (i.e. event streams). The state at any point in time can be defined as the aggregate of all changes applied in sequence to some initial state.  
   
 ![](8fc3279a6490993e24f6d0198f052988cdc253dd131094ff3d5ad3e41aa59dae.png)  
-Transactions a reified ([graph instruction](graph-instructions)) events.  
+Transactions a reified ([[ZefDoc - Graph Instruction |graph instruction]]) events.  
   
 It is common to persist this aggregate state in one or multiple databases. Which databases and the data model is chosen based on requirements of how the data will be queried.  
   

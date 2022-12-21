@@ -4,7 +4,7 @@ title: Traversing Graphs
 ---
 
   
-This page is focussed on traversing GraphSlices, i.e. traversing the knowledge graph across "space" at a specific time. ZefDB also provides a similar API to traverse the eternal graph across space and time: traversing eternal graphs  
+This page is focussed on traversing GraphSlices, i.e. traversing the knowledge graph across "space" at a specific time. ZefDB also provides a similar API to traverse the eternal graph across space and time: [[ZefDoc - How-To - Traversing Eternal Graphs |traversing eternal graphs]]  
   
   
 ### Finding all Attached Atoms  

@@ -50,7 +50,9 @@ There is a final fly in the ointment that an edge list may not be aligned to a b
 - `last proper edge = 0`   
 - `subsequent deferred edge list = 1`: the sentinel value indicating there is no   subsequent deferred edge list.      
   
-Graphically, this could be shown as: ![](e8a8d6c5950aedf85daf3f3202ed2890c148da392d0183e404cfa09ad45373fa.png)  where blue indicates blob-specific information, yellow indicates the subsequent deferred edge list indices, or the `last_chunk` reference, and green indicates filled edges.    
+Graphically, this could be shown as:   
+![](8125b94418c12705b9effb0988228ff91ceb6efcdec8fb9eee80e0646872d11f.png)  
+where blue indicates blob-specific information, yellow indicates the subsequent deferred edge list indices, or the `last_chunk` reference, and green indicates filled edges.    
   
   
 ## Delegate representation  (TODO)   

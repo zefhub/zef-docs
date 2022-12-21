@@ -94,4 +94,5 @@ source: [Blazing Fast, Pure Effects without Monads](https://youtu.be/L8AEj6IRNE)
 - [Algebraic Effects for the Rest of Us](https://overreacted.io/algebraic-effects-for-the-rest-of-us/) by Dan Abramov  
 - [What's cool about Unison?](https://jaredforsyth.com/posts/whats-cool-about-unison/) by Jared Forsyth  
 - [An Introduction to Algebraic Effects and Handlers](https://www.eff-lang.org/handlers-tutorial.pdf) by Matija Pretnar  
+- [Exotic Programming Ideas: Part 3 (Effect Systems)](https://www.stephendiehl.com/posts/exotic03.html) by Stephen Diehl  
   

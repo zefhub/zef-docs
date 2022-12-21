@@ -10,6 +10,7 @@ title: Zef Objects
 - key-value stores  
   
   
+  
 ### What are Zef Objects?  
 You can think of them as a thin wrapper with a type around a dictionary.  
 - no temporal dimension: just describe "state"  
@@ -159,4 +160,4 @@ Use Zef objects to
   
   
 ### Related  
-- transforming between different data types: [data wrangling](data-wrangling)
+- transforming between different data types: [[ZefDoc - Data Wrangling |data wrangling]]

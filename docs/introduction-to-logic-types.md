@@ -74,8 +74,8 @@ since we're saying that an element in the combined set must be a `List` (note th
   
 Using these combinators is very common for types and writing them out gets a bit tedious sometimes. You can also use a shorthand notation  
 ```python  
-A & B    # equivalent to Intersection[A][B]  
-A | B    # equivalent to Union[A][B]  
+A & B    # equivalent to Intersection[A,B]  
+A | B    # equivalent to Union[A,B]  
 ~A       # equivalent to Complement[A]  
 ```  
 This is in full agreement with the syntax introduced by Python 3.10 for native Python types.  
@@ -100,7 +100,7 @@ You may say "OK, fine. But what does this help me with concrete problems? This i
   
 Let's look at some more concrete examples.  
   
-Write more Total Functions (ZefBlog)  
+[[Write more Total Functions (ZefBlog)]]  
   
   
   
@@ -122,7 +122,7 @@ RAEs: Relations, Attribute Entities, Entities
   
   
   
-see also: Dictionary Queries in Zef  
+see also: [[Dictionary Queries in Zef]]  
   
   
   

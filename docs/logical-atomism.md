@@ -36,7 +36,7 @@ In Zef we use plain Python data types to represent them:
 ```python  
 (france, RT.CapitalCity, paris)  
 ```  
-`france` and `paris` are one of the [Zef reference types](reference-types) here.  
+`france` and `paris` are one of the [[ZefDoc - Reference Types |Zef reference types]] here.  
   
   
 ### Facts in Dictionaries  
@@ -65,11 +65,11 @@ Actor Table
  | Uma        | Thurman   | 🥦            |  
   
   
-!450  
+![[ZefDoc - Logical Atomism 2022-10-05 10.07.39.excalidraw| 450]]  
 Each relation instance can be seen as a fact. Multiple facts can relate to the same entity, leading to the graph-relational model of information.  
 This graph structure is to be understood on the conceptual level (i.e. not the concrete representation in a graph DB). The same visual representation can be used for data stored in a relational database or a Pandas dataframe.  
   
-For more details see [ZefDoc - Graph Relational Model](graph-relational-model).  
+For more details see [[ZefDoc - Graph Relational Model]].  
   
   
 ### History  
@@ -79,7 +79,7 @@ Some of the core ideas are well summarized by the [Plato Encyclopedia](https://p
 > The core tenets of Wittgenstein’s logical atomism may be stated as follows:   
 > 1.  Every proposition has a unique final analysis which reveals it to be a truth-function of elementary propositions (_Tractatus_ 3.25, 4.221, 4.51, 5);   
 > 2. These elementary propositions assert the existence of atomic states of affairs (3.25, 4.21);   
-> 3. Elementary Propositions are mutually independent — each one can be true or false independently of the truth or falsity of the others (4.211, 5.134);   
+> 3. [[Elementary Propositions]] are mutually independent — each one can be true or false independently of the truth or falsity of the others (4.211, 5.134);   
 > 5. Elementary propositions are immediate combinations of semantically simple symbols or “names” (4.221);   
 > 6. Names refer to items wholly devoid of complexity, so-called “objects” (2.02 & 3.22);  
 > 7. Atomic states of affairs are combinations of these objects (2.01).  

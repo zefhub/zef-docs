@@ -106,13 +106,13 @@ difference:
 - triples notation: the subject is part of the triple, it is the first element  
 - object notation: the subject identifier is to the left of the assignment operator  
   
-To see the various things a triple can mean in Zef, see ZefDoc - The Various Meanings of Triples.  
+To see the various things a triple can mean in Zef, see [[ZefDoc - The Various Meanings of Triples]].  
   
   
   
   
 ### Related Topics  
-- ZefDoc - The Various Meanings of Triples  
+- [[ZefDoc - The Various Meanings of Triples]]  
   
   
 ### Further Reading  

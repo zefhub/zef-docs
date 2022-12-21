@@ -4,13 +4,13 @@ title: Zef Value Types
 ---
 
   
-!ZefDoc - Zef Value Types 2022-10-16 08.07.19.excalidraw  
+![[ZefDoc - Zef Value Types 2022-10-16 08.07.19.excalidraw]]  
   
 Not all type systems are equal. One perspective on types is to distinguish between representation types and logic types.  
   
   
 ### Representation Types  
-In languages like C, one important part of a variable's type is to tell the compiler how to represent the data and how to read it. Given the address of a variable, the representation type and its declaration contains the context how to make sense out of the bit sequence starting at that location.  
+In languages like [[C (Programming Language) |C]], one important part of a variable's type is to tell the compiler how to represent the data and how to read it. Given the address of a variable, the representation type and its declaration contains the context how to make sense out of the bit sequence starting at that location.  
   
   
 ### Logic Type  
@@ -32,8 +32,8 @@ PositiveInt = Int & Is[lambda x: x>0]    # & denotes intersection
   
   
 ### Overview of Zef Types  
-!ZefDoc - Zef Value Types 2022-10-16 08.28.16.excalidraw  
-related: [ZefDoc - Ref Types vs UIDs](ref-types-vs-uids)  
+![[ZefDoc - Zef Value Types 2022-10-16 08.28.16.excalidraw]]  
+related: [[ZefDoc - Ref Types vs UIDs]]  
   
   
 ### Constructing Types  

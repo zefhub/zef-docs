@@ -3,7 +3,7 @@ id: image
 title: Image
 ---
 
-Images are first class citizens in the [Zef type system](zef-value-types).   
+Images are first class citizens in the [[ZefDoc - Zef Value Types |Zef type system]].   
   
 ### Loading an Image from File  
 ```python  

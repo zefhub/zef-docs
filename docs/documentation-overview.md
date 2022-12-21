@@ -29,9 +29,9 @@ A good starting point may be the introductory articles.
 (Youtube overview videos coming soon)  
   
   
-- Introduction to Zef (ZefDoc)  
-- [Introduction to ZefDB](introduction-to-zef-db)  
-- ZefDoc - Introduction to ZefOps  
+- [[Introduction to Zef (ZefDoc)]]  
+- [[Getting Started with ZefDB (ZefDoc) |Introduction to ZefDB ]]  
+- [[ZefDoc - Introduction to ZefOps]]  
   
   
   
@@ -72,7 +72,7 @@ Technical description of the machinery and how to operate it. This aspires to pr
   
 ## Feature List  
 (this is a work in progress, not all things considered features are listed)  
-- Start using ZefDB in a Local-First approach, switch to distributed and automatic persistence any time  
+- Start using ZefDB in a [[ZefDoc - ZefDB Local-First Mode |Local-First]] approach, switch to distributed and automatic persistence any time  
   
   
   

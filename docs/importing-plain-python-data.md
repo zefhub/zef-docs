@@ -102,7 +102,7 @@ There are three approaches:
   
 >[!note]  
 > It is useful to distinguish between lists and sets, also for representing data on a graph.   
-> Choose lists if the order is important: these are converted to Zef Lists where the order is represented by helper relations on the graph.  
+> Choose lists if the order is important: these are converted to [[Zef Lists]] where the order is represented by helper relations on the graph.  
 > Choose sets if the order is not important. The simplest corresponding structure on a graph is a one-to-many relation, i.e. the same type of relation going out of the parent multiple times.  
   
 >[!warning]   
