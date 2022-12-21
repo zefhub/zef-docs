@@ -4,7 +4,7 @@ title: Quick Start
 ---
 
   
-Welcome to Zef! This Quick Start is designed to give you a taste of the major ideas and concepts of Zef. If you haven't already, please go through the [Glossary](../reference/glossary) to get an overview of some common terms used in Zef.  
+Welcome to Zef! This Quick Start is designed to give you a taste of the major ideas and concepts of Zef. If you haven't already, please go through the [[ZefDoc - Glossary]] to get an overview of some common terms used in Zef.  
   
 Start at the top and work your way down!  
   
@@ -27,7 +27,10 @@ For now, the imports unlock user friendly syntax and powerful Zef operators (Zef
   
 The Zef graph data model is completely flat. There's no properties or data nested inside nodes.  
   
-The entire graph is made up of 3 things (called RAEs) - [Relation Types (RT)](../reference/glossary/#relation-type-rt), [Atomic Entities (AET)](../reference/glossary/#atomic-entity-aet), and [Entity Types (ET)](../reference/glossary/#entity-type-et).  
+The fundamental parts of any graph are instances of  
+- Entities  
+- Relations  
+- Attribute Entities (AEs), nodes to which values can be assigned over time  
   
 In Zef, "|" pipe is overloaded so users can chain together values, Zef operators (ZefOps), and functions in sequential, lazy, and executable pipelines where data flow is left to right.  
   
@@ -53,7 +56,7 @@ g | yo | collect            # outputs a detailed summary of the graph
 g | now | yo | collect      # outputs a summary of the latest time slice of the graph  
 ```  
   
-`now` is a ZefOp that takes users to the latest time slice (see [now reference](/reference/zef-ops#now) for details).  
+`now` is a ZefOp that takes users to the latest time slice.  
   
 ```python  
 p1 | yo | collect           # outputs an overview of a prior time slice of the specified node  
@@ -107,7 +110,7 @@ name_aet | value | run[print]
   
 ### Persisting graphs  
   
-Persisting graphs requires a free ZefHub account. See the [installation here](installation#first-steps-after-installing) on getting your ZefHub account.  
+Persisting graphs requires a free ZefHub account. See the [[ZefDoc - Installing Zef]] on getting your ZefHub account.  
   
 ```python  
 # This persists, syncs, and distributes all future changes via ZefHub in real-time  

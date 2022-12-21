@@ -198,7 +198,6 @@ Just like that, in 30 lines (or less) we created Wordle in Python using ZefOps!
 
 The takeaway from this is how easy ZefOps are. They are short. They are composable. They are lazy. They are data. They are extensible. They are pure. They are Zef!
 
-Checkout the comprehensive ZefOps [cheatsheet](/reference/cheatsheet-comprehensive).
 
 If you'd like to find out more about Zef and get early access to run this code yourself, sign up on [zefhub.io](https://zefhub.io). It's completely free, we won't bombard you with emails, and we'll get you set up quick!
 

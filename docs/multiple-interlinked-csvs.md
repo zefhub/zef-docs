@@ -16,7 +16,7 @@ You can use our graphical ImGui interface!
   
 If you're using MacOS, make sure you use Python 3.9 (as of March 2022, Python 3.10 does not play nicely with ImGui).  
   
-In this example, we'll use the Northwind dataset. We've made the zipped CSV files available [northwind.zip](sql-import-files/northwind.zip).  
+In this example, we'll use the Northwind dataset. We've made the zipped CSV files available TODO: link northwind.zip  
   
 Also check out our blog post on [SQL imports](https://zef.zefhub.io/blog/sql-import).  
   
@@ -92,7 +92,7 @@ actions = sql_import.import_actions(decl)
 actions | transact[g] | run  
 ```  
   
-If you would like, you can use our pre-configured file for this dataset [here](northwind_example.yaml).  
+If you would like, you can use our pre-configured file for this dataset: TODO: northwind_example.yaml  
   
 See the results of your import!  
   

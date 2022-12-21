@@ -7,12 +7,12 @@ title: Environment Variables
 ### ZefHub connections  
   
 - `ZEFHUB_AUTH_KEY`: either `GUEST` to authenticate as a guest user or an API  
-  key. See [authentication](configuration-auth) for more information.  
+  key. See [[ZefDoc - ZefHub Authentication]] for more information.  
 - `ZEFHUB_URL`: the URL to connect to, by default `wss://hub.zefhub.io`.  
   
 ### Information messages  
   
-These variables match to [zwitch options](configuration-messages)  
+These variables match to [[ZefDoc - Runtime Config]]]  
   
 - `ZEFDB_QUIET`: changes the default `zwitch` output options to be  
   `zefhub_communication_output(False)`, `extra_quiet(True)`,  
@@ -30,7 +30,7 @@ These variables match to [zwitch options](configuration-messages)
   
 ### Local storage  
   
-- `ZEFDB_FILEGRAPH_PATH`: where to store filegraphs, the caches for the zef graphs  
+- `ZEFDB_FILEGRAPH_PATH`: where to store file-graphs, the caches for the zef graphs  
 - `ZEFDB_MEMORY_STYLE`: set to  
   - `ANONYMOUS`: for mmap-ed in-memory graphs without file backing.  
   - `FILE_BACKED`: for mmap-ed in-memory graphs with cached file backing, see `ZEFDB_FILEGRAPH_PATH`.  
@@ -52,8 +52,8 @@ These variables match to [zwitch options](configuration-messages)
   stored. Defaults to `$HOME/.zef`. The config file itself is located at `ZEFDB_SESSION_PATH/config.yaml`.  
   
 The following variables match to configuration options that can be modified through the  
-`config` zefop. The variables will be merely listed here, see [config](configuration-config) for more  
-details about their behaviour.  
+`config` ZefOp. The variables will be merely listed here, see [[ZefDoc - Runtime Config]] for more  
+details about their behavior.  
   
 - `ZEFDB_LOGIN_AUTOCONNECT`  
 - `ZEFDB_BUTLER_AUTOSTART`  

@@ -11,7 +11,7 @@ sidebar_label: Basic - Employee Database
   
 This tutorial can be accessed interactively with a Google Colab session [here](https://colab.research.google.com/github/zefhub/zef-docs/blob/master/docs/tutorials/basic/employee-database-colab.ipynb).  
 You can also download the Jupyter notebook to explore it locally:  
-[employee-database.ipynb](employee-database.ipynb).  
+Todo: add link to updated Notebook: employee-database.ipynb  
   
 # Introduction  
   
