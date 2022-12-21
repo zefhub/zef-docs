@@ -4,7 +4,7 @@ title: Low Level Graph Data Layout
 ---
 
   
-![](6242f401cab321f231a63bfbbdcd5ed1e11827e18c3afc2571c2f503e96cbf12.png)  
+![](5812c1e3c652914a69116af17e06ffe2252d6e66d95dafc8b39c156c63c2ae5c.png)  
   
   
     
@@ -50,7 +50,9 @@ There is a final fly in the ointment that an edge list may not be aligned to a b
 - `last proper edge = 0`   
 - `subsequent deferred edge list = 1`: the sentinel value indicating there is no   subsequent deferred edge list.      
   
-Graphically, this could be shown as: ![](e8a8d6c5950aedf85daf3f3202ed2890c148da392d0183e404cfa09ad45373fa.png)  where blue indicates blob-specific information, yellow indicates the subsequent deferred edge list indices, or the `last_chunk` reference, and green indicates filled edges.    
+Graphically, this could be shown as:   
+![](a4ad489e456da57995bac94d9de8a5b97f670cbf38535e14c8a3c774fcae9a2f.png)  
+where blue indicates blob-specific information, yellow indicates the subsequent deferred edge list indices, or the `last_chunk` reference, and green indicates filled edges.    
   
   
 ## Delegate representation  (TODO)   

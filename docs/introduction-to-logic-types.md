@@ -5,7 +5,7 @@ title: Introduction to Logic Types
 
   
   
-![](159f741a856a1b9a95d017f7e0015528fd2a8c2e40c53ee6469ee9b2835cc18e.png)  
+![](4d3b8919aa10399d5418194ec10f7d57dbdba842aac9e88c16c46f14b8684863.png)  
 source: https://unsplash.com/photos/E2vK9eAqpdg  
   
   
@@ -74,8 +74,8 @@ since we're saying that an element in the combined set must be a `List` (note th
   
 Using these combinators is very common for types and writing them out gets a bit tedious sometimes. You can also use a shorthand notation  
 ```python  
-A & B    # equivalent to Intersection[A][B]  
-A | B    # equivalent to Union[A][B]  
+A & B    # equivalent to Intersection[A,B]  
+A | B    # equivalent to Union[A,B]  
 ~A       # equivalent to Complement[A]  
 ```  
 This is in full agreement with the syntax introduced by Python 3.10 for native Python types.  
@@ -100,7 +100,7 @@ You may say "OK, fine. But what does this help me with concrete problems? This i
   
 Let's look at some more concrete examples.  
   
-Write more Total Functions (ZefBlog)  
+[[Write more Total Functions (ZefBlog)]]  
   
   
   
@@ -122,7 +122,7 @@ RAEs: Relations, Attribute Entities, Entities
   
   
   
-see also: Dictionary Queries in Zef  
+see also: [[Dictionary Queries in Zef]]  
   
   
   

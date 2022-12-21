@@ -15,7 +15,7 @@ There are five different kinds of atoms on a ZefDB graph:
   
   
 ## References to Atoms  
-Any of the three [reference types in Zef](reference-types) can point at an atom. Let's shortly discuss the semantic meaning of each.  
+Any of the three [[ZefDoc - Reference Types|reference types in Zef]] can point at an atom. Let's shortly discuss the semantic meaning of each.  
 - **ZefRef**: A ZefRef always points to an atom. It can't point at any other blob / node on the graph. Since ZefRefs have the reference frame and baked in, they can always be understood to point at the respective atom "living in the Graph Slice".  
 - **EZefRef**: Any instance of an atom can always be pointed to by an EZefRef. The reference frame is given in terms of the eternal graph, i.e. the semantics are that the object is seen by a given frame, but the reference frame transcends time. Also: not every EZefRef necessarily points to an atom. There are other types of low level nodes and edges on the Eternal Graph that are not Atoms, but EZefRefs can refer to them.  
 - **Ref**: This is the most general / least specific reference to an Atom. No reference frame is specified.  

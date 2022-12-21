@@ -25,4 +25,4 @@ tag[z3]['my favorite atom']
   
   
 ### Related  
-- a list of graph instructions is called a [graph command](graph-instructions): an aggregate set of changes to be performed that are mutually consistent.
+- a list of graph instructions is called a [[ZefDoc - Graph Command |graph command]]: an aggregate set of changes to be performed that are mutually consistent.

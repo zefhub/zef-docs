@@ -4,7 +4,7 @@ title: ZefDB Transactions
 ---
 
   
-![](cbc536da0a821e00ffeaa4402f7ec5718963cf5649dfb857e3adc4aaa5baf4c8.png)  
+![](ae3955a986bb4928f36a9a643943ea4511822c629c402f45687018864359ea9f.png)  
   
   
 ### A Single Thread to Rule them All  

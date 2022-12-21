@@ -4,7 +4,7 @@ title: Merging
 ---
 
   
-This section assumes familiarity with the Zef Lineage]] system and the [[Zef Data Model  
+This section assumes familiarity with the [[Zef Lineage]] system and the [[Zef Data Model]]  
   
   
 ### Using the `merge` Operator  
@@ -29,6 +29,6 @@ FlatRefs can refer to two kinds of atoms represented on a FlatGraph: with and wi
 1. those with an assigned ID. These are atoms whose identity is known within the Zef Network. Assigning an ID is an impure operation, since calls into a random number generator. This is typically done within the transaction on a ZefDB graph.   
 2. New atoms can also be created locally in FlatGraph. Their identity is only specified by their index within the element list of the FlatGraph and no UID is assigned. This makes the operation pure and allows data pipelines that operate on FlatGraphs to be reproducible and have value semantics. The identity is stable within that graph and can also be addressed via additional tagging.  
   
-When FlatGraphs are merged into ZefDB graphs, FlatRefs without IDs can be seen as instantiation [graph instructions](graph-instructions).  
+When FlatGraphs are merged into ZefDB graphs, FlatRefs without IDs can be seen as instantiation [[ZefDoc - Graph Instruction |graph instructions]].  
   
   

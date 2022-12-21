@@ -4,13 +4,13 @@ title: ZefRef
 ---
 
   
-A [Zef reference](reference-types) that semantically also contains a reference frame. It can be understood to mean "I am talking about [atom](atoms) X seen from the reference frame of graph Y at its time T".  
+A [[ZefDoc - Reference Types |Zef reference]] that semantically also contains a reference frame. It can be understood to mean "I am talking about [[ZefDoc-Atom |atom]] X seen from the reference frame of graph Y at its time T".  
   
   
 ### Representation  
 We can encode everything in two UIDs:  
 1. the UID of the [object](https://plato.stanford.edu/entries/object/#ContObjeVsSubj) Zef Atom (entity / attribute entity / relation)  
-2. the UID of the transaction which determines the reference frame  
+2. the UID of the transaction which determines the [[ZefDoc - Reference Frame |reference frame]]  
   
   
   

@@ -24,7 +24,7 @@ movie_v1 | to_flatgraph | graphviz | collect
 ```  
   
 Output:  
-![](6336403af27eaf31c056a5176c6009983c497690db30350875a544d328e4a124.png)  
+![](c76ae4a8a2cc3377081ca1a4a131fdaca45c625f1abe3b9ad1c472d1dbe8b4a2.png)  
   
 But wait, the actors and directors should be first class entities on our graphs. Not strings.  
 Lesson: determine the language of your domain. You should consider making any significant "thing" that you can talk about as a concrete instance in the world an entity itself. Each actor is an entity on the graph and their names are attributes. The actors name is not the same as the actor entity in a good domain model.   
@@ -48,7 +48,7 @@ movie_v2 | to_flatgraph | graphviz | collect
   
   
 Output:  
-![](ccfdcb18cfddf02063c9e53db8045c2d648e59082f55baee5105821c2691d829.png)  
+![](74628db13ed0157fff2441fdfe5f64f29e6f4567c6ade406b2e9ad1c5e59413a.png)  
   
   
 The actors each are separate entities now, but of type 'ZEF_Unspecified'. There's no way for the "to_flatgraph" operator to know what type of entity they are.  
@@ -88,7 +88,7 @@ movie_v3 | to_flatgraph | graphviz | collect
   
   
 Output:  
-![](46c332c4238a9c0ee68620da947ab5cbf457b52f2a3a039643245dc38ebca684.png)  
+![](47cc7b1f60354039aad108ad6ed8fa90bc837b107bea72cdc697699125fadce6.png)  
   
 Much better. Now all the types are correct. But the graph looks a little noisy. The actors were specified as a list, but in this case the order is actually of no significance. JSON does not support sets. We also can't use a set in Python with native Python dictionaries, since these are not hashable.  
   
@@ -102,7 +102,7 @@ There are three approaches:
   
 >[!note]  
 > It is useful to distinguish between lists and sets, also for representing data on a graph.   
-> Choose lists if the order is important: these are converted to Zef Lists where the order is represented by helper relations on the graph.  
+> Choose lists if the order is important: these are converted to [[Zef Lists]] where the order is represented by helper relations on the graph.  
 > Choose sets if the order is not important. The simplest corresponding structure on a graph is a one-to-many relation, i.e. the same type of relation going out of the parent multiple times.  
   
 >[!warning]   

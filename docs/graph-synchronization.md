@@ -4,7 +4,7 @@ title: Graph Synchronization
 ---
 
   
-![](8113258af4afdc75f04552d158445d92733c53ece3849c1f575af313ea8d626b.png)  
+![](e58fee8f569292a63b3d53107b27f0bda981c415727c26ebc9c5da171fe51aa7.png)  
   
 ### Single Transactor  
 At any point in time, there may be at most one transactor for a given ZefDB graph.  
@@ -33,4 +33,4 @@ The same physical memory can be mapped into multiple processes by Zef. This allo
   
   
 ### References & Related Material  
-- [ZefDoc - ZefDB Transactions](zef-db-transactions)  
+- [[ZefDoc - ZefDB Transactions]]  

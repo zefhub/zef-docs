@@ -6,7 +6,7 @@ title: Introduction to Zef-FX
   
 # Introduction to Zef-FX  
   
-![](008b843812103e66588c8d6d19939d857661729313f5f35bafda367459f9ac2a.png)  
+![](70fcafcfd64830370e747c91a9ec651648996020d85dee8f8aa966549bd3d894.png)  
   
 Most programmers will probably not disagree with the following statement:   
 >"If you can express some logic as a pure function, you should express it as a pure function."  
@@ -25,7 +25,7 @@ One or a list of these wishes can now be returned from your functions. This has 
   
   
   
-![](c85ef37498e4e2bf40cadb3970e4f2640ca56efecd9c5ac258f5c457e28c28bd.png)  
+![](48f94c0052340d939a994b482e36a8eaaea67a2fe03a87e3a7b047a74fe8b772.png)  
   
 ## Procedural Effects  
   
@@ -69,7 +69,7 @@ You get back either an error or a success value.
 Using Streams and Effects you can unify various models of computation into the same computational model provided by Zef. This makes it much easier to reason about the execution of your application and provides the tools to monitor, replay and test your code. Both by providing a powerful set of tools that can be used during development as well as on your running production code, whether one process or a distributed system.  
   
   
-![](2dab5348634fa82513132644f872a0b6124e16686efa4814c07018f70eba92d2.png)  
+![](ab860a1d0319d3a10352f1de824de01db37c48902e63bbf114e835fc6976acc0.png)  
   
   
   
@@ -94,4 +94,5 @@ source: [Blazing Fast, Pure Effects without Monads](https://youtu.be/L8AEj6IRNE)
 - [Algebraic Effects for the Rest of Us](https://overreacted.io/algebraic-effects-for-the-rest-of-us/) by Dan Abramov  
 - [What's cool about Unison?](https://jaredforsyth.com/posts/whats-cool-about-unison/) by Jared Forsyth  
 - [An Introduction to Algebraic Effects and Handlers](https://www.eff-lang.org/handlers-tutorial.pdf) by Matija Pretnar  
+- [Exotic Programming Ideas: Part 3 (Effect Systems)](https://www.stephendiehl.com/posts/exotic03.html) by Stephen Diehl  
   

@@ -5,7 +5,7 @@ title: Ref Types vs UIDs
 
   
   
-![](d288dbf7ad61358447c286802b33ad452b260745248a5a71b35275c14f1baa7e.png)  
+![](fc87ffa7e4ee65cee0d4cb153ca31aed9546aad7eac03e064bee314fb500300e.png)  
   
 ### What do we mean with "Ref Types"?   
 ZefRef / EZefRef / Ref / Graph (they have reference semantics too)  
