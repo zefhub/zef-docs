@@ -34,7 +34,7 @@ Both the field operator (F), as well as the dot-notation provide a high level sy
   
 ### What does a ZefList concretely look like on a graph?  
 If we were to look at a DB state for the above data, we would see.  
-![[ZefDoc - ZefList 2022-11-14 12.31.00.excalidraw]]  
+!ZefDoc - ZefList 2022-11-14 12.31.00.excalidraw  
 The `RT.ZEF_NextListElement` relations exist to define a unique order.  
   
   
@@ -56,4 +56,4 @@ Yes, in exactly the same way.
   
   
 ### Related  
-- if ordering is not important, [[ZefDoc - ZefSet]]  
+- if ordering is not important, ZefDoc - Set  

@@ -90,7 +90,7 @@ relation. If you want to disable this you can set `store_id=None`.
   
 This How-To is about imports only. Zef graphs in general can be meta-graphs and  
 so might not be directly representable in any of the formats. However, one  
-option we have is to use the [[ZefDoc - NetworkX Interface]] to view and then export your Zef  
+option we have is to use the [ZefDoc - NetworkX Interface](network-x-interface) to view and then export your Zef  
 graph to a file. For example:  
   
 ```py  

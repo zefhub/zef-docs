@@ -3,8 +3,8 @@ id: currying-and-partial-application
 title: Currying and Partial Application
 ---
 
-![](6b85bdd70f4092cc877ccff2cf1b39ae4f632904ab45b7d2825f5388520bd2ab.png)  
-source: [Quinten de Graaf, Unsplash](https://unsplash.com/photos/L4gN0aeaPY4)  
+![](d27dfc5ed7a71c7179606ddc6e29761253dc3104eb4319457f44797f658763f4.png)  
+Thanks to StableDiffusion   
   
   
   
@@ -32,7 +32,7 @@ f(1)(2)      # return the final result or a function that takes z?
 ```  
 No good solution.  
   
-Currying and data last languages go together well. See [[Data First Language]]  
+Currying and data last languages go together well. See Data First Language  
 e.g. `map(function, data)`. We want to pass the data in at the very last step, this should trigger computation.  
   
 ### How to solve this Dilemma in Python  

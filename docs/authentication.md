@@ -51,6 +51,6 @@ When graphs are unloaded, any `ZefRef` referencing that graph is invalidated.
 ## Overriding the user account for a session  
   
 User accounts can be overridden with an environment variable or a plain text  
-file. See the page [[ZefDoc - Environment Variables]] for more details.  
+file. See the page [ZefDoc - Environment Variables](environment-variables) for more details.  
   
   

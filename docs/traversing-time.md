@@ -19,7 +19,7 @@ my_graph_slice | time_travel[-2]  # move backwards in time by 2 slices
 ```python  
 my_graph_slice | time_travel[-2 * unit.hours]  # travel back in time  
 ```  
-Related: [[ZefDoc - Explanation - Units in Zef |units in Zef]].  
+Related: units in Zef.  
   
   
 ##### Moving to an absolute time  

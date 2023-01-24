@@ -54,7 +54,7 @@ Actor Table
   
   
 ### Zef Graph  
-![[Drawing 2022-10-05 09.26.39.excalidraw| 400]]  
+!400  
 This is shown in very granular form here. For practical purposes, we usually have a more compressed view when visually displaying graphs.  
   
   
@@ -84,4 +84,4 @@ Or why it is worth departing from the trodden paths?
   
   
 ### Related  
-- [[ZefDoc - Representing Temporally Qualified Information in ZefDB]]  
+- ZefDoc - Representing Temporally Qualified Information in ZefDB  

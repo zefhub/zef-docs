@@ -33,4 +33,4 @@ The same physical memory can be mapped into multiple processes by Zef. This allo
   
   
 ### References & Related Material  
-- [[ZefDoc - ZefDB Transactions]]  
+- [ZefDoc - ZefDB Transactions](zef-db-transactions)  

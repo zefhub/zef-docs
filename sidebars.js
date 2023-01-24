@@ -1,14 +1,15 @@
 module.exports = {
   "mainSidebar": [
     "documentation-overview",
+    "getting-started",
     {
       "type": "category",
       "label": "Tutorials",
       "items": [
         "importing-plain-python-data",
-        "zef-op-katas",
         "employee-database",
         "personal-budgeter",
+        "zef-op-katas",
         {
           "type": "category",
           "label": "Advent of Code",
@@ -34,7 +35,6 @@ module.exports = {
         "codebase-queries",
         "network-x-interface",
         "basic-graph-traversal",
-        "quick-start",
         {
           "type": "category",
           "label": "Import From File",
@@ -85,7 +85,9 @@ module.exports = {
             "authentication",
             "creating-tokens"
           ]
-        }
+        },
+        "db-schemas",
+        "coordinating-computation"
       ]
     },
     {
@@ -96,6 +98,7 @@ module.exports = {
         "introduction-to-logic-types",
         "zef-ops-two-levels-of-laziness",
         "zef-objects",
+        "z-expression",
         "creating-a-data-model",
         "graph-relational-model",
         "unifying-streams-and-dbs",
@@ -107,7 +110,6 @@ module.exports = {
         "predicate-dispatch",
         "ref-types-vs-uids",
         "currying-and-partial-application",
-        "z-expression",
         "zef-lists",
         "design-goals",
         "zef-value-types",
@@ -134,13 +136,6 @@ module.exports = {
         },
         {
           "type": "category",
-          "label": "ZefFX",
-          "items": [
-            "wish"
-          ]
-        },
-        {
-          "type": "category",
           "label": "FlatGraph",
           "items": [
             "merging"
@@ -152,7 +147,8 @@ module.exports = {
           "items": [
             "zef-db-transactions",
             "relational-or-graph",
-            "graph-synchronization"
+            "graph-synchronization",
+            "distributed-modes-of-zef-db"
           ]
         },
         {
@@ -198,7 +194,19 @@ module.exports = {
           "items": [
             "managing-privileges-permissions"
           ]
-        }
+        },
+        "logical-db-schemas",
+        "identity-vs-value-semantics",
+        {
+          "type": "category",
+          "label": "ZefOps",
+          "items": [
+            "zef-op-with-logic-types"
+          ]
+        },
+        "platonic-ref",
+        "literal-expression",
+        "entity-vs-value"
       ]
     },
     {
@@ -230,6 +238,19 @@ module.exports = {
           "items": [
             "managing-atom-encodings",
             "importing-submodules"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Upcoming",
+      "items": [
+        {
+          "type": "category",
+          "label": "Explanations",
+          "items": [
+            "representing-time"
           ]
         }
       ]

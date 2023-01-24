@@ -29,6 +29,7 @@ You can also ask them for their UID, which is returned in a form similar to a St
 This allows literal construction of Ref types, e.g.  
 ```python  
 z1 = ZefRef('32674567523-2378647263-7852437236')  
+z1 = ZefRef('32674567523-2378647263-7852437236')  
 ```  
   
   
