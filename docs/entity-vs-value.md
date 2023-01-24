@@ -4,38 +4,26 @@ title: Entity vs Value
 ---
 
   
-In Zef (and generally in domain modeling) we can categorize any object appearing as data as one of two types: entities or values.  
   
   
-#### Side Note  
-With "entity" we refer to any instance of type entity, attribute entity and relations on this page. This is for brevity only.  
+### How do I Decide if Something is a Value or an Entity?  
+The question you should think about first when choosing how to represent **something** is: what happens when I write down a literal expression for this thing and were to "instantiate" it twice?  
+- should it refer to the identical "thing"?  
+- does it denote two different things of the same type?  
+  
+If (1) is the answer, you're dealing with a **value**.  
+If (2) is the answer, you're dealing with something that has an identity, e.g. an entity.  
+  
+### I thought you said Zef has "value semantics" everywhere?  
+Yes, this is *mostly* true. It is also true for the "atoms", i.e. the concrete Python objects you are dealing with.  
+To resolve this paradox, we have to get slightly philosophical: Suppose you're dealing some entity that has value semantics, e.g. a "User" which you are storing in a database and dealing with in your code. The obvious, but fundamentally critical point you always need to remember is the following: your Python object representing this customer **IS NOT** that person. The actual person lives in the real world. All you have in your Python process or your database is something you choose to be a representation of that person. It is simply a "handle" or pointer to refer to whichever actual real-world entity or abstract concept you choose to represent.  
+  
+- The actual entity / person has an identity and does not follow value semantics  
+- The handle / entity object in your system has value semantics. If you make a copy of it, it points to the real thing.  
+  
+This is analogous to pointers in languages like C++ having value semantics. Even if they point to an object which does not have value semantics.  
   
   
-  
-### Values  
-- Values have no identity and are purely determined by the value they represent. e.g. our concept of 42 refers to exactly the same (abstract) thing / concept as that which an alien civilization would have once they formalized the natural natural numbers.  
-- Values and their equality follow the rules of [[Value Semantics |value semantics]].  
-- Values compose: composite container types of values are themselves values again. e.g. the list `[1, 2, "hello"]` can itself be considered a value. Other container types are dictionaries and sets.  
-- If the "constructor" for a value object is called, it should always lead to the same object. Two values constructed on different computers would compare equal if they were constructed with the same parameters.  
-- The constructor for a value object is a pure function. No entropy generation for a uid is required.  
-- In [[Domain Driven Design (DDD)|domain driven design]], these are called as **value objects**.  
-  
-  
-  
-## Entities  
-- Entities often refer to "things" in the real world.  
-- When referring to entities within the systems we build, we can only ever talk about them using references. Concretely within Zef, we can use one of the three different [[ZefDoc - Reference Types |reference types]] with the choice depending on the semantic meaning within the given context.  
-- Entities have an identity: We would consider two entities to be different, even if all attributes and properties are considered equal.  
-- In [[Domain Driven Design (DDD)|domain driven design]], these are called as **domain objects**.  
-- Entities with identity semantics can be represented by value objects when using an id, as underlined by Pat Helland in [Identity by Any Other Name](https://cacm.acm.org/magazines/2019/4/235620-identity-by-any-other-name/fulltext)  
-- Relational databases don't have identity semantics (see e.g. [Relational has no Object Identity](https://wiki.c2.com/?RelationalHasNoObjectIdentity) by Costin Cozianu). Identity is assigned and managed using keys in tables and it is the responsibility of the user to operate on this low abstraction level (we should write a blog post on [dealing with entities via keys and ID is the domain modeling counterpart of manual memory management and pointer arithmetic in C.])  
-  
-  
-  
-  
-## Further References and Material  
-- blog post [Value Object](https://martinfowler.com/bliki/ValueObject.html) by Martin Fowler  
-- [Value Object](http://wiki.c2.com/?ValueObject) by Costin Cozianu  
-   
-  
-  
+---  
+### Related  
+- [ZefDoc - Identity vs Value Semantics](identity-vs-value-semantics)  

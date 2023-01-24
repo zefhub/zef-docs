@@ -7,12 +7,12 @@ title: Environment Variables
 ### ZefHub connections  
   
 - `ZEFHUB_AUTH_KEY`: either `GUEST` to authenticate as a guest user or an API  
-  key. See [[ZefDoc - ZefHub Authentication]] for more information.  
+  key. See [ZefDoc - ZefHub Authentication](authentication) for more information.  
 - `ZEFHUB_URL`: the URL to connect to, by default `wss://hub.zefhub.io`.  
   
 ### Information messages  
   
-These variables match to [[ZefDoc - Runtime Config]]]  
+These variables match to ZefDoc - Runtime Config]  
   
 - `ZEFDB_QUIET`: changes the default `zwitch` output options to be  
   `zefhub_communication_output(False)`, `extra_quiet(True)`,  
@@ -52,7 +52,7 @@ These variables match to [[ZefDoc - Runtime Config]]]
   stored. Defaults to `$HOME/.zef`. The config file itself is located at `ZEFDB_SESSION_PATH/config.yaml`.  
   
 The following variables match to configuration options that can be modified through the  
-`config` ZefOp. The variables will be merely listed here, see [[ZefDoc - Runtime Config]] for more  
+`config` ZefOp. The variables will be merely listed here, see [ZefDoc - Runtime Config](runtime-config) for more  
 details about their behavior.  
   
 - `ZEFDB_LOGIN_AUTOCONNECT`  

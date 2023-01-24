@@ -100,7 +100,7 @@ You may say "OK, fine. But what does this help me with concrete problems? This i
   
 Let's look at some more concrete examples.  
   
-[[Write more Total Functions (ZefBlog)]]  
+Write more Total Functions (ZefBlog)  
   
   
   
@@ -122,7 +122,7 @@ RAEs: Relations, Attribute Entities, Entities
   
   
   
-see also: [[Dictionary Queries in Zef]]  
+see also: Dictionary Queries in Zef  
   
   
   

@@ -28,7 +28,7 @@ diff(flat_graph_2, flat_graph_1)    # between two FlatGraphs
 diff(flat_graph_2, graph_slice_1)   # between a FlatGraph and a GS  
 ```  
   
-Essentially this diffing can be done between any graphs that represent state. Since the identity of atoms in Zef are tracked across different graphs based on the [[ZefDoc - Explanation - Zef Lineage Model |Zef Lineage Model]], diffs can even be computed between states of different ZefDB graphs.  
+Essentially this diffing can be done between any graphs that represent state. Since the identity of atoms in Zef are tracked across different graphs based on the Zef Lineage Model, diffs can even be computed between states of different ZefDB graphs.  
   
   
 ### Data Structure  
@@ -50,7 +50,7 @@ This is just a list of changes, which we refer to as a **GraphDelta**. They are 
   
   
 #### Relation to Graph Commands  
-You may have noticed that a GraphDelta looks very similar to a [[ZefDoc - Graph Command |graph command]] (a list of changes one wishes to execute). GraphDeltas are pure descriptions of what is different, i.e. they describe something about the world / the states. Graph commands express wishes and are imperative in nature.  
+You may have noticed that a GraphDelta looks very similar to a [graph command](graph-instructions) (a list of changes one wishes to execute). GraphDeltas are pure descriptions of what is different, i.e. they describe something about the world / the states. Graph commands express wishes and are imperative in nature.  
   
   
 #### Relation to Graph Subscriptions  

@@ -1360,7 +1360,7 @@ The result should speak for itself. There are three obvious issues however:
   
 ### Manually  
   
-See the guide [[ZefDoc - GraphQL Manual Schema]] for how to customize the GraphQL schema.  
+See the guide [ZefDoc - GraphQL Manual Schema](advanced-apis) for how to customize the GraphQL schema.  
   
   
 ### Running a server  

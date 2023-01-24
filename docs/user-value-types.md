@@ -134,4 +134,4 @@ For instances of these types:
   
   
 ### Related Material  
-- [[ZefDoc - Structural Typing|Advanced typing for UserValueTypes]]
+- Advanced typing for UserValueTypes

@@ -160,4 +160,4 @@ Use Zef objects to
   
   
 ### Related  
-- transforming between different data types: [[ZefDoc - Data Wrangling |data wrangling]]
+- transforming between different data types: [data wrangling](data-wrangling)

@@ -18,7 +18,7 @@ T1 = (Z < 10)  # the set / type of all things considered to be less than 10.
 'hi' | is_a[T1]      # False  
 ```  
   
-On the type level, `Z` is of type `ZExpression`. As soon as a `ZExpression` is combined with some value using one of the binary boolean operators `==, !=, <, >, <=, >=`, this evaluates to a [[ZefDoc - Zef Value Types |Zef ValueType]].  
+On the type level, `Z` is of type `ZExpression`. As soon as a `ZExpression` is combined with some value using one of the binary boolean operators `==, !=, <, >, <=, >=`, this evaluates to a [Zef ValueType](zef-value-types).  
   
   
   
@@ -72,7 +72,7 @@ my_query = (
     & (Z.YearOfBirth > 1950)  
 )  
 ```  
-All ValueTypes in Zef are expressions, which themselves obey [[ZefDoc Value Semantics |value semantics]].  
+All ValueTypes in Zef are expressions, which themselves obey value semantics.  
 Above, we combined the various types to define a hypothetical set of things that fulfill **all** of the stated conditions by using the shorthand `&` for `Intersection`.  
   
 Sometime it is also convenient to use the `|` operator for set `Union`.  
@@ -93,7 +93,7 @@ The `RT` expression is used to define sets of entities (generally: sets of atoms
 AtomsNamedPeter = RP[(Z, RT.FirstName, 'Peter')]  # a ValueType / Set  
 ```  
 Importantly, `Z` indicates the position of the **subject**/thing we are looking for.  
-For more details, see the [[ZefDoc - RelationType Expression |RelationType]] docs.  
+For more details, see the RelationType docs.  
   
   
 ### Multiple Occurrences of Z  
@@ -111,7 +111,7 @@ It is an opinionated and somewhat unusual approach to create expressions for set
   
   
 ### Relation to the `dplyr` Package in R  
-> "A lot of it *(R's success)* is because of one man, which is [[Hadley Wickham]], who has created a set of beautiful libraries that have a better developer experience for stuff like data munging and things like than any other language. ...   
+> "A lot of it *(R's success)* is because of one man, which is Hadley Wickham, who has created a set of beautiful libraries that have a better developer experience for stuff like data munging and things like than any other language. ...   
 > I do feel that Hadley's libraries are the best in the world for doing what they do."   -   Jeremy Howard  
   
 Z-Expressions allow for syntax that is similar to that of dplyr's, but in Python.  

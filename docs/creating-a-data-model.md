@@ -25,7 +25,7 @@ data_model = [
 ```  
 This is also a Zef Object, i.e. a literal expression. The values just happen to be typed. We can use this data structure to declare a schema.  
   
-![[ZefDoc - Creating a Data Model 2022-10-13 15.53.56.excalidraw]]  
+!ZefDoc - Creating a Data Model 2022-10-13 15.53.56.excalidraw  
 TODO...  
   
 ### Schema  
@@ -86,4 +86,5 @@ ET.Movie(
   
   
 ### Related  
-- more details on defining logical schemas via predicate functions: [[ZefDoc - Logical DB Schemas]]
+- more details on defining logical schemas via predicate functions: [ZefDoc - Logical DB Schemas](logical-db-schemas)  
+  
