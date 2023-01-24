@@ -126,6 +126,7 @@ If you don't want to give the "user" / caller access to all this information (be
   
 In addition, it may be helpful to compare some of the properties of these types.  
 For instances of these types:  
+  
 |                         | UVT | Dictionary | Python Object | ZefRef |  
 | ----------------------- | --- | ---------- | ------------- | ------ |  
 | identity                | ❌  | ❌         | ✅            |   ✅       |  
