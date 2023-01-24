@@ -58,6 +58,7 @@ Very similar principles to dictionaries apply: the field names map to relations 
 Very similar principles to dictionaries apply: the field names map to relations and field values to the target nodes. The field values could be of scalar type or other objects.  
   
 Actor Table  
+  
  | first name | last name | favorite food |  
  | ---------- | --------- | ------------- |  
  | John       | Travolta  | 🍕            |  

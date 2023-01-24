@@ -86,7 +86,6 @@ module.exports = {
             "creating-tokens"
           ]
         },
-        "db-schemas",
         "coordinating-computation"
       ]
     },
@@ -206,7 +205,8 @@ module.exports = {
         },
         "platonic-ref",
         "literal-expression",
-        "entity-vs-value"
+        "entity-vs-value",
+        "db-schemas"
       ]
     },
     {

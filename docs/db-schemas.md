@@ -5,6 +5,9 @@ title: DB Schemas
 
 In a ZefDB database, we distinguish between a blueprint and  logical schema of a database.  
   
+!ZefDoc - Schemas 2023-01-24 23.04.51.excalidraw  
+  
+  
 ### Three Functions Schemas  
 - Encode a domain model: communicate with your team and future self  
 - Give an overview of the data that exists  

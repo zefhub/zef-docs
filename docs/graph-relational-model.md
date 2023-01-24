@@ -8,6 +8,7 @@ title: Graph-Relational Model
   
 ### Tabular Data  
 Actor Table  
+  
  | first name | last name | favorite food |  
  | ---------- | --------- | ------------- |  
  | John       | Travolta  | 🍕            |  
@@ -61,6 +62,7 @@ This is shown in very granular form here. For practical purposes, we usually hav
   
 ### Which Problems does the Graph-Relational Model Address?  
 Or why it is worth departing from the trodden paths?  
+  
 |                                                | SQL-Based Relational DBs     | Labeled Property Graphs     | Graph-Relational |  
 | ---------------------------------------------- | ---------------------------- | --------------------------- | ---------------- |  
 | Schema                                         | ✅                           | Typically no strong support | ✅               |  
