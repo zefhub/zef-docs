@@ -8,11 +8,10 @@ slug: /
   
 ![](df0090957d11156c71ccb2fb5d0391c9e9e07670b120debc5588c038a8efd8b3.png)  
   
-This page will give an overview of   
+This page will give an overview of  
 1. "I want to...": point you somewhere quickly  
 2. How the documentation is structured  
 3. A table of contents giving an aggregated overview of the contents  
-  
   
   
 ## I want to...  
@@ -29,7 +28,7 @@ A good starting point may be the introductory articles.
 (Youtube overview videos coming soon)  
   
   
-- Introduction to Zef (ZefDoc)  
+- ZefDoc - Introduction to Zef  
 - [Introduction to ZefDB](introduction-to-zef-db)  
 - ZefDoc - Introduction to ZefOps  
   

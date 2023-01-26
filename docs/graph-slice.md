@@ -4,8 +4,6 @@ title: Graph Slice
 ---
 
   
-# Graph Slice  
-  
 A **Graph Slice** is a time slice of a cross an eternal ZefDB graph at one fixed point in time. It can be seen as the **state of the data base** at a given point in time, which makes assertions about   
 1. the existence about a set of Atoms (Entities, Relations, AttributeEntities)   
 2. facts that are asserted to to be true (relations between atoms, aka semantic triples)  

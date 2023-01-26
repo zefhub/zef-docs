@@ -4,8 +4,6 @@ title: Zef Value Types
 ---
 
   
-!ZefDoc - Zef Value Types 2022-10-16 08.07.19.excalidraw  
-  
 Not all type systems are equal. One perspective on types is to distinguish between representation types and logic types.  
   
   
