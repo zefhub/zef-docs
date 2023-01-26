@@ -3,6 +3,7 @@ id: importing-plain-python-data
 title: Importing Plain Python Data
 ---
 
+  
 - **Tutorial Level**: Easy  
 - **Prerequisites**: piping syntax  
   

@@ -8,7 +8,7 @@ title: ZefDB Transactions
   
   
 ### A Single Thread to Rule them All  
-on a per graph basis: all writes / transaction are performed by one thread. Requested changes (writes) to a graph are expressed as plain data and are part of [[ZefDoc - Introduction to Zef-FX (ZefDoc)| Zef's managed effect system]]: the wishes are automatically and safely forwarded as messages to the transactor thread.  
+on a per graph basis: all writes / transaction are performed by one thread. Requested changes (writes) to a graph are expressed as plain data and are part of [[ZefDoc - Introduction to Zef-FX| Zef's managed effect system]]: the wishes are automatically and safely forwarded as messages to the transactor thread.  
   
   
 ### Pending Transaction Queue  

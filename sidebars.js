@@ -19,6 +19,13 @@ module.exports = {
             "2021-day-5",
             "2021-day-6"
           ]
+        },
+        {
+          "type": "category",
+          "label": "ZefOps",
+          "items": [
+            "funny-how-the-knight-moves"
+          ]
         }
       ]
     },
