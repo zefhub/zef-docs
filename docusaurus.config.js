@@ -18,6 +18,14 @@ module.exports = {
       disableSwitch: false,
       respectPrefersColorScheme: true,
     },
+    algolia: {
+      appId: "1R69LQWN42",
+      apiKey: "829b7dfc22942f61c2583857deb39b1f",
+      indexName: "zef-zefhub",
+      contextualSearch: true,
+      searchParameters: {},
+      pathsToMatch: ["https://zef.zefhub.io/**", "http://zef.zefhub.io/**"],
+    },
     navbar: {
       title: "",
       logo: {
