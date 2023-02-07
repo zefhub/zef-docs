@@ -24,6 +24,7 @@ module.exports = {
       indexName: "zef-zefhub",
       contextualSearch: true,
       searchParameters: {},
+      pathsToMatch: ["https://zef.zefhub.io/**", "http://zef.zefhub.io/**"],
     },
     navbar: {
       title: "",
