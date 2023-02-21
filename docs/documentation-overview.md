@@ -1,6 +1,6 @@
 ---
 id: documentation-overview
-title: Documentation Overview
+title: Overview
 slug: /
 ---
 
@@ -32,16 +32,31 @@ A good starting point may be the introductory articles.
 - [Introduction to ZefDB](introduction-to-zef-db)  
 - ZefDoc - Introduction to ZefOps  
   
-  
-  
+
 ## I Need Help With...  
 - installing Zef  
 - configuring zef  
 - connecting to ZefHub  
   
-  
-  
-  
+
+### Details element example
+
+<details>
+  <summary>Toggle me!</summary>
+  <div>
+    <div>This is the detailed content</div>
+    <br/>
+    <details>
+      <summary>
+        Nested toggle! Some surprise inside...
+      </summary>
+      <div>
+        😲😲😲😲😲
+      </div>
+    </details>
+  </div>
+</details>
+
 ## How the Documentation is Structured  
 We follow the structure laid out in [the wonderful guide by Divio](https://documentation.divio.com/).  
 Essentially, there are four categories for documentation.  
