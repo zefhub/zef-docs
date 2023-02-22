@@ -32,15 +32,8 @@ module.exports = {
     
     {
       type: "category",
-      label: "ZefOps",
-      // link: {
-      //   type: 'generated-index',
-      //   title: 'Docusaurus Guides2',
-      //   description: 'Learn about the most important Docusaurus concepts!',
-      //   slug: '/category/docusaurus-guides',
-      //   keywords: ['guides'],
-      //   image: '/img/docusaurus.png',
-      // },
+      label: "Data Pipelines & ZefOps",
+      "link": {"type": 'doc', "id": 'overview-zefops'},
       items: [
         "representing-time",
         {
@@ -48,46 +41,8 @@ module.exports = {
           label: 'ZefHub',               // The link label
           href: 'https://zefhub.io',     // The external URL
         },
-        {
-          type: 'html',
-          value: 'Core concepts',
-          className: 'sidebar-title',
-        },
       ]
     },
-
-    // {
-    //   type: 'category',
-    //   label: 'ABCDE',
-    //   collapsible: true,
-    //   collapsed: false,
-    //   items: [
-    //     'creating-pages',
-    //     {
-    //       type: 'category',
-    //       label: 'Docs',
-    //       items: ['introduction', 'sidebar', 'markdown-features', 'versioning'],
-    //     },
-    //   ],
-    // },
-
-    // {
-    //   type: 'category',
-    //   label: 'ABCDE',
-    //   // collapsible: false,    # enabling this does not cause an error, but the category does not show up
-    //   collapsed: false,
-    //   link: {
-    //     type: 'generated-index',
-    //     title: 'Docusaurus Guides',
-    //     description: 'Learn about the most important Docusaurus concepts!',
-    //     slug: '/category/docusaurus-guides',
-    //     keywords: ['guides'],
-    //     image: '/img/docusaurus.png',
-    //   },
-    //   items: [
-    //     'representing-time',
-    //   ],
-    // },
 
     {
       "type": "category",
