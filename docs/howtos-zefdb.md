@@ -1,7 +1,7 @@
 ---
 id: howtos-zefdb
 description: a description of ...
-title: How-Tos
+title: ZefDB How-Tos
 ---
 
 List of howtos for ZefDB
