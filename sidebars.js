@@ -1,266 +1,172 @@
 module.exports = {
   "mainSidebar": [
     "documentation-overview",
-    "getting-started",
     {
       "type": "category",
-      "label": "Tutorials",
+      "label": "ZefDB",
+      "link": {"type": 'doc', "id": 'overview-zefdb'},
       "items": [
-        "importing-plain-python-data",
-        "employee-database",
-        "personal-budgeter",
-        "zef-op-katas",
+        // "getting-started",
+        "zef-db-getting-started",
         {
           "type": "category",
-          "label": "Advent of Code",
-          "items": [
-            "2021-day-1",
-            "2021-day-3",
-            "2021-day-5",
-            "2021-day-6"
-          ]
+          "label": "How-Tos",
+          "link": {"type": 'doc', "id": 'howtos-zefdb'},
+          "items": ["facts-logic"]
         },
         {
           "type": "category",
-          "label": "ZefOps",
-          "items": [
-            "funny-how-the-knight-moves"
-          ]
-        }
+          "label": "Tutorials",
+          "link": {"type": 'doc', "id": 'tutorials-zefdb'},
+          "items": ["graph-instructions", "graph-formats"]
+        },
+        "explanations-zefdb",
+        //"reference-zefdb",
       ]
     },
+    
     {
-      "type": "category",
-      "label": "How-To",
+      type: "category",
+      label: "Data Pipelines & ZefOps",
+      "link": {"type": 'doc', "id": 'overview-zefops'},
       "items": [
-        "installing-zef",
-        "traversing-graphs",
-        "traversing-time",
-        "data-wrangling",
-        "reacting-to-graph-changes",
-        "using-zef-fx",
-        "codebase-queries",
-        "network-x-interface",
-        "basic-graph-traversal",
+        "zef-ops-getting-started",
         {
           "type": "category",
-          "label": "Import From File",
-          "items": [
-            "graph-formats",
-            "multiple-interlinked-csvs"
-          ]
+          "label": "How-Tos",
+          "link": {"type": 'doc', "id": 'howtos-zefops'},
+          "items": ["zef-op-katas"]
         },
         {
           "type": "category",
-          "label": "ZefDB",
-          "items": [
-            "introduction-to-zef-db",
-            "zef-db-graph",
-            "collaborate"
-          ]
+          "label": "Tutorials",
+          "link": {"type": 'doc', "id": 'tutorials-zefops'},
+          "items": ["finding-zef-ops"]
         },
-        {
-          "type": "category",
-          "label": "ZefFX",
-          "items": [
-            "clipboard",
-            "reading-and-writing-files",
-            "http",
-            "websocket"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "ValueTypes",
-          "items": [
-            "image"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "GraphQL",
-          "items": [
-            "advanced-apis",
-            "simple-gql",
-            "quick-api-creation"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "ZefHub",
-          "items": [
-            "authentication",
-            "creating-tokens"
-          ]
-        },
-        "coordinating-computation"
+        "explanations-zefdb",
+        "reference-zefdb",
       ]
     },
-    {
-      "type": "category",
-      "label": "Explanations",
-      "items": [
-        "user-value-types",
-        "introduction-to-logic-types",
-        "zef-ops-two-levels-of-laziness",
-        "zef-objects",
-        "z-expression",
-        "creating-a-data-model",
-        "graph-relational-model",
-        "unifying-streams-and-dbs",
-        "zef-vs-python-lists-tuples",
-        "data-first",
-        "low-level-graph-data-layout",
-        "introduction-to-zef-fx",
-        "logical-atomism",
-        "predicate-dispatch",
-        "ref-types-vs-uids",
-        "currying-and-partial-application",
-        "zef-lists",
-        "design-goals",
-        "zef-value-types",
-        {
-          "type": "category",
-          "label": "Concepts",
-          "items": [
-            "zef-ref",
-            "reference-types",
-            "reference-frame-programming",
-            "entity-vs-value",
-            "semantic-diffing",
-            "graph-slice",
-            "ezef-ref",
-            "atoms"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Wish",
-          "items": [
-            "wish"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "FlatGraph",
-          "items": [
-            "merging"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "ZefDB",
-          "items": [
-            "zef-db-transactions",
-            "relational-or-graph",
-            "graph-synchronization",
-            "distributed-modes-of-zef-db"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Logic Types",
-          "items": [
-            "triples-pattern-matching"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "ValueTypes",
-          "items": [
-            "z-expressions"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Code Search",
-          "items": [
-            "finding-zef-ops"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Graphs",
-          "items": [
-            "graph-instructions",
-            "graph-instructions"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Logic",
-          "items": [
-            "facts-logic"
-          ]
-        },
-        "glossary",
-        {
-          "type": "category",
-          "label": "ZefHub",
-          "items": [
-            "managing-privileges-permissions"
-          ]
-        },
-        "logical-db-schemas",
-        "identity-vs-value-semantics",
-        {
-          "type": "category",
-          "label": "ZefOps",
-          "items": [
-            "zef-op-with-logic-types"
-          ]
-        },
-        "platonic-ref",
-        "literal-expression",
-        "entity-vs-value",
-        "db-schemas"
-      ]
-    },
-    {
-      "type": "category",
-      "label": "Reference",
-      "items": [
-        "zef-faq",
-        "writing-to-graphs",
-        {
-          "type": "category",
-          "label": "Configuration",
-          "items": [
-            "environment-variables",
-            "runtime-config",
-            "client-states",
-            "config-file"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "ZefHub",
-          "items": [
-            "zef-hub-connection"
-          ]
-        },
-        {
-          "type": "category",
-          "label": "Internals",
-          "items": [
-            "managing-atom-encodings",
-            "importing-submodules"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "category",
-      "label": "Upcoming",
-      "items": [
-        {
-          "type": "category",
-          "label": "Explanations",
-          "items": [
-            "representing-time"
-          ]
-        }
-      ]
-    }
+
+    // {
+    //   "type": "category",
+    //   "label": "GraphQL",
+    //   "link": {"type": 'doc', "id": 'overview-graphql'},
+    //   "items": [
+    //     "graph-ql-getting-started",
+    //     {
+    //       "type": "category",
+    //       "label": "Tutorials",
+    //       "link": {"type": 'doc', "id": 'tutorials-graphql'},
+    //       "items": ["simple-gql"]
+    //     },
+    //     "explanations-graphql"
+    //   ]
+    // },
+
+    
+
+
+
+    // {
+    //   "type": "category",
+    //   "label": "Data Streaming",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+
+    // {
+    //   "type": "category",
+    //   "label": "Type System",
+    //   "link": {"type": 'doc', "id": 'finding-zef-ops'},
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+
+
+    
+    // {
+    //   "type": "category",
+    //   "label": "Managed Effects",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+    
+    // {
+    //   "type": "category",
+    //   "label": "Zef Studio",
+    //   "link": {"type": 'doc', "id": 'overview-zefstudio'},
+    //   "items": [
+    //     // "representing-time"
+    //   ]
+    // },
+    
+    // {
+    //   "type": "category",
+    //   "label": "Integration",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+
+    // {
+    //   "type": "category",
+    //   "label": "Domain Modeling",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+
+    // {
+    //   "type": "category",
+    //   "label": "Algorithms",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+
+    
+    // {
+    //   "type": "category",
+    //   "label": "Use Cases",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+    
+    // {
+    //   "type": "category",
+    //   "label": "Installing Zef",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+    
+    // {
+    //   "type": "category",
+    //   "label": "Contributing",
+    //   "items": [
+    //     "representing-time"
+    //   ]
+    // },
+
+    // {
+    //   "type": "category",
+    //   "label": "Roadmap",
+    //   "items": [
+    //     {
+    //       "type": "category",
+    //       "label": "Distributed Systems",
+    //       "items": [
+    //         "representing-time"
+    //       ]
+    //     }
+    //   ]
+    // }
+
+
   ]
 }
