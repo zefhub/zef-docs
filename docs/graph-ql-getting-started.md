@@ -1,6 +1,6 @@
 ---
-id: deploying-a-backend-with-a-graph-ql-api
-title: Deploying a backend with a GraphQL API
+id: graph-ql-getting-started
+title: GraphQL Getting Started
 ---
 
   

@@ -6,7 +6,8 @@ module.exports = {
       "label": "ZefDB",
       "link": {"type": 'doc', "id": 'overview-zefdb'},
       "items": [
-        "getting-started",
+        // "getting-started",
+        "zef-db-getting-started",
         {
           "type": "category",
           "label": "How-Tos",
@@ -20,7 +21,7 @@ module.exports = {
           "items": ["graph-instructions", "graph-formats"]
         },
         "explanations-zefdb",
-        "reference-zefdb",
+        //"reference-zefdb",
       ]
     },
     
@@ -29,6 +30,7 @@ module.exports = {
       label: "Data Pipelines & ZefOps",
       "link": {"type": 'doc', "id": 'overview-zefops'},
       "items": [
+        "zef-ops-getting-started",
         {
           "type": "category",
           "label": "How-Tos",
@@ -46,20 +48,21 @@ module.exports = {
       ]
     },
 
-    {
-      "type": "category",
-      "label": "GraphQL",
-"link": {"type": 'doc', "id": 'overview-graphql'},
-      "items": [
-        {
-          "type": "category",
-          "label": "Tutorials",
-          "link": {"type": 'doc', "id": 'tutorials-graphql'},
-          "items": ["simple-gql"]
-        },
-        "explanations-graphql"
-      ]
-    },
+    // {
+    //   "type": "category",
+    //   "label": "GraphQL",
+    //   "link": {"type": 'doc', "id": 'overview-graphql'},
+    //   "items": [
+    //     "graph-ql-getting-started",
+    //     {
+    //       "type": "category",
+    //       "label": "Tutorials",
+    //       "link": {"type": 'doc', "id": 'tutorials-graphql'},
+    //       "items": ["simple-gql"]
+    //     },
+    //     "explanations-graphql"
+    //   ]
+    // },
 
     
 
