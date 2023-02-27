@@ -22,7 +22,7 @@ module.exports = {
       appId: "1R69LQWN42",
       apiKey: "829b7dfc22942f61c2583857deb39b1f",
       indexName: "zef-zefhub",
-      contextualSearch: true,
+      contextualSearch: false,
       searchParameters: {},
       sitemaps: ["https://zef.zefhub.io/sitemap.xml"],
       pathsToMatch: ["https://zef.zefhub.io/**", "http://zef.zefhub.io/**"],
