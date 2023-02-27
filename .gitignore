@@ -5,3 +5,4 @@ build/
 /notebook_tutorials/.ipynb_checkpoints/
 /static/notebooks/.ipynb_checkpoints/
 
+.vercel
