@@ -4,6 +4,7 @@ title: ZefOp Katas
 ---
 
   
+  
 This tutorial is a collection of small sample problems and coding challenges. The goal of this tutorial is to demonstrate the usage of ZefOps on a variety of self-contained problems. Hopefully it gives you an idea of  
 - some of the commonly ZefOps  
 - demonstrate the conciseness and composability of code written in the data pipelining approach using chaining of ZefOps  

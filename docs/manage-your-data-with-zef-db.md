@@ -1,16 +1,16 @@
 ---
-id: zef-db-getting-started
-title: ZefDB Getting Started
+id: manage-your-data-with-zef-db
+title: Manage your data with ZefDB
 ---
 
   
 One of the best way to learn is by example.   
   
 In this tutorial series, you will learn how to:  
-* [Model, add, view, and update your domain data with ZefDB](zef-db-getting-started)  
-* [Build Data pipeline with ZefOps](zef-ops-getting-started)  
-* [Deploy a working backend with Zef](graph-ql-getting-started)  
-* [Build a reactive application with Zef](streaming-getting-started)  
+* [Model, add, view, and update your domain data with ZefDB](manage-your-data-with-zef-db)  
+* [Build Data pipeline with ZefOps](building-data-pipelines-with-zef-ops)  
+* [Deploy a working backend with Zef](deploying-a-backend-with-a-graph-ql-api)  
+* [Build a reactive application with Zef](data-streaming-with-zef)  
   
 You can walk through these tutorials using IPython, or any of its extension:  
 * Jupyter Notebook,   
@@ -205,7 +205,7 @@ result = (
 print(result) # 1  
 ```  
   
-We've traversed one DB state earlier with respect to the current state, which the fact that `J. Lawrence` has not yet acted in `Causeway` . The result of the query will then become `1`. There are few ways to traverse time in ZefDB, check out this topic.  
+We've traversed one DB state earlier with respect to the current state, which the fact that `J. Lawrence` has not yet acted in `Causeway` . The result of the query will then become `1`. There are few ways to traverse time in ZefDB, check out this [topic](changing-reference-frames).  
   
 #### Persisting Database  
 Persisting graphs requires a free ZefHub account. See this [[ZefDoc - Quick Install Guide#Sign up for a free Zefhub account|section]] on getting your ZefHub account.  

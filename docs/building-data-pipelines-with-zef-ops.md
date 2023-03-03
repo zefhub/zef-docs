@@ -5,7 +5,7 @@ title: Building Data Pipelines with ZefOps
 
   
   
-In our first tutorial, you would have seen the term "ZefOp" being brought up a several term. In fact, it's one of the core feature that makes programming with Zef so powerful, easy, and most importantly, fun!   
+In our [first tutorial](manage-your-data-with-zef-db), you would have seen the term "ZefOp" being brought up a several term. In fact, it's one of the core feature that makes programming with Zef so powerful, easy, and most importantly, fun!   
   
 By the end of this tutorial, you should be familiar with the overall concept of a ZefOps, and should be able to harness the full power of it and slot it in into your python project easily.  
   
@@ -16,14 +16,10 @@ For example, `first` is a ZefOp that is included in the core Zef library. It ret
   
 ```python  
 first([1,2,3,4])                      # 1  
-  
-first(["hello", 6.7, 4, 3, 1], Int)   # 4  
 ```  
   
-The functions above were evaluated eagerly. However, when used with the pipe operator, we can convert it to an expression that is evaluated lazily:  
+The functions above were evaluated eagerly. However, when used with the pipe operator, we can convert it to an expression that is evaluated lazily until we call `collect` at the end of the pipeline:  
 ```python  
-[1,2,3,4] | first                     # LazyValue([1, 2, 3, 4] | first)  
-  
 [1,2,3,4] | first | collect           # 1  
 ```  
   
@@ -34,107 +30,110 @@ The pipe operator takes the output of one function and passes it as the input to
 ```python  
 [1,2,3,4] | first | int_to_alpha | collect  # b  
 ```  
-%%  
-Is using `first` maybe confusing? The type to filter on is optional, this is actually one of the more complicated operators to understand this behavior  
-%%  
   
 1. `[1,2,3,4]` is passed as in input to `first`  
 2. the output of `first` is passed as input to `int_to_alpha`  
 3. `collect` is used at the end of a ZefOp chain to trigger the evaluation  
   
 ##### Motivation   
-Why did Zef decide to introduce the Pipe Operator into our core library? There are a couple of reasons:  
-1. Avoid Excessive Nesting  
-   If we want to invoke a series of functions in Python, we would have to write something like this:  
+Piping is a common technique in many programming languages, and it's used for a few key reasons:  
+1. It avoids excessive nesting, making code more readable by allowing data to flow from **left to right**:  
 ```python  
-lambda x: func_d(func_c(func_b(func_a(x))))     
+result = x | func_a | func_b | func_c | func_d | collect  
 ```  
-   The user would need to read the expression from **right to left** to understand the order of execution. This can make code hard to read and debug.  
+  as compared to the normal way, which reads from **right to left**:  
+```python  
+result = func_d(func_c(func_b(func_a(x))))  
+```  
   
-   With the pipe operator, we can write the same expression like this:  
+2.  It makes it easy to debug and inspect intermediate values. We can easily comment on any part of a multiline data pipeline:  
 ```python  
-new_func = func_a | func_b | func_c | func_d  
+result = (  
+	x  
+	| func_a  
+	| func_b  
+	| func_c  
+#	 | func_d  
+	| collect  
+)  
 ```  
-  This way, data flows from **left to right** and makes it easier for users to understand the order of execution.  
-  %%  
-  1. avoid nesting and bad readability  
-  2. with nested code: it is harder to debug and inspect intermediate values  
-  3. function composition: tacit  / point-free programming  
-  %%  
-2. Avoid Intermediate Names  
-   Another alternative to nesting functions is to have intermediate names for the output variables. For example:  
-   %%  
-   - excessive Naming sucks  
-   - common alternative: mutating variables / unnecessary state  
-   %%  
+    
+Common alternative to nesting function are   
+1.  Intermediate variable names / states  
 ```python  
 a_output = func_a(input_data)  
 b_output = func_b(a_output)  
 c_output = func_c(b_output)  
 d_output = func_d(c_output)  
 ```  
-   While this is not necessarily wrong, thinking of proper names for intermediate output variables could be time-consuming and has little value to the overall readability. We think using the pipe operator can make the code more succinct and arguably more readable.  
-%%shorten this a bit?%%  
   
-::: info  
+2. Mutating variables  
+```python  
+x = func_a(x)  
+x = func_b(x)  
+x = func_c(x)  
+final_result = func_d(x)  
+```  
+     
+  
+  Excessive naming is time-consuming and adds little to readability, while mutating variables can make debugging difficult. We believe functional pipelining promotes high-quality, readable, and consistent code.  
+  
+:::info  
   
 In Zef, the pipe operator is implemented using operator overloading, and specifically, the `__or__` and `__ror__` method is overloaded to support the pipe operator. These are the Python method that corresponds to the `|` operator, and it's typically used for bitwise OR operations, but it can be overloaded to perform other operations. Check this [article](https://www.programiz.com/python-programming/operator-overloading) out on Operator Overloading in python.  
   
 :::  
   
   
-%%  
-before Currying: using zefops / functions with multiple args?  
-%%  
   
 #### Argument Currying  
 Argument currying is a powerful technique in functional programming where a function that takes multiple arguments is transformed into a series of functions, each of which takes a single argument. Zef is a data first language, and the syntax for currying is visualized by the following diagram.  
   
 !500  
-%%  
-Ulf: I love this diagram. These small things get the points across really well, we should make more of them.  
-%%  
   
-Read more about argument currying here, where we will have a deeper look in some of our design choices made to enable currying in python.  
+  
+For example, the `add` operator takes in 1 argument:  
+```python  
+1 | add[2] | collect      # => 3  
+```  
+  
+which is equivalent to a python function like the following:  
+```python  
+def add(x, y)  
+	return x + y  
+```  
+  
+Read more about argument currying [here](currying-and-partial-application), where we will have a deeper look in some of our design choices made to enable currying in python.  
   
 #### Triggering Evaluations  
 All Zef pipeline expressions are **lazy by default**. `collect` is a ZefOp used at the end of a Zef pipeline that makes it **eager** and returns a value. Without `collect`, the expression is just data. If you have been working with tools such as Apache Spark for data processing, you should be familiar with this concept, else you can refer to one of our topic - Lazy vs Eager Evaluation.  
   
 #### Most Commonly Used ZefOps  
-%%"Common ZefOps?"  
-I would say that the ones for ZefDB may be among the most common in a lot of user code?  
-Should they appear here?  
-%%  
+  
 Now, we have explained the core concepts of ZefOp, let's look at some commonly used operators that ships along with the core library.   
   
-##### `filter`  
-Filters an iterable or stream lazily.  
 ```python  
+# filter  
 [1,2,3,4,5] | filter[lambda x: x%2 == 0]   # => [2, 4]  
-[1,2,3,4,5] | filter[greater_than[2]]      # => [3, 4, 5]  
-```  
   
-##### `map`  
-Applies a pure function elementwise to each item of a collection. It can be used both for iterables and streams (observables).  
-```python  
-[3, 4, 5] | map[add[1]]                             # => [4, 5, 6]  
-{'a': 1, 'b': 2} | map[lambda k, v: (k+'!', v+1)]   # => {'a!': 2, 'b!': 3}  
-```  
+# map  
+[3, 4, 5] | map[lambda x: x+1]             # => [4, 5, 6]  
   
-##### `match`  
-This is a core operator that makes functional programming powerful, using the concept called Predicate Dispatch Given an item and a list of `Tuples[predicate, output]`, The item is checked sequentially on each predicate until one matches. If non-matches an exception is raised.  
+# reverse  
+[2,3,4] | reverse                          # => [4,3,2]  
   
-```python  
- (  
-	 -9 | match[(  
-		{24, 42}, lambda x: f'a very special temperature'),   
-		(Is[less_than[-10]], lambda x: f'it is a freezing {x} degrees'),  
-		(Is[less_than[10]], lambda x: f'somewhat cold: {x} degrees'),  
-		(Is[greater_than_or_equal[20]], lambda x: f'warm: {x}'),    
-		(Any, lambda x: f'something else {x}'  
-	)]   
-	| collect  
-)      # => 'somewhat cold: -9 degrees'  
+# nth  
+[1,2,3,4,5] | nth[-2]                      # => 4  
+  
+# match  
+ -9 | match[(  
+	{24, 42}, lambda x: f'a very special temperature'),   
+	(Is[less_than[-10]], lambda x: f'it is a freezing {x} degrees'),  
+	(Is[less_than[10]], lambda x: f'somewhat cold: {x} degrees'),  
+	(Is[greater_than_or_equal[20]], lambda x: f'warm: {x}'),    
+	(Any, lambda x: f'something else {x}'  
+)] # => 'somewhat cold: -9 degrees'  
+  
 ```  
   
 You may have seen similar named operators in other programming languages. In fact, Zef took inspirations from the good things from many different language. Also, We use these operators all over within Zef codebase!  
@@ -144,27 +143,12 @@ Another powerful feature of ZefOp is the ability to easily discover available op
 ```python  
 ops | all[OperatesOn(List)] | collect  
 ```  
-%%I'm still a bit hesitant to commit to this syntax. At least to the bracket type.  
-Conceptually,   
-   - each ZefOp is a node in a graph  
-   - RT.operates_on   is the relation  
-   - the node representing `List` as a value is the target  
   
-In the future, the syntax would also allow writing (something like)  
-all[ (Z, RT.operates_on, List) ]  
-The above form can follow from lifting it to types:   
-similar to StartsWith = Where[starts_with]  
-  
-OperatesOn = Where[Out[RT.operates_on]]  
-OperatesOn = Where[  
-	lambda Out[RT.operates_on]  
-  ]]   
-%%  
   
   
 and you will get the whole list of operators that operates on a `List`.   
   
-To learn more about discovering ZefOp, sheck out the Finding ZefOps page in the Zef documentation.  
+To learn more about discovering ZefOp, sheck out the [Finding ZefOps](finding-zef-ops) page in the Zef documentation.  
   
 #### Writing Your Own ZefOps  
 What if the function you wanted does not exist within the core ZefOps? Fear not, you can define your own function, convert it into a ZefOp just with a `@func` decorator, and use it like a normal ZefOp in your pipeline.   
@@ -179,7 +163,7 @@ def my_fancy_op(x):
   
 In the future, Zef plans to provide a platform for sharing custom ZefOps with others via ZefHub, creating a rich ecosystem where code sharing and live collaboration is made easy.   
   
-#### A Glance to its Real Strength  
+#### ZefOps in Action  
 _Advent of Code_ is an [Advent calendar](https://en.wikipedia.org/wiki/Advent_calendar) of small programming puzzles for a variety of skill sets and skill levels that can be solved in [any](https://github.com/search?q=advent+of+code) programming language you like. Let's see how we can use ZefOps in python to solve one of the Puzzle.  
   
 We'll look at [AOC 2022 Day 1](https://adventofcode.com/2022/day/1).  
@@ -205,41 +189,19 @@ data = """\
 ```  
 There are groups of numbers, e.g., `1000 2000 3000` and `4000` are each a group, respectively. The solution is to find the group whose sum of all numbers is highest and return the sum. The answer to this set of input is `24000`.  
   
-Normal Python:  
+Solution:  
 ```python  
-def compute(s: str) -> int:  
-    return max(  
-        sum(int(line) for line in part.splitlines())  
-        for part in s.split('\n\n')  
-    )  
-```  
-  
-Python with ZefOps:  
-```python  
-def compute(s:str) -> int:  
-	return (  
-	    s   
-	    | split["\n\n"]  
-	    | map[split["\n"]]   
-	    | map[map[lambda x: int(x)]]  
-	    | map[sum]  
-	    | max  
-	    | collect  
-	)  
-```  
-  
-%% Alternative, not sure if it's simpler  
-```  
-(data  
-| split['\n']  
-| split['']  
-| map[map[Int] | sum]  
-| max  
-| collect  
+(  
+	data  
+	| split['\n']  
+	| split['']  
+	| map[map[Int] | sum]  
+	| max  
+	| collect  
 )  
 ```  
-%%  
-It is up for debate which code is more readable, but we would argue that writing data transformation pipelines with ZefOps is more succinct and intuitive to human eyes.   
+  
+Thats it! Writing data transformation pipelines with ZefOps is succinct and intuitive.  
   
 #### Recap  
 Congratulations on completing this tutorial! Throughout the guide, we have covered the following topics:  
