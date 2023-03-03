@@ -78,7 +78,7 @@ final_result = func_d(x)
   
   Excessive naming is time-consuming and adds little to readability, while mutating variables can make debugging difficult. We believe functional pipelining promotes high-quality, readable, and consistent code.  
   
-::: info  
+:::info  
   
 In Zef, the pipe operator is implemented using operator overloading, and specifically, the `__or__` and `__ror__` method is overloaded to support the pipe operator. These are the Python method that corresponds to the `|` operator, and it's typically used for bitwise OR operations, but it can be overloaded to perform other operations. Check this [article](https://www.programiz.com/python-programming/operator-overloading) out on Operator Overloading in python.  
   

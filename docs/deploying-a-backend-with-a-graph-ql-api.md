@@ -5,16 +5,10 @@ title: Deploying a backend with a GraphQL API
 
   
 In our previous tutorials,  
-* [ZefDoc - Getting Started 1 - Manage your data with ZefDB](zef-db-getting-started)  
-* [ZefDoc - Getting Started 2 - Building Data Pipelines with ZefOps](zef-ops-getting-started)  
+* [ZefDoc - Getting Started 1 - Manage your data with ZefDB](manage-your-data-with-zef-db)  
+* [ZefDoc - Getting Started 2 - Building Data Pipelines with ZefOps](building-data-pipelines-with-zef-ops)  
   
 We learnt how to manage data with ZefDB and perform some actions with ZefOp. Now that we have data stored in our database, we want to make it available to external applications via an API. In this tutorial, we will walkthrough how to set up a GraphQL server with minimal effort.  
-  
-:::info  
-  
-Zef utilizes [Ariadne](https://github.com/mirumee/ariadne) as its GraphQL interface builder. The data representation used by Ariadne aligns seamlessly with Zef's data model, enabling smooth interaction between the two libraries. As a result, users can easily incorporate Zef's powerful data-oriented features with Ariadne to develop complex, real-time web applications with ease.  
-  
-:::  
   
 #### Loading Data (Again)  
 Continuing from our previous tutorial on managing data with ZefDB, we have successfully transacted the Actor and Movies entities into our database. If you have access to the database from the previous tutorial, you can skip this section.  
@@ -205,7 +199,7 @@ will give the following output:
 ```  
   
 #### Filling in Resolvers  
-In order to use the schema dictionary to start the GraphQL server with Ariadne, we need to define the resolver functions for each of the fields in the schema that we want to use, which are currently defined as `None`.    
+In order to use the schema dictionary to start the GraphQL server, we need to define the resolver functions for each of the fields in the schema that we want to use, which are currently defined as `None`.    
   
 Resolvers are functions in a GraphQL server that are responsible for resolving the value of a field in a query. They are the actual implementation of the GraphQL operations defined in the schema. In ZefDB, resolvers would typically interact with the database to perform the queries or mutations specified in the GraphQL schema.  
   
@@ -261,7 +255,7 @@ def name_of_resolver(query_args: dict, db: DB):
 	...  
 ```  
 Let's breakdown the syntax that is happening here:  
-1. `@func` is a decorator that converts a regular python function to a Zef Function  
+1. `@func` is a decorator that converts a regular python function to a [Zef Function](functions-and-methods)  
 2. `@func(db)` is a variant of the `@func` decorator that injects a ZefDB instance into the Zef function. This means that the resolver has access to the database and can perform queries and mutations.  
 3.  `query_args` is a dictionary of the arguments passed to the GraphQL query. The keys are the names of the arguments, and the values are their corresponding values. For example, if the query includes `actors(firstName: "Tom")`, then `query_args` would be `{"firstName": "Tom"}`.  
 4. `db` is the ZefDB instance that was injected into the resolver using the `@func(db)` decorator. The resolver can use this instance to perform queries and mutations on the database.  
@@ -459,7 +453,7 @@ schema_dict = {
 ```  
   
 #### Spinning Up GraphQL Server  
-Now that we have fully defined our schema as a Python data structure, all we need to do is spin up the GraphQL server. Zef has its own way of handling side effects, called ZefFX, which includes a GraphQL server as one of the side effect that comes with the core library.   
+Now that we have fully defined our schema as a Python data structure, all we need to do is spin up the GraphQL server. Zef has its own way of handling side effects, called [ZefFX](introduction-to-zef-fx), which includes a GraphQL server as one of the side effect that comes with the core library.   
   
 Run the following to start a GraphQL Server with ZefFX:  
 ```python  
@@ -483,6 +477,6 @@ stop_handler = FX.GraphQL.StopPlayground(
 ```  
   
 #### Recap  
-In this tutorial, we learned how to set up a GraphQL API with Zef and saw how the Ariadne data model can be seamlessly integrated with the Zef data model. We explored how to write custom resolvers using ZefOps, and also briefly introduced the effect system for Zef called ZefFX.  
+In this tutorial, we learned how to set up a GraphQL API with Zef. We explored how to write custom resolvers using ZefOps, and also briefly introduced the effect system for Zef called ZefFX.  
   
 With these tools, we can easily build an end-to-end database and backend system using Zef. One key advantage of using Zef is that it allows us to write both the database and backend in pure Python code. This makes it easier to maintain and update the codebase, and reduces the potential for errors that can arise from having separate codebases for different components of the system.

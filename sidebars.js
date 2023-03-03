@@ -3,22 +3,35 @@ module.exports = {
     "documentation-overview",
     {
       "type": "category",
+      "label": "Installation",
+      "link": {"type": 'doc', "id": 'quick-install-guide'},
+      "items": [
+        "extensive-install-guide",
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Getting Started",
+      "link": {"type": 'generated-index'},
+      "items": ["manage-your-data-with-zef-db", "building-data-pipelines-with-zef-ops", "deploying-a-backend-with-a-graph-ql-api", "data-streaming-with-zef"]
+    },
+    {
+      "type": "category",
       "label": "ZefDB",
       "link": {"type": 'doc', "id": 'overview-zefdb'},
       "items": [
-        // "getting-started",
-        "zef-db-getting-started",
+        // "zef-db-getting-started",
         {
           "type": "category",
           "label": "How-Tos",
           "link": {"type": 'doc', "id": 'howtos-zefdb'},
-          "items": ["facts-logic"]
+          "items": ["changing-reference-frames"]
         },
         {
           "type": "category",
           "label": "Tutorials",
           "link": {"type": 'doc', "id": 'tutorials-zefdb'},
-          "items": ["graph-instructions", "graph-formats"]
+          "items": []
         },
         "explanations-zefdb",
         //"reference-zefdb",
@@ -26,43 +39,47 @@ module.exports = {
     },
     
     {
-      type: "category",
-      label: "Data Pipelines & ZefOps",
+      "type": "category",
+      "label": "Data Pipelines & ZefOps",
       "link": {"type": 'doc', "id": 'overview-zefops'},
       "items": [
-        "zef-ops-getting-started",
+      // "zef-ops-getting-started",
         {
           "type": "category",
           "label": "How-Tos",
           "link": {"type": 'doc', "id": 'howtos-zefops'},
-          "items": ["zef-op-katas"]
+          "items": ["finding-zef-ops"]
         },
         {
           "type": "category",
           "label": "Tutorials",
           "link": {"type": 'doc', "id": 'tutorials-zefops'},
-          "items": ["finding-zef-ops"]
+          "items": ["zef-op-katas"]
         },
-        "explanations-zefdb",
-        "reference-zefdb",
+        {
+          "type": "category",
+          "label": "Explanations",
+          "items": ["currying-and-partial-application", "functions-and-methods"]
+        },
+      //  "reference-zefdb",
       ]
     },
 
-    // {
-    //   "type": "category",
-    //   "label": "GraphQL",
-    //   "link": {"type": 'doc', "id": 'overview-graphql'},
-    //   "items": [
-    //     "graph-ql-getting-started",
-    //     {
-    //       "type": "category",
-    //       "label": "Tutorials",
-    //       "link": {"type": 'doc', "id": 'tutorials-graphql'},
-    //       "items": ["simple-gql"]
-    //     },
-    //     "explanations-graphql"
-    //   ]
-    // },
+     {
+       "type": "category",
+       "label": "GraphQL",
+       "link": {"type": 'doc', "id": 'overview-graphql'},
+       "items": [
+        // "graph-ql-getting-started",
+         {
+           "type": "category",
+           "label": "Tutorials",
+           "link": {"type": 'doc', "id": 'tutorials-graphql'},
+           "items": ["simple-gql"]
+         },
+        // "explanations-graphql"
+       ]
+     },
 
     
 

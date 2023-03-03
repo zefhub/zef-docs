@@ -12,6 +12,6 @@ Zef allows you to easily created and maintain backends via GraphQL APIs.
   
   
 ## 🌱 Getting Started 🌱  
-[Getting Started with Zef GraphQL](graph-ql-getting-started)  
+[Getting Started with Zef GraphQL](deploying-a-backend-with-a-graph-ql-api)  
   
   
