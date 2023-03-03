@@ -3,6 +3,7 @@ id: currying-and-partial-application
 title: Currying and Partial Application
 ---
 
+  
 ![](d27dfc5ed7a71c7179606ddc6e29761253dc3104eb4319457f44797f658763f4.png)  
 Thanks to StableDiffusion   
   
