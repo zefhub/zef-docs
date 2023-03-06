@@ -89,7 +89,7 @@ In Zef, the pipe operator is implemented using operator overloading, and specifi
 #### Argument Currying  
 Argument currying is a powerful technique in functional programming where a function that takes multiple arguments is transformed into a series of functions, each of which takes a single argument. Zef is a data first language, and the syntax for currying is visualized by the following diagram.  
   
-!500  
+![](d1fd5d893ccb79514d9269044b2b54927318ea86604f813b87357054dde26f62.svg)  
   
   
 For example, the `add` operator takes in 1 argument:  

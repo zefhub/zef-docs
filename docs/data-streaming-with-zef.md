@@ -7,7 +7,7 @@ title: Data Streaming with Zef
 Zef offers a built-in streaming capability as a core feature. This allows users to build reactive systems without requiring any additional libraries. In fact, a significant part of the ZefDB is built on top of streams inherently. Users can leverage this streaming capability to react to various events in the database such as the creation, assignment, or removal of entities. The resulting reactive system can be used for a range of applications such as push notifications or real-time data processing.  
   
 A data stream consists of three stages: a data producer (source), a processing engine, and a data sink.    
-!ZefDoc - Getting Started 4 - Data Streaming with Zef 2023-02-28 16.08.31.excalidraw  
+![](143b23d7fd0bc591afe6c892e7ffa8dba430a0b70310996559c1dee643fbe41f.svg)  
 In this tutorial, we will explore three different types of data sources for streaming that zef can produce, and learn how to write simple code to react to them.  
   
 #### Reacting to Database Events  
