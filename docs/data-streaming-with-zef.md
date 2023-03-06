@@ -7,10 +7,10 @@ title: Data Streaming with Zef
 Zef offers a built-in streaming capability as a core feature. This allows users to build reactive systems without requiring any additional libraries. In fact, a significant part of the ZefDB is built on top of streams inherently. Users can leverage this streaming capability to react to various events in the database such as the creation, assignment, or removal of entities. The resulting reactive system can be used for a range of applications such as push notifications or real-time data processing.  
   
 A data stream consists of three stages: a data producer (source), a processing engine, and a data sink.    
-!ZefDoc - Getting Started 4 - Data Streaming with Zef 2023-02-28 16.08.31.excalidraw  
+![](143b23d7fd0bc591afe6c892e7ffa8dba430a0b70310996559c1dee643fbe41f.svg)  
 In this tutorial, we will explore three different types of data sources for streaming that zef can produce, and learn how to write simple code to react to them.  
   
-#### Reacting to Database Events  
+## Reacting to Database Events  
 Let's say we want to build a reactive system that sends push notifications every time a new movie is created in the database. We can subscribe to the events emitted every time an `ET.Movie` is created using the `on` operator:  
 ```python  
 db | on[Instantiated[ET.Movie]] | subscribe[print]  
@@ -54,7 +54,7 @@ Terminated({'target': <ZefRef #302 ET.Movie slice=5>})
 ```  
   
   
-#### Pushable Streams  
+## Pushable Streams  
 In addition to graph events, Zef also allows us to create pushable streams where we can push messages or data and react to them. It works similarly to creating a "Topic" in Kafka.  
   
 To create a pushable stream, we can run the following command:  
@@ -81,7 +81,7 @@ The output console should show the following:
 Doing something with new data  
 ```  
   
-#### Web Requests as Data Stream  
+## Web Requests as Data Stream  
 One can think of web requests as an stream of data. Any incoming requests from a HTTP Server or a Websocket Server can be treated as an event that trigger a series of downstream computation.  
   
 ```python  
@@ -113,5 +113,5 @@ handle['stream'] | map[handle_request] | subscribe[run]
 ```  
 The only difference is, we would need to send a response back to the client within a specified amount of time, or else a timeout will be returned.  
   
-#### Recap  
+## Recap  
 Zef is continuously improving its reactive component and adding more features, such as more advanced stream processing operators and joins. Additionally, the complexity of building distributed streaming process systems will be absorbed by Zefhub.  The goal is to make it easy for users to build streaming and reactive systems.

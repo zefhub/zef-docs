@@ -1,6 +1,6 @@
 ---
 id: manage-your-data-with-zef-db
-title: Manage your data with ZefDB
+title: Manage Your Data with ZefDB
 ---
 
   
@@ -16,7 +16,7 @@ You can walk through these tutorials using IPython, or any of its extension:
 * Jupyter Notebook,   
 * [Jupyter Notebook in VSCode](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)  
   
-#### Importing Zef   
+## Importing Zef   
 Let's import all the necessary modules for this tutorial:  
 ```python  
 from zef import DB, ET, RT, Where, Z  
@@ -29,7 +29,7 @@ from zef import *
 from zef.ops import *  
 ```  
   
-#### Defining the data  
+## Defining the data  
 One way to express your data is using the object notation as follow:  
 ```python  
 data = ET.Person(  
@@ -45,13 +45,13 @@ Here, we have expressed a single entity `ET.Person`, which fields are
 - `last_name` - Lawrence  
 - `acted_in`  - another entity `ET.Movie` with field `name` = `Hunger Games`  
   
-#### Instantiating DB  
+## Instantiating DB  
 ```python  
 db = DB() # Graph()  
 ```  
 A new database instance is created within your local Python session, just like that! ZefDB is fully embedded, you can work with it within Python and without network connections!  
   
-#### Adding Data into DB  
+## Adding Data into DB  
 Now, we want to insert the data we declared above into our database.   
 ```python  
 jen_law = data | db | run  
@@ -71,7 +71,7 @@ Out[7]: <ZefRef #97 ET.Person slice=2>
   
 These handles can be used for further operations (traversals, addition of data), which we will use later in this tutorial!  
   
-#### Exploring the Data  
+## Exploring the Data  
 ##### yo  
 When you are working with Zef and come across "something" and you wonder if you can get additional context about it so in your head you go:  
    
@@ -85,7 +85,7 @@ You'll see the following in your repl:
   
 `yo`-ing the database gives you a summary of it outputted in the form of ASCII (SVG in the future). User can look at information such as the size of the database, number of entities and relations, when was the last transaction made, and etc.   
   
-##### Relational Data  
+### Relational Data  
 ZefDB is a graph-relational database. For those familiar with relational data, it's common to think in terms of tables.  To view data in a tabular form, run:  
 ```python  
 db | now | all | ui.to_table | show  
@@ -107,7 +107,7 @@ db | now | all | graphviz | collect
 You'll see the following output:  
 ![](f6bc3e1fccd9e26b3713e14b302d27f4560a820d9e509de37e6d2d1af165f4b0.png)  
   
-#### Creating and Updating Data  
+## Creating and Updating Data  
 We have now successfully added the initial data into the database.   
   
 Let's add two more entry into our database:  
@@ -161,7 +161,7 @@ db | now | all | graphviz | collect
 ```  
 ![](1aa82107a4ea5b06f37826eacfccee123cccfba0eb9ba2b4d16c764b86372bd4.png)  
   
-#### Querying the data   
+## Querying the data   
 Let's say we want know how many movies Jennifer Lawrence has acted in, we would do:  
   
 ```python  
@@ -189,7 +189,7 @@ print(result) # 2
   
 From this example, we can see how Zef allows us to write succint and readable code with the powerful piping syntax and composable operators. We will discuss more about ZefOp in one of the following tutorial.  
   
-#### Querying the data - Time Traveling  
+## Querying the data - Time Traveling  
 Now, we want answer the same question as above, maybe sometime ago. We can access any previous time slice with ease with ZefDB by doing:  
 ```python  
   
@@ -207,7 +207,7 @@ print(result) # 1
   
 We've traversed one DB state earlier with respect to the current state, which the fact that `J. Lawrence` has not yet acted in `Causeway` . The result of the query will then become `1`. There are few ways to traverse time in ZefDB, check out this [topic](changing-reference-frames).  
   
-#### Persisting Database  
+## Persisting Database  
 Persisting graphs requires a free ZefHub account. See this [[ZefDoc - Quick Install Guide#Sign up for a free Zefhub account|section]] on getting your ZefHub account.  
   
 ```python  

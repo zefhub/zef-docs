@@ -1,6 +1,6 @@
 ---
 id: deploying-a-backend-with-a-graph-ql-api
-title: Deploying a backend with a GraphQL API
+title: Deploying a Backend with a GraphQL API
 ---
 
   
@@ -10,7 +10,7 @@ In our previous tutorials,
   
 We learnt how to manage data with ZefDB and perform some actions with ZefOp. Now that we have data stored in our database, we want to make it available to external applications via an API. In this tutorial, we will walkthrough how to set up a GraphQL server with minimal effort.  
   
-#### Loading Data (Again)  
+## Loading Data (Again)  
 Continuing from our previous tutorial on managing data with ZefDB, we have successfully transacted the Actor and Movies entities into our database. If you have access to the database from the previous tutorial, you can skip this section.  
   
 However, if you don't have access to the previous database instance, you can load the data again by running the following code:  
@@ -43,7 +43,7 @@ data = [
 data | db | run  
 ```  
   
-#### Importing Zef  
+## Importing Zef  
 Lets import the modules that will be used in this tutorial.  
 ```python  
 from zef.ops import *  
@@ -52,7 +52,7 @@ from zef.graphql import *
 from rich.pretty import pprint  
 ```  
   
-#### Declaring GraphQL Schema  
+## Declaring GraphQL Schema  
 The following code snippet represents a GraphQL schema, which is a blueprint that defines the types of data that a GraphQL server can access:  
 ```graphql  
 type Query {  
@@ -95,7 +95,7 @@ Additionally, the schema includes two mutations:
 -   `addActor` - takes compulsory arguments of `firstName` and `lastName` and creates an `Actor` instance in the database.  
 -   `addMovie` - takes compulsory arguments of `title` and a list of actor `id` and creates a `Movie` instance with actors that acted in the movie in the database.  
   
-#### Generating Data Representation in Python  
+## Generating Data Representation in Python  
 Next, we need a Python data structure to represent the GraphQL schema defined above. For the sake of simplicity in this tutorial, we will first define the schema as a string in a Python variable:  
 ```python   
 schema = """  
@@ -198,12 +198,12 @@ will give the following output:
 }  
 ```  
   
-#### Filling in Resolvers  
+## Filling in Resolvers  
 In order to use the schema dictionary to start the GraphQL server, we need to define the resolver functions for each of the fields in the schema that we want to use, which are currently defined as `None`.    
   
 Resolvers are functions in a GraphQL server that are responsible for resolving the value of a field in a query. They are the actual implementation of the GraphQL operations defined in the schema. In ZefDB, resolvers would typically interact with the database to perform the queries or mutations specified in the GraphQL schema.  
   
-##### Resolvers for Object Type  
+### Resolvers for Object Type  
 To access a specific field for an `Actor` or `Movie` entity in ZefDB, you can use a resolver function to retrieve the field value using a "handle" to the entity.  In general, you can use the following pattern to retrieve a field value from an entity:  
 ```python  
 handle | <resolver> | collect  
@@ -247,7 +247,7 @@ The snippets of the dictionary below is after we fill in all the resolvers for o
 :::  
   
   
-##### Resolvers for Queries  
+### Resolvers for Queries  
 To write a custom resolver in Zef's GraphQL, it has to follow a certain format  
 ```python  
 @func(db)  
@@ -343,7 +343,7 @@ def get_movies_acted_in(query_args, db):
 ```  
 All of the code in the resolvers is just standard Zef code, which we introduced earlier in our getting started series. It's important to note that we don't use the `collect` ZefOp in any of the resolvers. The `collect` operator is invoked at runtime when a user makes a query or mutation.  
   
-##### Resolvers for Mutations  
+### Resolvers for Mutations  
 The mutation resolvers are defined in the same way as the query resolvers, with the only difference being that the mutation resolvers will commit a transaction against the database.  
   
 ```python  
@@ -452,7 +452,7 @@ schema_dict = {
 }  
 ```  
   
-#### Spinning Up GraphQL Server  
+## Spinning Up GraphQL Server  
 Now that we have fully defined our schema as a Python data structure, all we need to do is spin up the GraphQL server. Zef has its own way of handling side effects, called [ZefFX](introduction-to-zef-fx), which includes a GraphQL server as one of the side effect that comes with the core library.   
   
 Run the following to start a GraphQL Server with ZefFX:  
@@ -476,7 +476,7 @@ stop_handler = FX.GraphQL.StopPlayground(
 ) | run  
 ```  
   
-#### Recap  
+## Recap  
 In this tutorial, we learned how to set up a GraphQL API with Zef. We explored how to write custom resolvers using ZefOps, and also briefly introduced the effect system for Zef called ZefFX.  
   
 With these tools, we can easily build an end-to-end database and backend system using Zef. One key advantage of using Zef is that it allows us to write both the database and backend in pure Python code. This makes it easier to maintain and update the codebase, and reduces the potential for errors that can arise from having separate codebases for different components of the system.
