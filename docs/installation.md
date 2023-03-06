@@ -54,7 +54,7 @@ You are still able to work locally without a ZefHub account, however there are m
 Login to ZefHub by either creating an account in the process, or using an existing account. This can be done via the following commands:  
   
 ```python  
-from zef.ops import *  
+from zef.ops import login, run  
 login | run  
 ```  
   
