@@ -72,7 +72,7 @@ Out[7]: <ZefRef #97 ET.Person slice=2>
 These handles can be used for further operations (traversals, addition of data), which we will use later in this tutorial!  
   
 ## Exploring the Data  
-##### yo  
+### yo  
 When you are working with Zef and come across "something" and you wonder if you can get additional context about it so in your head you go:  
    
 When you are working with Zef and came across "something" that you want to have additional information, in your mind you would be thinking : "Yo Zef, show me more about this something!". `yo` is exactly the operator that you would use in these scenario.  
@@ -92,7 +92,7 @@ db | now | all | ui.to_table | show
 ```  
 ![](77ff4ab2431a769df98462aef8e868d87f8b3b06c1c37267c920c75e57f2104a.png)  
   
-###### Graph Data  
+### Graph Data  
 Data in ZefDB can also be viewed in graphical form. Zef has incorporated  [GraphViz](https://graphviz.org/) as one of our native operator.   
   
 :::warning  
