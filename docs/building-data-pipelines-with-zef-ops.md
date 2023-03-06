@@ -9,7 +9,7 @@ In our [first tutorial](manage-your-data-with-zef-db), you would have seen the t
   
 By the end of this tutorial, you should be familiar with the overall concept of a ZefOps, and should be able to harness the full power of it and slot it in into your python project easily.  
   
-#### What is it?  
+## What is it?  
 A ZefOp is a function that can be executed lazily and used in a composable way, just like a regular function. Lazy evaluation means that the function's execution is delayed until it's explicitly triggered. This enables the compiler to optimize the code when many lazy functions are chained together, leading to better performance compared to regular Python functions.  
   
 For example, `first` is a ZefOp that is included in the core Zef library. It returns the first item of an iterator that matches a specified type. We can use ZefOp with regular function call syntax, like so:  
@@ -23,7 +23,7 @@ The functions above were evaluated eagerly. However, when used with the pipe ope
 [1,2,3,4] | first | collect           # 1  
 ```  
   
-#### The Pipe Operator  
+## The Pipe Operator  
 The pipe operator is a feature in programming languages that allows you to chain functions and operations together. In Zef and in most cases, the pipe is represented by a vertical bar `|`. It is commonly used in functional programming languages like Unix shell, R, Elixir, Elm, F#, and others.  
   
 The pipe operator takes the output of one function and passes it as the input to the next operation in the chain. Consider the following example:  
@@ -35,7 +35,7 @@ The pipe operator takes the output of one function and passes it as the input to
 2. the output of `first` is passed as input to `int_to_alpha`  
 3. `collect` is used at the end of a ZefOp chain to trigger the evaluation  
   
-##### Motivation   
+### Motivation   
 Piping is a common technique in many programming languages, and it's used for a few key reasons:  
 1. It avoids excessive nesting, making code more readable by allowing data to flow from **left to right**:  
 ```python  
@@ -86,7 +86,7 @@ In Zef, the pipe operator is implemented using operator overloading, and specifi
   
   
   
-#### Argument Currying  
+## Argument Currying  
 Argument currying is a powerful technique in functional programming where a function that takes multiple arguments is transformed into a series of functions, each of which takes a single argument. Zef is a data first language, and the syntax for currying is visualized by the following diagram.  
   
 ![](d1fd5d893ccb79514d9269044b2b54927318ea86604f813b87357054dde26f62.svg)  
@@ -108,7 +108,7 @@ Read more about argument currying [here](currying-and-partial-application), wher
 #### Triggering Evaluations  
 All Zef pipeline expressions are **lazy by default**. `collect` is a ZefOp used at the end of a Zef pipeline that makes it **eager** and returns a value. Without `collect`, the expression is just data. If you have been working with tools such as Apache Spark for data processing, you should be familiar with this concept, else you can refer to one of our topic - Lazy vs Eager Evaluation.  
   
-#### Most Commonly Used ZefOps  
+## Most Commonly Used ZefOps  
   
 Now, we have explained the core concepts of ZefOp, let's look at some commonly used operators that ships along with the core library.   
   
@@ -138,7 +138,7 @@ Now, we have explained the core concepts of ZefOp, let's look at some commonly u
   
 You may have seen similar named operators in other programming languages. In fact, Zef took inspirations from the good things from many different language. Also, We use these operators all over within Zef codebase!  
   
-#### ZefOps Discovery  
+## ZefOps Discovery  
 Another powerful feature of ZefOp is the ability to easily discover available operators for a given use case. In addition to the `yo` operator mentioned earlier, you can use the `all` operator to search for operators that you might need but are not yet aware of. For example, to get a list of all the operators that work on a `List`, you can use the following code:  
 ```python  
 ops | all[OperatesOn(List)] | collect  
@@ -150,7 +150,7 @@ and you will get the whole list of operators that operates on a `List`.
   
 To learn more about discovering ZefOp, sheck out the [Finding ZefOps](finding-zef-ops) page in the Zef documentation.  
   
-#### Writing Your Own ZefOps  
+## Writing Your Own ZefOps  
 What if the function you wanted does not exist within the core ZefOps? Fear not, you can define your own function, convert it into a ZefOp just with a `@func` decorator, and use it like a normal ZefOp in your pipeline.   
   
 ```python  
@@ -163,7 +163,7 @@ def my_fancy_op(x):
   
 In the future, Zef plans to provide a platform for sharing custom ZefOps with others via ZefHub, creating a rich ecosystem where code sharing and live collaboration is made easy.   
   
-#### ZefOps in Action  
+## ZefOps in Action  
 _Advent of Code_ is an [Advent calendar](https://en.wikipedia.org/wiki/Advent_calendar) of small programming puzzles for a variety of skill sets and skill levels that can be solved in [any](https://github.com/search?q=advent+of+code) programming language you like. Let's see how we can use ZefOps in python to solve one of the Puzzle.  
   
 We'll look at [AOC 2022 Day 1](https://adventofcode.com/2022/day/1).  
@@ -203,7 +203,7 @@ Solution:
   
 Thats it! Writing data transformation pipelines with ZefOps is succinct and intuitive.  
   
-#### Recap  
+## Recap  
 Congratulations on completing this tutorial! Throughout the guide, we have covered the following topics:  
   
 -   An introduction to ZefOp and its syntax  
