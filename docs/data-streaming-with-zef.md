@@ -33,8 +33,21 @@ If we want to send a push notification to users, we can do
 ```python  
 def send_push_notification(event):  
 	# do something with the event emitted  
+    message = f"{event.target | F.title | collect} is created!"  
+      
+    effect = FX.HTTP.Request(  
+        url="https://<your_push_notification_service>",  
+        data={  
+            "message" : message  
+        }  
+    )  
+    return effect  
   
-db | on[Instantiated[ET.Movie]] | subscribe[send_push_notification]  
+(  
+	 db | on[Instantiated[ET.Movie]] # Data Source  
+	 | map[send_push_notification]   # Stream Processing  
+	 | subscribe[run]                # Data Sink  
+)  
 ```  
   
 There are two other graph events that we can subscribe to, `Assigned` and `Terminated`. For example:  
@@ -65,9 +78,13 @@ stream =  FX.Stream.CreatePushableStream() | run
 After that, we can create a subscription to the stream like this:  
 ```python  
 def do_something(data):  
-	print(f"Doing something with {data}")  
+	return f"Doing something with {data}"  
 	  
-stream | subscribe[do_something]  
+(  
+	 stream                   # Data Stream  
+	| map[do_something]       # Stream Processing  
+	| subscribe[print]        # Data Sink  
+)  
 ```  
   
 Now, if we have other systems pushing data to this stream, such as data from a HTTP request or a websocket, we can push data to the stream like this:  
@@ -75,6 +92,7 @@ Now, if we have other systems pushing data to this stream, such as data from a H
 ```python  
 "new data" | push[stream] | run  
 ```  
+Note that pushing an event into a stream is a side-effectful operation itself (the stream is potentially observable and not part of the pure functional core).  
   
 The output console should show the following:  
 ```console  
@@ -85,11 +103,9 @@ Doing something with new data
 One can think of web requests as an stream of data. Any incoming requests from a HTTP Server or a Websocket Server can be treated as an event that trigger a series of downstream computation.  
   
 ```python  
-handle = (   
-	FX.HTTP.StartServer(  
+handle = FX.HTTP.StartServer(  
 		port=3000  
 	) | run            
-)  
 ```  
 The return value of executing the `HTTP.StartServer` side effect is a dictionary that consist of:  
 * `server_uuid` - unique identifier of the server   
@@ -98,20 +114,22 @@ The return value of executing the `HTTP.StartServer` side effect is a dictionary
 Similar to the last example, we can subscribe to the request stream by doing the following:  
 ```python  
 def handle_request(req: Dict) -> FX:  
-	# Can do something else  
-	# I.E. send push notification  
-	  
-    return (  
-	    FX.HTTP.SendResponse(  
+	# construct and return an effect (data)  
+    return FX.HTTP.SendResponse(  
 			server_uuid=req["server_uuid"],  
 			request_id=req["request_id"],  
-			response="Hello World!"  
+			response="Welcome to ZefFX!"  
 		)  
-	)  
   
-handle['stream'] | map[handle_request] | subscribe[run]  
+(  
+	 handle['stream']        # Data Stream   
+	 | map[handle_request]   # Stream Processing  
+	 | subscribe[run]        # Data Sink  
+)  
 ```  
-The only difference is, we would need to send a response back to the client within a specified amount of time, or else a timeout will be returned.  
+The HTTP server converts external requests to a stream of events and expects a response in form of an effect object (action) to be returned to the runtime within the timeout limit.  
+`subscribe` is an operator which takes an impure function and executes this using the incoming event as an argument, as the events arrive in the stream.  
+  
   
 ## Recap  
-Zef is continuously improving its reactive component and adding more features, such as more advanced stream processing operators and joins. Additionally, the complexity of building distributed streaming process systems will be absorbed by Zefhub.  The goal is to make it easy for users to build streaming and reactive systems.
+Zef is continuously improving its reactive component and adding more features, such as more advanced stream processing operators and joins. Additionally, the complexity of building distributed streaming process systems will be absorbed by ZefHub.  The goal is to make it easy for users to build streaming and reactive systems.

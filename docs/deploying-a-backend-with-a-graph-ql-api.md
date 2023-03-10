@@ -138,7 +138,7 @@ pprint(schema_dict, indent_guides=False)
 will give the following output:  
 ```python  
 {  
-    "_Types": {  
+    "GraphQLTypes": {  
         "Query": {  
             "actor": {  
                 "type": "Actor",  
@@ -452,20 +452,16 @@ schema_dict = {
 }  
 ```  
   
-## Spinning Up GraphQL Server  
+## Exploring our API  
 Now that we have fully defined our schema as a Python data structure, all we need to do is spin up the GraphQL server. Zef has its own way of handling side effects, called [ZefFX](introduction-to-zef-fx), which includes a GraphQL server as one of the side effect that comes with the core library.   
   
 Run the following to start a GraphQL Server with ZefFX:  
 ```python  
-start_handler = FX.GraphQL.StartPlayground(  
+my_playground = FX.GraphQL.StartPlayground(  
     schema_dict =  schema_dict,  
     db =  db,  
     port =  5002,  
-    path =  "/gql",  
-    playground_path =  "/",  
-    open_browser =  True,  
-    debug=True  
- ) | run  
+ ) | run | get['server_uuid']  
 ```  
 Each of the keyword arguments for `GraphQL.StartPlayground` should be self-explanatory. The return value is the handler to the side effect, which in this case is a dictionary with the `uuid` of the GraphQL server. This can be used to interact with the server in the future.  
   
@@ -475,6 +471,12 @@ stop_handler = FX.GraphQL.StopPlayground(
     **start_handler  
 ) | run  
 ```  
+  
+  
+## Hosting our API  
+  
+  
+  
   
 ## Recap  
 In this tutorial, we learned how to set up a GraphQL API with Zef. We explored how to write custom resolvers using ZefOps, and also briefly introduced the effect system for Zef called ZefFX.  

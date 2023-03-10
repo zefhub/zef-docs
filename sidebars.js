@@ -25,7 +25,7 @@ module.exports = {
           "type": "category",
           "label": "How-Tos",
           "link": {"type": 'doc', "id": 'howtos-zefdb'},
-          "items": ["changing-reference-frames"]
+          "items": []
         },
         {
           "type": "category",
@@ -48,24 +48,25 @@ module.exports = {
           "type": "category",
           "label": "How-Tos",
           "link": {"type": 'doc', "id": 'howtos-zefops'},
-          "items": ["finding-zef-ops"]
+          "items": []
         },
         {
           "type": "category",
           "label": "Tutorials",
           "link": {"type": 'doc', "id": 'tutorials-zefops'},
-          "items": ["zef-op-katas"]
+          "items": []
         },
         {
           "type": "category",
           "label": "Explanations",
-          "items": ["currying-and-partial-application", "functions-and-methods"]
+          "link": {"type": 'doc', "id": 'explanations-zefops'},
+          "items": []
         },
       //  "reference-zefdb",
       ]
     },
 
-     {
+    {
        "type": "category",
        "label": "GraphQL",
        "link": {"type": 'doc', "id": 'overview-graphql'},
@@ -75,9 +76,23 @@ module.exports = {
            "type": "category",
            "label": "Tutorials",
            "link": {"type": 'doc', "id": 'tutorials-graphql'},
-           "items": ["simple-gql"]
+           "items": []
          },
         // "explanations-graphql"
+       ]
+     },
+
+     {
+       "type": "category",
+       "label": "Zef Studio",
+       "link": {"type": 'doc', "id": 'overview-zefstudio'},
+       "items": [
+         {
+           "type": "category",
+           "label": "How-Tos",
+           "link": {"type": 'doc', "id": 'howtos-zefstudio'},
+           "items": []
+         },
        ]
      },
 

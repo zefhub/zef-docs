@@ -5,6 +5,7 @@ title: SimpleGQL
 
   
   
+  
 ## What is SimpleGQL?  
   
 The `zef.gql.server_simplegql` provides a way to host a GraphQL server using  
