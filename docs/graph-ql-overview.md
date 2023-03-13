@@ -16,5 +16,6 @@ Zef allows you to easily created and maintain backends via GraphQL APIs.
   
   
 ## 👀 Tutorials 👀  
+* [ZefDoc - GraphQL API for Movies and Actors](graph-ql-api-for-movies-and-actors)  
 * [ZefDoc - SimpleGQL](simple-gql)  
   

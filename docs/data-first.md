@@ -1,8 +1,9 @@
 ---
 id: data-first
-title: Data-First?
+title: Data-First
 ---
 
+  
   
 # Data-First vs Data-Last Languages. Where Python Stands  
   

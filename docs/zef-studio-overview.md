@@ -1,15 +1,15 @@
 ---
 id: overview-zefstudio
-title: Zef Studio Overview
+title: ZefStudio Overview
 ---
 
   
 # ❓Overview❓  
 zef-studio is a companion application to help you visually explore the data stored in zef.  
-It's free provided that you have signed up for a [zefhub account]([[https://console.zefhub.io/](https://console.zefhub.io/)](https://console.zefhub.io/](https://console.zefhub.io/))).  
+It's free provided that you have signed up for a [ZefHub account](https://console.zefhub.io/)  
   
 # Getting started  
-Zef Studio is a web application, so there is no need to download and install any software to run it.  
+ZefStudio is a web application, so there is no need to download and install any software to run it.  
 To start it simply make sure you have the latest version of zef installed `pip install zef` and run the following commands to get started.  
 ```python  
 # Import nessasary zef packages  
@@ -35,3 +35,8 @@ Eg: `FX.Studio.Start(report_errors=True)`.
 # Interacting with zef studio  
   
 TODO: screenshots  
+  
+  
+  
+  
+  

@@ -84,7 +84,7 @@ module.exports = {
 
      {
        "type": "category",
-       "label": "Zef Studio",
+       "label": "ZefStudio",
        "link": {"type": 'doc', "id": 'overview-zefstudio'},
        "items": [
          {
